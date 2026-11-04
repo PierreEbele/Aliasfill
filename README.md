@@ -86,6 +86,10 @@ pnpm pack        # dist/aliasfill-<version>.xpi and dist/aliasfill-<version>-chr
 
 Tests run the extension's own files in a Node `vm` with a fake `browser` and a fake `fetch` (`tests/fake-throwaway.ts` stands in for a Throwaway Mail server): no network, no browser. Store listing drafts can be kept locally in `extension/store/` (git-ignored, left out of the packages).
 
+## Privacy
+
+See [PRIVACY.md](PRIVACY.md): no analytics, nothing sent unless you set up an alias provider, and then only to that provider.
+
 ## License
 
 MIT, see [LICENSE](LICENSE).
