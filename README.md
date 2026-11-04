@@ -2,7 +2,7 @@
 
 Browser extension for Firefox and Chrome/Chromium that fills sign-up forms with a fake identity and a disposable e-mail address for the site.
 
-`extension/` holds the extension, for Firefox and Chrome/Chromium (Edge, Brave, Vivaldi…) from one codebase. It fills sign-up forms with a fake identity (name, address, phone, birth date, password, test card) and a **disposable e-mail address for the site**. Originally based on Fable (MIT); it started inside [Throwaway Mail](https://github.com/PierreEbele/throwaway-mail), a self-hosted disposable address server, and lives here on its own since 2.0.
+`extension/` holds the extension, for Firefox and Chrome/Chromium (Edge, Brave, Vivaldi…) from one codebase. It fills sign-up forms with a fake identity (name, address, phone, birth date, password, test card) and a **disposable e-mail address for the site**. It started inside [Throwaway Mail](https://github.com/PierreEbele/throwaway-mail), a self-hosted disposable address server, and now lives here on its own.
 
 It works **without a Throwaway Mail server**: the address can come from your own catch-all domain, plus-addressing on your mailbox, or an alias service you already use. Only a Throwaway Mail server reads the mail it receives, so verification-code autofill is available with Throwaway Mail only; with any other provider you read the code in your mailbox.
 
@@ -26,7 +26,7 @@ Pick one in the extension settings (⚙ in the popup header) under _Where do add
 - Every provider gets the site's host name (as `hostname`, `generated_for`, `forDomain`, label or description depending on the API) so you can find the alias later; Throwaway Mail also gets the fake name as the label.
 - _Test connection_ calls a read-only endpoint (`/api/user_info`, `/api/v1/account-details`, `/api/v1/profiles/`, the JMAP session, `/v1/account`, `/v1/auth/me`). _Save_ stores the settings in the extension's local storage and makes the provider active.
 
-The adapters live in `extension/providers/*.js`; each registers `{ id, name, codes, fields, configured, createAlias, testConnection, waitForCode? }` with `extension/providers/index.js`, which also stores settings (`aliasProvider`, `providerSettings`; Throwaway Mail keeps its `tm*` keys) and builds the address object. Installs from before 2.0 with a Throwaway Mail server keep using it.
+The adapters live in `extension/providers/*.js`; each registers `{ id, name, codes, fields, configured, createAlias, testConnection, waitForCode? }` with `extension/providers/index.js`, which also stores settings (`aliasProvider`, `providerSettings`; Throwaway Mail keeps its `tm*` keys) and builds the address object. Settings saved by the extension when it was still part of Throwaway Mail (a server and API key) select that provider.
 
 ## What it does
 
