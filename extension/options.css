@@ -16,7 +16,24 @@ body.options {
   gap: 6px;
   margin-top: 12px;
 }
-.options form > label {
+/* Provider fields live in wrappers: lay them out like the form's own fields. */
+.options #generic-fields,
+.options #tm-fields,
+.options #generic-fields > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.options #generic-fields > [hidden],
+.options #tm-fields[hidden] {
+  display: none;
+}
+.options #provider-help {
+  margin: 0;
+}
+.options form > label,
+.options #generic-fields label,
+.options #tm-fields > label {
   font-size: 11px;
   color: var(--muted);
   margin-top: 6px;
