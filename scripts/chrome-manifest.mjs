@@ -10,7 +10,7 @@ export function chromeManifest(firefox) {
   m.background = { service_worker: "service-worker.js" };
   m.permissions = m.permissions.map((p) => (p === "menus" ? "contextMenus" : p));
   // Chrome does not render SVG icons.
-  const png = (sizes) => Object.fromEntries(sizes.map((s) => [String(s), `icons/throwaway-mail-${s}.png`]));
+  const png = (sizes) => Object.fromEntries(sizes.map((s) => [String(s), `icons/aliasfill-${s}.png`]));
   m.icons = png([16, 32, 48, 128]);
   if (m.action) m.action.default_icon = png([16, 32, 48]);
   return m;

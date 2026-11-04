@@ -8,14 +8,14 @@
     "default_title": "Aliasfill",
     "default_popup": "popup.html",
     "default_icon": {
-      "32": "icons/throwaway-mail.svg",
-      "64": "icons/throwaway-mail.svg"
+      "32": "icons/aliasfill.svg",
+      "64": "icons/aliasfill.svg"
     }
   },
   "icons": {
-    "32": "icons/throwaway-mail.svg",
-    "64": "icons/throwaway-mail.svg",
-    "128": "icons/throwaway-mail.svg"
+    "32": "icons/aliasfill.svg",
+    "64": "icons/aliasfill.svg",
+    "128": "icons/aliasfill.svg"
   },
   "browser_specific_settings": {
     "gecko": {

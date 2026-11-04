@@ -33,7 +33,7 @@
     root = null;
   function ui() {
     if (root) return root;
-    host = document.createElement("throwaway-mail-host");
+    host = document.createElement("aliasfill-host");
     host.style.cssText = "all:initial;position:fixed;z-index:2147483647;right:16px;bottom:16px";
     root = host.attachShadow({ mode: "closed" });
     root.innerHTML = `<style>
@@ -156,7 +156,7 @@
   let chip = null;
   function showChip(target, code) {
     chip?.remove();
-    chip = document.createElement("throwaway-mail-chip");
+    chip = document.createElement("aliasfill-chip");
     const r = anchorOf(target).getBoundingClientRect();
     chip.style.cssText = `all:initial;position:absolute;z-index:2147483647;left:${Math.round(r.left + scrollX)}px;top:${Math.round(r.bottom + scrollY + 4)}px`;
     const sh = chip.attachShadow({ mode: "closed" });

@@ -19,7 +19,7 @@ rm -f "$FIREFOX" "$CHROME"
 STAGE=$(mktemp -d)
 trap 'rm -rf "$STAGE"' EXIT
 cp -r extension/. "$STAGE/"
-rm -rf "$STAGE/icons/throwaway-mail.svg" "$STAGE/store"
+rm -rf "$STAGE/icons/aliasfill.svg" "$STAGE/store"
 node scripts/chrome-manifest.mjs extension/manifest.json >"$STAGE/manifest.json"
 (cd "$STAGE" && zip -qr -X "$CHROME" . -x '*.DS_Store')
 
