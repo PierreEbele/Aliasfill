@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Aliasfill",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Fake identities for sign-up forms, with disposable addresses from your own domain or alias service.",
   "permissions": ["alarms", "activeTab", "menus", "scripting", "storage"],
   "action": {
@@ -19,7 +19,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "throwaway-mail@extension",
+      "id": "aliasfill@extension",
       "strict_min_version": "140.0",
       "data_collection_permissions": {
         "required": ["none"]
