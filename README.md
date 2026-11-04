@@ -1,5 +1,7 @@
 # Aliasfill
 
+[![CI](https://github.com/PierreEbele/Aliasfill/actions/workflows/ci.yml/badge.svg)](https://github.com/PierreEbele/Aliasfill/actions/workflows/ci.yml)
+
 Browser extension for Firefox and Chrome/Chromium that fills sign-up forms with a fake identity and a disposable e-mail address for the site.
 
 `extension/` holds the extension, for Firefox and Chrome/Chromium (Edge, Brave, Vivaldi…) from one codebase. It fills sign-up forms with a fake identity (name, address, phone, birth date, password, test card) and a **disposable e-mail address for the site**. It started inside [Throwaway Mail](https://github.com/PierreEbele/throwaway-mail), a self-hosted disposable address server, and now lives here on its own.
@@ -77,6 +79,7 @@ The provider's key is only sent to that provider's API. Extensions with host acc
 pnpm install
 pnpm test        # adapters against fake HTTP, background script, generator, one-time-code detection, Chrome manifest
 pnpm lint        # types + formatting
+pnpm lint:firefox  # Mozilla's add-on linter (what addons.mozilla.org runs), warnings fail
 pnpm format
 pnpm pack        # dist/aliasfill-<version>.xpi and dist/aliasfill-<version>-chrome.zip
 ```

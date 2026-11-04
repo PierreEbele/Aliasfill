@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm lint:firefox
+      - name: Check the tag matches the manifest version
+        run: test "v$(node -p 'require("./extension/manifest.json").version')" = "$GITHUB_REF_NAME"
+      - run: sh scripts/pack-extension.sh
+      - name: Publish a GitHub release with both packages
+        run: gh release create "$GITHUB_REF_NAME" dist/* --title "Aliasfill $GITHUB_REF_NAME" --generate-notes --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -14,12 +14,14 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "tsc --noEmit --noUnusedLocals --noUnusedParameters -p tsconfig.json && prettier --check .",
     "format": "prettier --write .",
-    "pack": "sh scripts/pack-extension.sh"
+    "pack": "sh scripts/pack-extension.sh",
+    "lint:firefox": "web-ext lint -s extension --ignore-files \"store/**\" --self-hosted=false --warnings-as-errors"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
     "prettier": "^3.9.10",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.5"
+    "vitest": "^5.0.5",
+    "web-ext": "^10.8.0"
   }
 }
