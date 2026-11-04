@@ -1,0 +1,25 @@
+{
+  "name": "aliasfill",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Browser extension: fake identities for sign-up forms, with a disposable address from your own domain or alias service",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@12.14.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "tsc --noEmit --noUnusedLocals --noUnusedParameters -p tsconfig.json && prettier --check .",
+    "format": "prettier --write .",
+    "pack": "sh scripts/pack-extension.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

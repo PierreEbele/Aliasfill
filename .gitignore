@@ -1,0 +1,4 @@
+node_modules
+dist
+# Local store listing drafts
+extension/store/
