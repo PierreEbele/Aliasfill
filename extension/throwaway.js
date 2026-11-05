@@ -4,6 +4,8 @@
 const Throwaway = (() => {
   const KEYS = ["tmServer", "tmApiKey", "tmDomain", "tmExpiresDays", "tmMaxMessages"];
 
+  const CHOICES = ["@random", "@rotate"];
+
   function normalizeServer(raw) {
     const url = new URL(String(raw || "").trim());
     if (url.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(url.hostname)) throw new Error("The server must use HTTPS.");
@@ -56,8 +58,9 @@ const Throwaway = (() => {
         site_name: url.hostname,
         site_url: url.origin,
         label: label ? `Throwaway Mail · ${label}` : "Throwaway Mail",
-        // preferred, not forced: the server skips a domain this site is known to reject.
-        ...(c.domain ? { preferred_domain: c.domain } : {}),
+        // "@random" / "@rotate" pick among the server's domains; a name is preferred, not forced: the server skips
+        // a domain this site is known to reject.
+        ...(CHOICES.includes(c.domain) ? { domain_choice: c.domain.slice(1) } : c.domain ? { preferred_domain: c.domain } : {}),
         ...(c.expiresDays ? { expires_in_days: c.expiresDays } : {}),
         ...(c.maxMessages ? { max_messages: c.maxMessages } : {}),
       },
@@ -84,5 +87,5 @@ const Throwaway = (() => {
     return request(`/v1/addresses/${encodeURIComponent(addressId)}/code?${q}`);
   }
 
-  return { KEYS, normalizeServer, config, enabled, request, createAddress, siteAddress, waitForCode };
+  return { KEYS, CHOICES, normalizeServer, config, enabled, request, createAddress, siteAddress, waitForCode };
 })();

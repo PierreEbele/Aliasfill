@@ -76,7 +76,11 @@ $("provider").addEventListener("change", async () => {
 // ---------- Throwaway Mail ----------
 async function loadDomains(cfg, selected) {
   const data = await Throwaway.request("/v1/domains", { cfg });
-  $("domain").replaceChildren(new Option("Server default", ""));
+  $("domain").replaceChildren(
+    new Option("Server default", ""),
+    new Option("Random domain for each address", "@random"),
+    new Option("Rotate through domains", "@rotate"),
+  );
   for (const d of data.domains || []) $("domain").add(new Option(d.name, d.name));
   $("domain").value = selected || "";
   return data.domains?.length || 0;

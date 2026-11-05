@@ -43,6 +43,25 @@ describe("Throwaway Mail client", () => {
     expect(await tm.waitForCode(alias.id, found.message_id, 0)).toBeNull();
   });
 
+  it("sends a random domain choice or a preferred domain", async () => {
+    const t = fakeThrowaway();
+    const bodies: any[] = [];
+    const handle = t.handle.bind(t);
+    t.handle = (url: string, init?: RequestInit) => {
+      if (init?.method === "POST") bodies.push(JSON.parse(String(init.body)));
+      return handle(url, init);
+    };
+    const store: Record<string, unknown> = { tmServer: "https://mail.example.test", tmApiKey: t.key, tmDomain: "@random" };
+    const tm = loadClient(t, store);
+    await tm.createAddress("https://a.example/", "x");
+    store.tmDomain = "b.example.test";
+    await tm.createAddress("https://b.example/", "x");
+    expect(bodies[0]).toMatchObject({ domain_choice: "random" });
+    expect(bodies[0].preferred_domain).toBeUndefined();
+    expect(bodies[1]).toMatchObject({ preferred_domain: "b.example.test" });
+    expect(bodies[1].domain_choice).toBeUndefined();
+  });
+
   it("reports an invalid key and refuses plain-http servers", async () => {
     const t = fakeThrowaway();
     const tm = loadClient(t, { tmServer: "https://mail.example.test", tmApiKey: "tm_bad" });
