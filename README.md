@@ -131,11 +131,15 @@ Tests run the extension's own files in a Node `vm` with a fake `browser` and a f
 ## Releasing
 
 1. Bump `version` in `extension/manifest.json` and `package.json`, commit.
-2. Tag and push: `git tag -a v1.1.0 -m "Aliasfill 1.1.0" && git push origin v1.1.0`.
+2. Tag and push: `git tag -a v1.2.0 -m "Aliasfill 1.2.0" && git push origin v1.2.0`.
 
 The **Release** workflow then runs the tests and Mozilla's linter, checks the tag matches the manifest, builds both packages, creates the GitHub release with them, and submits the version to addons.mozilla.org (listed channel). Mozilla reviews it, then publishes it and Firefox updates installed copies on its own.
 
 The AMO step needs two repository secrets, `AMO_JWT_ISSUER` and `AMO_JWT_SECRET`, from [addons.mozilla.org → Manage API Keys](https://addons.mozilla.org/developers/addon/api/key/). Without them it is skipped and the GitHub release is still made.
+
+It then submits the Chrome package to **Microsoft Edge Add-ons** (`scripts/publish-edge.mjs`, Update REST API v1.1): the package is uploaded as the draft and the draft is published; Microsoft reviews it. This needs the product to exist (submit the first version by hand in [Partner Center](https://partner.microsoft.com/dashboard/microsoftedge), free) and three repository secrets from Partner Center → Microsoft Edge → Publish API: `EDGE_CLIENT_ID`, `EDGE_API_KEY` (it expires: renew it there) and `EDGE_PRODUCT_ID` (on the extension's overview page). Without them the step is skipped.
+
+**Opera add-ons** has no publishing API (its sign-in has a CAPTCHA), so new versions go up by hand: upload the `-chrome.zip` from the GitHub release at [addons.opera.com/developer](https://addons.opera.com/developer/).
 
 ## Privacy
 

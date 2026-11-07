@@ -14,6 +14,10 @@ jobs:
       # addons.mozilla.org API credentials (repository secrets); without them the AMO step is skipped.
       AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
       AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+      # Microsoft Edge Add-ons Publish API (Partner Center → Microsoft Edge → Publish API); without them the Edge step is skipped.
+      EDGE_CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
+      EDGE_API_KEY: ${{ secrets.EDGE_API_KEY }}
+      EDGE_PRODUCT_ID: ${{ secrets.EDGE_PRODUCT_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -38,3 +42,7 @@ jobs:
         run: >-
           pnpm exec web-ext sign --source-dir extension --ignore-files "store/**" --channel listed
           --api-key "$AMO_JWT_ISSUER" --api-secret "$AMO_JWT_SECRET" --approval-timeout 0
+      - name: Submit the new version to Microsoft Edge Add-ons
+        if: env.EDGE_CLIENT_ID != '' && env.EDGE_API_KEY != '' && env.EDGE_PRODUCT_ID != ''
+        # The Chrome package; Microsoft reviews it, the job does not wait for the review.
+        run: node scripts/publish-edge.mjs "dist/aliasfill-${GITHUB_REF_NAME#v}-chrome.zip"
