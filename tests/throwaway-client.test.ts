@@ -18,7 +18,8 @@ function loadClient(t: ReturnType<typeof fakeThrowaway>, store: Record<string, u
     },
   };
   const src = fs.readFileSync(path.join(__dirname, "../extension/throwaway.js"), "utf8");
-  vm.runInNewContext(`${src}\nglobalThis.Throwaway = Throwaway;`, sandbox);
+  const i18n = fs.readFileSync(path.join(__dirname, "../extension/i18n.js"), "utf8");
+  vm.runInNewContext(`${i18n}\n${src}\nglobalThis.Throwaway = Throwaway;`, sandbox);
   return sandbox.Throwaway as any;
 }
 

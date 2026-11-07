@@ -12,8 +12,8 @@
     name: "Firefox Relay",
     codes: false,
     baseUrl: BASE,
-    help: "relay.firefox.com → Settings → API key.",
-    fields: [{ key: "apiKey", label: "API key", type: "password", required: true }],
+    help: t("relay.firefox.com → Settings → API key."),
+    fields: [{ key: "apiKey", label: t("API key"), type: "password", required: true }],
     configured: (cfg) => !!cfg.apiKey,
     async createAlias(cfg, { url, note }) {
       const data = await P.http(`${BASE}/api/v1/relayaddresses/`, {
@@ -26,8 +26,8 @@
     async testConnection(cfg) {
       const profiles = await P.http(`${BASE}/api/v1/profiles/`, { headers: auth(cfg) });
       const p = Array.isArray(profiles) ? profiles[0] : null;
-      if (!p) throw new Error("No Relay profile for this key.");
-      return `Connected${p.has_premium ? " (premium)" : ""}.`;
+      if (!p) throw new Error(t("No Relay profile for this key."));
+      return p.has_premium ? t("Connected (premium).") : t("Connected.");
     },
   });
 })();

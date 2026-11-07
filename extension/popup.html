@@ -11,102 +11,103 @@
       <span class="mark" aria-hidden="true">A</span>
       <strong class="brand">Aliasfill</strong>
       <span class="pill" id="tm-badge"><i></i> LOCAL</span>
-      <a id="tm-settings" class="icon-link" href="#" title="Settings" aria-label="Settings">⚙</a>
+      <a id="tm-settings" class="icon-link" href="#" title="Settings" aria-label="Settings" data-i18n-attr="title,aria-label">⚙</a>
     </header>
-    <nav class="tabs" aria-label="Data type">
-      <button id="tab-profile" type="button" aria-pressed="true" aria-controls="profile-panel">Identity</button
-      ><button id="tab-card" type="button" aria-pressed="false" aria-controls="card-panel">Test card</button
-      ><button id="tab-history" type="button" aria-pressed="false" aria-controls="history-panel">History</button>
+    <nav class="tabs" aria-label="Data type" data-i18n-attr="aria-label">
+      <button id="tab-profile" type="button" aria-pressed="true" aria-controls="profile-panel" data-i18n>Identity</button
+      ><button id="tab-card" type="button" aria-pressed="false" aria-controls="card-panel" data-i18n>Test card</button
+      ><button id="tab-history" type="button" aria-pressed="false" aria-controls="history-panel" data-i18n>History</button>
     </nav>
     <main>
       <div id="perm-banner" class="perm" hidden>
-        <p>The browser has not yet allowed Aliasfill on websites, so it cannot detect sign-up forms or paste codes on its own.</p>
-        <button id="perm-grant" class="primary" type="button">Allow on all sites</button>
+        <p data-i18n>The browser has not yet allowed Aliasfill on websites, so it cannot detect sign-up forms or paste codes on its own.</p>
+        <button id="perm-grant" class="primary" type="button" data-i18n>Allow on all sites</button>
       </div>
-      <section id="profile-panel" aria-label="Fake profile">
-        <section class="identity-card" aria-label="Generated details">
+      <section id="profile-panel" aria-label="Fake profile" data-i18n-attr="aria-label">
+        <section class="identity-card" aria-label="Generated details" data-i18n-attr="aria-label">
           <div class="identity">
             <div class="avatar" id="avatar" aria-hidden="true">?</div>
             <div class="who">
-              <h2 id="full-name">No identity</h2>
+              <h2 id="full-name" data-i18n>No identity</h2>
               <span id="edition" class="meta">—</span>
             </div>
             <label class="country" for="country-mode"
-              ><span class="sr">Country</span
+              ><span class="sr" data-i18n>Country</span
               ><select id="country-mode">
-                <option value="random">Random</option>
+                <option value="random" data-i18n>Random</option>
               </select></label
             >
           </div>
           <p id="country-hint" class="hint" hidden></p>
           <dl>
             <div class="wide">
-              <dt>E-mail <span id="tm-email-note" class="tag" hidden></span></dt>
+              <dt><span data-i18n>E-mail</span> <span id="tm-email-note" class="tag" hidden></span></dt>
               <dd id="email" class="mono">—</dd>
             </div>
             <div>
-              <dt>Title</dt>
+              <dt data-i18n>Title</dt>
               <dd id="civility">—</dd>
             </div>
             <div>
-              <dt>Username</dt>
+              <dt data-i18n>Username</dt>
               <dd id="username" class="mono">—</dd>
             </div>
             <div>
-              <dt>First name</dt>
+              <dt data-i18n>First name</dt>
               <dd id="first-name">—</dd>
             </div>
             <div>
-              <dt>Last name</dt>
+              <dt data-i18n>Last name</dt>
               <dd id="last-name">—</dd>
             </div>
             <div class="wide">
-              <dt>Address</dt>
+              <dt data-i18n>Address</dt>
               <dd id="address">—</dd>
             </div>
             <div class="wide">
-              <dt>Address line 2</dt>
+              <dt data-i18n>Address line 2</dt>
               <dd id="address2">—</dd>
             </div>
             <div>
-              <dt>City</dt>
+              <dt data-i18n>City</dt>
               <dd id="city">—</dd>
             </div>
             <div>
-              <dt>Postal code</dt>
+              <dt data-i18n>Postal code</dt>
               <dd id="postal-code" class="mono">—</dd>
             </div>
             <div>
-              <dt>Region / State</dt>
+              <dt data-i18n>Region / State</dt>
               <dd id="region">—</dd>
             </div>
             <div>
-              <dt>Country</dt>
+              <dt data-i18n>Country</dt>
               <dd id="country">—</dd>
             </div>
             <div>
-              <dt>Phone</dt>
+              <dt data-i18n>Phone</dt>
               <dd id="phone" class="mono">—</dd>
             </div>
             <div>
-              <dt>Company</dt>
+              <dt data-i18n>Company</dt>
               <dd id="company">—</dd>
             </div>
             <div>
-              <dt>Birth date</dt>
+              <dt data-i18n>Birth date</dt>
               <dd id="birth-date" class="mono">—</dd>
             </div>
             <div>
-              <dt>Password</dt>
+              <dt data-i18n>Password</dt>
               <dd class="password-row">
-                <input id="password" class="mono" type="password" readonly autocomplete="off" aria-label="Generated password" /><button
-                  id="reveal-password"
-                  class="link"
-                  type="button"
-                  aria-pressed="false"
-                  aria-controls="password"
-                  disabled
-                >
+                <input
+                  id="password"
+                  class="mono"
+                  type="password"
+                  readonly
+                  autocomplete="off"
+                  aria-label="Generated password"
+                  data-i18n-attr="aria-label"
+                /><button id="reveal-password" class="link" type="button" aria-pressed="false" aria-controls="password" disabled data-i18n>
                   Show
                 </button>
               </dd>
@@ -114,105 +115,113 @@
           </dl>
         </section>
 
-        <section id="tm-panel" class="code-card" aria-label="Verification code" hidden>
-          <div class="code-head"><span class="label">Verification code</span><span id="tm-address" class="meta mono"></span></div>
+        <section id="tm-panel" class="code-card" aria-label="Verification code" hidden data-i18n-attr="aria-label">
+          <div class="code-head"><span class="label" data-i18n>Verification code</span><span id="tm-address" class="meta mono"></span></div>
           <p id="tm-code" class="code">—</p>
           <div class="row">
-            <button id="tm-wait" class="ghost" type="button">Wait for code</button
-            ><button id="tm-copy" class="ghost" type="button" disabled>Copy</button
-            ><button id="tm-paste" class="primary" type="button" disabled>Paste</button>
+            <button id="tm-wait" class="ghost" type="button" data-i18n>Wait for code</button
+            ><button id="tm-copy" class="ghost" type="button" disabled data-i18n>Copy</button
+            ><button id="tm-paste" class="primary" type="button" disabled data-i18n>Paste</button>
           </div>
           <p id="tm-link" class="hint" hidden></p>
           <p id="tm-status" class="hint" role="status" aria-live="polite"></p>
         </section>
 
         <details id="options">
-          <summary>Fields to fill <span id="options-count" class="meta">15/15 fields · 0 locked</span></summary>
-          <p class="hint">“Fill” picks the fields on the page. “Locked” keeps the value when you generate.</p>
-          <div class="option-head"><span>Field</span><span>Fill</span><span>Value</span></div>
+          <summary>
+            <span data-i18n>Fields to fill</span> <span id="options-count" class="meta" data-i18n>15/15 fields · 0 locked</span>
+          </summary>
+          <p class="hint" data-i18n>“Fill” picks the fields on the page. “Locked” keeps the value when you generate.</p>
+          <div class="option-head"><span data-i18n>Field</span><span data-i18n>Fill</span><span data-i18n>Value</span></div>
           <div id="field-options"></div>
         </details>
 
         <div class="toolbar">
-          <label class="check"><input type="checkbox" id="overwrite" /> Overwrite existing</label>
+          <label class="check"><input type="checkbox" id="overwrite" /> <span data-i18n>Overwrite existing</span></label>
           <span class="spacer"></span>
-          <button id="undo" class="link" type="button" title="Undo the last fill on this page">Undo</button>
-          <button id="copy" class="link" type="button" disabled>Copy</button>
+          <button id="undo" class="link" type="button" title="Undo the last fill on this page" data-i18n data-i18n-attr="title" data-i18n>
+            Undo
+          </button>
+          <button id="copy" class="link" type="button" disabled data-i18n>Copy</button>
         </div>
-        <p id="status" class="status" role="status" aria-live="polite">Generate an identity or fill directly.</p>
+        <p id="status" class="status" role="status" aria-live="polite" data-i18n>Generate an identity or fill directly.</p>
       </section>
 
-      <section id="history-panel" aria-label="Identities used per site" hidden>
+      <section id="history-panel" aria-label="Identities used per site" hidden data-i18n-attr="aria-label">
         <input
           id="history-search"
           class="search"
           type="search"
           placeholder="Search a site, name or address"
           aria-label="Search the history"
+          data-i18n-attr="placeholder,aria-label"
         />
         <ul id="history-list" class="history"></ul>
-        <p id="history-empty" class="hint">No identity filled yet. Each fill is kept here, in this browser only.</p>
+        <p id="history-empty" class="hint" data-i18n>No identity filled yet. Each fill is kept here, in this browser only.</p>
         <div class="toolbar">
           <span id="history-retention" class="hint"></span><span class="spacer"></span
-          ><button id="history-clear" class="link" type="button">Clear history</button>
+          ><button id="history-clear" class="link" type="button" data-i18n>Clear history</button>
         </div>
         <p id="history-status" class="status" role="status" aria-live="polite"></p>
       </section>
 
-      <section id="card-panel" aria-label="Test card" hidden>
-        <p id="card-mode-heading" class="label">FRANCE · STRIPE SANDBOX</p>
+      <section id="card-panel" aria-label="Test card" hidden data-i18n-attr="aria-label">
+        <p id="card-mode-heading" class="label" data-i18n>FRANCE · STRIPE SANDBOX</p>
         <div class="field">
-          <label for="card-mode">Number type</label
+          <label for="card-mode" data-i18n>Number type</label
           ><select id="card-mode">
-            <option value="stripe">Official Stripe test</option>
-            <option value="bank-bin">Synthetic · bank BIN</option>
+            <option value="stripe" data-i18n>Official Stripe test</option>
+            <option value="bank-bin" data-i18n>Synthetic · bank BIN</option>
           </select>
         </div>
         <div class="field">
-          <label for="card-bank">Simulated bank</label
+          <label for="card-bank" data-i18n>Simulated bank</label
           ><select id="card-bank">
-            <option value="random">Random</option>
+            <option value="random" data-i18n>Random</option>
           </select>
         </div>
         <div class="field">
-          <label for="card-network">Network</label
+          <label for="card-network" data-i18n>Network</label
           ><select id="card-network">
-            <option value="random">Random</option>
-            <option value="visa">CB / Visa</option>
-            <option value="mastercard">CB / Mastercard</option>
+            <option value="random" data-i18n>Random</option>
+            <option value="visa" data-i18n>CB / Visa</option>
+            <option value="mastercard" data-i18n>CB / Mastercard</option>
           </select>
         </div>
         <div class="test-card">
-          <div class="card-top"><span id="card-bank-name">Simulated bank</span><span class="tag">TEST</span></div>
+          <div class="card-top"><span id="card-bank-name" data-i18n>Simulated bank</span><span class="tag" data-i18n>TEST</span></div>
           <p id="card-number" class="mono">•••• •••• •••• ••••</p>
           <p id="card-network-name" class="meta">—</p>
           <div class="card-bottom">
-            <div><span>Holder</span><strong id="card-holder">—</strong></div>
-            <div><span>Expires</span><strong id="card-expiry" class="mono">—</strong></div>
-            <div><span>CVC</span><strong id="card-cvc" class="mono">—</strong></div>
+            <div><span data-i18n>Holder</span><strong id="card-holder">—</strong></div>
+            <div><span data-i18n>Expires</span><strong id="card-expiry" class="mono">—</strong></div>
+            <div><span data-i18n>CVC</span><strong id="card-cvc" class="mono">—</strong></div>
           </div>
         </div>
-        <p id="card-explanation" class="hint">Official Stripe test numbers. The bank is a simulated label: no real payment is possible.</p>
+        <p id="card-explanation" class="hint" data-i18n>
+          Official Stripe test numbers. The bank is a simulated label: no real payment is possible.
+        </p>
         <p id="card-bin-info" class="hint" hidden></p>
         <div class="toolbar">
-          <label class="check"><input id="card-overwrite" type="checkbox" /> Overwrite existing</label><span class="spacer"></span
-          ><button id="copy-card-number" class="link" type="button" disabled>Copy number</button
-          ><button id="copy-card" class="link" type="button" disabled>Copy all</button
-          ><button id="undo-card" class="link" type="button">Undo</button>
+          <label class="check"><input id="card-overwrite" type="checkbox" /> <span data-i18n>Overwrite existing</span></label
+          ><span class="spacer"></span><button id="copy-card-number" class="link" type="button" disabled data-i18n>Copy number</button
+          ><button id="copy-card" class="link" type="button" disabled data-i18n>Copy all</button
+          ><button id="undo-card" class="link" type="button" data-i18n>Undo</button>
         </div>
-        <p id="card-status" class="status" role="status" aria-live="polite">Generate a card for your test environment.</p>
+        <p id="card-status" class="status" role="status" aria-live="polite" data-i18n>Generate a card for your test environment.</p>
         <div class="actions">
-          <button id="generate-card" class="ghost" type="button">Generate</button
-          ><button id="fill-card" class="primary" type="button" disabled>Fill card</button>
+          <button id="generate-card" class="ghost" type="button" data-i18n>Generate</button
+          ><button id="fill-card" class="primary" type="button" disabled data-i18n>Fill card</button>
         </div>
       </section>
     </main>
     <footer class="actions" id="profile-actions">
-      <button id="generate" class="ghost" type="button">New identity</button
-      ><button id="fill" class="primary" type="button" disabled>Fill form</button>
+      <button id="generate" class="ghost" type="button" data-i18n>New identity</button
+      ><button id="fill" class="primary" type="button" disabled data-i18n>Fill form</button>
     </footer>
-    <p class="credit"><span id="version"></span> · Never submits automatically</p>
+    <p class="credit"><span id="version"></span> · <span data-i18n>Never submits automatically</span></p>
     <script src="compat.js"></script>
+    <script src="i18n.js"></script>
     <script src="data/index.js"></script>
     <script src="data/at.js"></script>
     <script src="data/au.js"></script>

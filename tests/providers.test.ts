@@ -6,7 +6,9 @@ import { describe, expect, it } from "vitest";
 // Runs the extension's alias providers (extension/providers/*.js) against a fake `fetch`: no network.
 const root = path.join(__dirname, "..");
 const manifest = JSON.parse(fs.readFileSync(path.join(root, "extension/manifest.json"), "utf8"));
-const files: string[] = manifest.background.scripts.filter((f: string) => f === "throwaway.js" || f.startsWith("providers/"));
+const files: string[] = manifest.background.scripts.filter(
+  (f: string) => f === "i18n.js" || f === "throwaway.js" || f.startsWith("providers/"),
+);
 
 type Call = { url: string; method: string; headers: Record<string, string>; body: any };
 type Route = (call: Call) => { status?: number; json?: unknown };

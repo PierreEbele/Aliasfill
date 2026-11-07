@@ -20,7 +20,7 @@ globalThis.AliasProviders = (() => {
   // Plain HTTPS origin (localhost may use http, for self-hosted tests).
   function normalizeBaseUrl(raw) {
     const url = new URL(String(raw || "").trim());
-    if (url.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(url.hostname)) throw new Error("The server must use HTTPS.");
+    if (url.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(url.hostname)) throw new Error(t("The server must use HTTPS."));
     return url.origin + url.pathname.replace(/\/+$/, "");
   }
 
@@ -112,14 +112,14 @@ globalThis.AliasProviders = (() => {
       note: `Aliasfill · ${url.hostname}`,
       name,
     });
-    if (!created?.email) throw new Error(`${a.provider.name} returned no address.`);
+    if (!created?.email) throw new Error(t("$1 returned no address.", a.provider.name));
     return { createdAt: Date.now(), ...created, host: url.hostname, provider: a.provider.id };
   }
 
   // Human message for a failed call.
   function errorMessage(provider, e) {
-    if (e?.status === 401 || e?.status === 403) return `Invalid ${provider?.name || "provider"} API key.`;
-    if (e?.message === "NOT_CONFIGURED") return "No alias provider is set up (see the extension settings).";
+    if (e?.status === 401 || e?.status === 403) return t("Invalid $1 API key.", provider?.name || t("provider"));
+    if (e?.message === "NOT_CONFIGURED") return t("No alias provider is set up (see the extension settings).");
     return e?.message || String(e);
   }
 

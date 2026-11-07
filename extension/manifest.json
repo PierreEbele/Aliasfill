@@ -2,7 +2,8 @@
   "manifest_version": 3,
   "name": "Aliasfill",
   "version": "1.2.0",
-  "description": "Fake identities for sign-up forms, with disposable addresses from your own domain or alias service.",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
   "permissions": ["alarms", "activeTab", "menus", "scripting", "storage"],
   "action": {
     "default_title": "Aliasfill",
@@ -37,6 +38,7 @@
   "background": {
     "scripts": [
       "compat.js",
+      "i18n.js",
       "data/index.js",
       "data/at.js",
       "data/au.js",
@@ -70,7 +72,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["compat.js", "otp.js", "content.js"],
+      "js": ["compat.js", "i18n.js", "otp.js", "content.js"],
       "run_at": "document_idle"
     }
   ]

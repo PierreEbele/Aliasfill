@@ -29,12 +29,19 @@ $("tab-history").addEventListener("click", () => {
   showPanel("history");
   void renderHistory();
 });
-// One option per country sheet (data/*.js), sorted by name.
-for (const sheet of AliasfillCountries.codes()
-  .map(AliasfillCountries.get)
-  .sort((a, b) => a.countryEnglish.localeCompare(b.countryEnglish)))
-  $("country-mode").add(new Option(sheet.countryEnglish, sheet.code));
-for (const [key, name] of Object.entries(ThrowawayGenerator.banks)) $("card-bank").add(new Option(name + " (simulated)", key));
+// One option per country sheet (data/*.js), named and sorted in the browser's language.
+const regionNames = (() => {
+  try {
+    return new Intl.DisplayNames([browser.i18n.getUILanguage()], { type: "region" });
+  } catch {
+    return null;
+  }
+})();
+for (const [code, name] of AliasfillCountries.codes()
+  .map((code) => [code, regionNames?.of(code) || AliasfillCountries.get(code).countryEnglish])
+  .sort((a, b) => a[1].localeCompare(b[1])))
+  $("country-mode").add(new Option(name, code));
+for (const [key, name] of Object.entries(ThrowawayGenerator.banks)) $("card-bank").add(new Option(t("$1 (simulated)", name), key));
 function syncCardSettings() {
   const bankMode = $("card-mode").value === "bank-bin";
   $("card-network").querySelector('[value="visa"]').textContent = bankMode ? "Visa" : "CB / Visa";
@@ -52,7 +59,7 @@ for (const id of ["card-mode", "card-bank", "card-network"])
   $(id).addEventListener("change", async () => {
     cardSettingsTouched = true;
     syncCardSettings();
-    cardStatus("Applies to the next test card.");
+    cardStatus(t("Applies to the next test card."));
     try {
       await browser.storage.local.set({
         cardMode: $("card-mode").value,
@@ -60,15 +67,19 @@ for (const id of ["card-mode", "card-bank", "card-network"])
         cardNetworkMode: $("card-network").value,
       });
     } catch {
-      cardStatus("Applied, but saving it locally failed.", true);
+      cardStatus(t("Applied, but saving it locally failed."), true);
     }
   });
 function renderCard() {
   const bankMode = testCard.mode === "bank-bin";
-  $("card-mode-heading").textContent = bankMode ? "FRANCE · SYNTHETIC NUMBER" : "FRANCE · STRIPE SANDBOX";
+  $("card-mode-heading").textContent = bankMode ? t("FRANCE · SYNTHETIC NUMBER") : t("FRANCE · STRIPE SANDBOX");
   $("card-explanation").textContent = bankMode
-    ? "BIN attributed to the bank by BinCheck.org; the other digits are generated with a Luhn check digit. No card is issued and no account is created. Mock-up number, not certified by the bank and not provided by Stripe for its sandbox."
-    : "Official Stripe test numbers, fixed per network. The bank is a simulated label: these cards are not issued by the banks shown and cannot make any real payment.";
+    ? t(
+        "BIN attributed to the bank by BinCheck.org; the other digits are generated with a Luhn check digit. No card is issued and no account is created. Mock-up number, not certified by the bank and not provided by Stripe for its sandbox.",
+      )
+    : t(
+        "Official Stripe test numbers, fixed per network. The bank is a simulated label: these cards are not issued by the banks shown and cannot make any real payment.",
+      );
   $("card-bin-info").hidden = !bankMode;
   $("card-bin-info").replaceChildren();
   if (bankMode) {
@@ -76,10 +87,13 @@ function renderCard() {
     source.href = testCard.binSource;
     source.target = "_blank";
     source.rel = "noopener noreferrer";
-    source.textContent = "BinCheck source";
-    $("card-bin-info").append(`BIN ${testCard.bin} · ${testCard.binIssuer}. Checked on ${testCard.binChecked || "2026-10-20"}. `, source);
+    source.textContent = t("BinCheck source");
+    $("card-bin-info").append(
+      t("BIN $1 · $2. Checked on $3.", testCard.bin, testCard.binIssuer, testCard.binChecked || "2026-10-20") + " ",
+      source,
+    );
   }
-  $("card-bank-name").textContent = testCard.bank + " · simulated";
+  $("card-bank-name").textContent = t("$1 · simulated", testCard.bank);
   $("card-network-name").textContent = testCard.network + " · France";
   $("card-number").textContent = testCard.number.match(/.{4}/g).join(" ");
   $("card-holder").textContent = testCard.holder;
@@ -91,20 +105,20 @@ $("generate-card").addEventListener("click", async () => {
   if (busy) return;
   const generated = ThrowawayGenerator.generateCard($("card-bank").value, $("card-network").value, profile?.fullName, $("card-mode").value);
   if (!generated) {
-    cardStatus("No known BIN for this bank/network combination. Pick another network.", true);
+    cardStatus(t("No known BIN for this bank/network combination. Pick another network."), true);
     return;
   }
   testCard = generated;
   renderCard();
   cardStatus(
     testCard.mode === "bank-bin"
-      ? "Synthetic number ready, with the listed bank BIN. For form mock-ups only."
-      : "Test card ready. The official number is fixed per network.",
+      ? t("Synthetic number ready, with the listed bank BIN. For form mock-ups only.")
+      : t("Test card ready. The official number is fixed per network."),
   );
   try {
     await browser.storage.local.set({ testCard });
   } catch {
-    cardStatus("Card ready, but saving it locally failed.", true);
+    cardStatus(t("Card ready, but saving it locally failed."), true);
   }
 });
 for (const id of ["copy-card", "copy-card-number"])
@@ -114,23 +128,23 @@ for (const id of ["copy-card", "copy-card-number"])
       id === "copy-card-number"
         ? testCard.number
         : [
-            testCard.mode === "bank-bin" ? "SYNTHETIC CARD — MOCK-UP, NOT A STRIPE SANDBOX CARD" : "TEST CARD — STRIPE SANDBOX",
-            `Simulated bank: ${testCard.bank} (not actually issued)`,
+            testCard.mode === "bank-bin" ? t("SYNTHETIC CARD — MOCK-UP, NOT A STRIPE SANDBOX CARD") : t("TEST CARD — STRIPE SANDBOX"),
+            t("Simulated bank: $1 (not actually issued)", testCard.bank),
             ...(testCard.mode === "bank-bin"
-              ? [`Listed BIN: ${testCard.bin}`, `Issuer per BinCheck: ${testCard.binIssuer}`, `Source: ${testCard.binSource}`]
+              ? [t("Listed BIN: $1", testCard.bin), t("Issuer per BinCheck: $1", testCard.binIssuer), t("Source: $1", testCard.binSource)]
               : []),
-            `Network: ${testCard.network}`,
-            "Country: France",
-            `Number: ${testCard.number}`,
-            `Fake holder: ${testCard.holder}`,
-            `Expiry: ${testCard.expiry}`,
-            `Test CVC: ${testCard.cvc}`,
+            t("Network: $1", testCard.network),
+            t("Country: France"),
+            t("Number: $1", testCard.number),
+            t("Fake holder: $1", testCard.holder),
+            t("Expiry: $1", testCard.expiry),
+            t("Test CVC: $1", testCard.cvc),
           ].join("\n");
     try {
       await navigator.clipboard.writeText(text);
-      cardStatus(id === "copy-card-number" ? "Test number copied." : "Test card copied.");
+      cardStatus(id === "copy-card-number" ? t("Test number copied.") : t("Test card copied."));
     } catch {
-      cardStatus("Copy unavailable. You can copy the displayed values by hand.", true);
+      cardStatus(t("Copy unavailable. You can copy the displayed values by hand."), true);
     }
   });
 function status(message, error = false) {
@@ -149,8 +163,8 @@ function syncControls() {
   const countryLocked = !!profile && ThrowawayGenerator.isCountryLocked([...lockedFields]);
   $("country-mode").disabled = busy || countryLocked;
   $("country-hint").hidden = !countryLocked;
-  $("country-hint").textContent = countryLocked ? `Country kept: ${profile.country} (location details locked).` : "";
-  $("options-count").textContent = `${selectedFields.size}/${fieldKeys.length} fields · ${lockedFields.size} locked`;
+  $("country-hint").textContent = countryLocked ? t("Country kept: $1 (location details locked).", profile.country) : "";
+  $("options-count").textContent = t("$1/$2 fields · $3 locked", selectedFields.size, fieldKeys.length, lockedFields.size);
   for (const key of fieldKeys) {
     const include = $("include-" + key),
       lock = $("lock-" + key);
@@ -158,16 +172,16 @@ function syncControls() {
     include.disabled = busy;
     lock.disabled = busy || !profile;
     lock.setAttribute("aria-pressed", String(lockedFields.has(key)));
-    lock.setAttribute("aria-label", `${lockedFields.has(key) ? "Unlock" : "Lock"}: ${fieldLabels[key]}`);
-    lock.textContent = lockedFields.has(key) ? "Locked" : "Free";
-    lock.title = lockedFields.has(key) ? "Value kept when generating" : "Keep this value when generating";
+    lock.setAttribute("aria-label", lockedFields.has(key) ? t("Unlock: $1", t(fieldLabels[key])) : t("Lock: $1", t(fieldLabels[key])));
+    lock.textContent = lockedFields.has(key) ? t("Locked") : t("Free");
+    lock.title = lockedFields.has(key) ? t("Value kept when generating") : t("Keep this value when generating");
   }
 }
 async function saveSettings() {
   try {
     await browser.storage.local.set({ selectedFields: [...selectedFields], lockedFields: [...lockedFields], settingsVersion: 4 });
   } catch {
-    status("Settings applied, but saving them locally failed.", true);
+    status(t("Settings applied, but saving them locally failed."), true);
   }
 }
 for (const [key, label] of Object.entries(fieldLabels)) {
@@ -175,17 +189,17 @@ for (const [key, label] of Object.entries(fieldLabels)) {
   row.className = "option-row";
   const name = document.createElement("label");
   name.htmlFor = "include-" + key;
-  name.textContent = label;
+  name.textContent = t(label);
   const include = document.createElement("input");
   include.type = "checkbox";
   include.id = "include-" + key;
-  include.setAttribute("aria-label", "Fill: " + label);
+  include.setAttribute("aria-label", t("Fill: $1", t(label)));
   include.addEventListener("change", () => {
     settingsTouched = true;
     if (include.checked) selectedFields.add(key);
     else selectedFields.delete(key);
     syncControls();
-    status(selectedFields.size ? `${selectedFields.size} field(s) selected for filling.` : "Tick at least one field to fill.");
+    status(selectedFields.size ? t("$1 field(s) selected for filling.", selectedFields.size) : t("Tick at least one field to fill."));
     void saveSettings();
   });
   const lock = document.createElement("button");
@@ -198,7 +212,7 @@ for (const [key, label] of Object.entries(fieldLabels)) {
     if (lockedFields.has(key)) lockedFields.delete(key);
     else lockedFields.add(key);
     syncControls();
-    status(`${lockedFields.has(key) ? "Locked" : "Unlocked"}: “${label}”.`);
+    status(lockedFields.has(key) ? t("Locked: “$1”.", t(label)) : t("Unlocked: “$1”.", t(label)));
     void saveSettings();
   });
   row.append(name, include, lock);
@@ -223,37 +237,37 @@ function render() {
   }))
     $(id).textContent = profile[key] || "—";
   $("avatar").textContent = profile.firstName[0] + profile.lastName[0];
-  $("edition").textContent = `Identity #${revision} · ${profile.country}`;
+  $("edition").textContent = t("Identity #$1 · $2", revision, profile.country);
   $("phone").title =
     profile.phoneReserved === false
-      ? "Random number in this country's format: no range is reserved for fiction here, so it may belong to someone."
+      ? t("Random number in this country's format: no range is reserved for fiction here, so it may belong to someone.")
       : "";
   $("password").value = profile.password;
   $("birth-date").textContent = profile.birthDate.split("-").reverse().join("/");
   $("password").type = "password";
-  $("reveal-password").textContent = "Show";
+  $("reveal-password").textContent = t("Show");
   $("reveal-password").setAttribute("aria-pressed", "false");
   syncControls();
 }
 $("reveal-password").addEventListener("click", () => {
   const show = $("password").type === "password";
   $("password").type = show ? "text" : "password";
-  $("reveal-password").textContent = show ? "Hide" : "Show";
+  $("reveal-password").textContent = show ? t("Hide") : t("Show");
   $("reveal-password").setAttribute("aria-pressed", String(show));
 });
 $("country-mode").addEventListener("change", async () => {
   countryTouched = true;
   const countryMode = $("country-mode").value;
-  status("Country set for the next profile. Click New identity.");
+  status(t("Country set for the next profile. Click New identity."));
   try {
     await browser.storage.local.set({ countryMode });
   } catch {
-    status("Applied, but saving it locally failed.", true);
+    status(t("Applied, but saving it locally failed."), true);
   }
 });
 $("generate").addEventListener("click", async () => {
   if (profile && lockedFields.size === fieldKeys.length) {
-    status("Every field is locked. Set at least one value to Free to regenerate it.");
+    status(t("Every field is locked. Set at least one value to Free to regenerate it."));
     return;
   }
   // The disposable address follows the e-mail: kept only if the e-mail is locked.
@@ -264,23 +278,23 @@ $("generate").addEventListener("click", async () => {
   tmCode = null;
   void tmRender();
   render();
-  status(lockedFields.size ? "Profile regenerated. Locked values were kept." : "New profile ready. The page was not changed.");
+  status(lockedFields.size ? t("Profile regenerated. Locked values were kept.") : t("New profile ready. The page was not changed."));
   try {
     await browser.storage.local.set({ profile, revision });
   } catch {
-    status("Profile ready, but saving it locally failed.", true);
+    status(t("Profile ready, but saving it locally failed."), true);
   }
 });
 $("copy").addEventListener("click", async () => {
   if (!profile) return;
   const text = Object.entries(fieldLabels)
-    .map(([key, label]) => `${label}: ${key === "birthDate" ? profile[key].split("-").reverse().join("/") : (profile[key] ?? "")}`)
+    .map(([key, label]) => `${t(label)}: ${key === "birthDate" ? profile[key].split("-").reverse().join("/") : (profile[key] ?? "")}`)
     .join("\n");
   try {
     await navigator.clipboard.writeText(text);
-    status("Profile copied to the clipboard.");
+    status(t("Profile copied to the clipboard."));
   } catch {
-    status("Copy unavailable. You can select the displayed values and copy them by hand.", true);
+    status(t("Copy unavailable. You can select the displayed values and copy them by hand."), true);
   }
 });
 async function activeTabId() {
@@ -292,7 +306,7 @@ $("fill").addEventListener("click", async () => {
   if (!selectedFields.size || busy) return;
   busy = true;
   syncControls();
-  status("Looking for form fields…");
+  status(t("Looking for form fields…"));
   try {
     if (!(await ensureIdentity())) return;
     const { bitwardenMode } = await browser.storage.local.get("bitwardenMode");
@@ -329,39 +343,46 @@ $("fill").addEventListener("click", async () => {
       await AliasfillHistory.record(browser.storage.local, new URL(pageUrl).hostname, profile).catch(() => {});
     const passwordNote =
       (report.passwordIssue === "preserved"
-        ? " Passwords kept together to avoid a mismatched confirmation."
+        ? " " + t("Passwords kept together to avoid a mismatched confirmation.")
         : report.passwordIssue === "constraints"
-          ? " Password does not meet the site’s rules: neither field was changed."
+          ? " " + t("Password does not meet the site’s rules: neither field was changed.")
           : report.passwordIssue === "registration"
-            ? " Password skipped: not recognised as a sign-up."
+            ? " " + t("Password skipped: not recognised as a sign-up.")
             : report.password
-              ? " Password shortened or simplified to meet the site’s rules (saved in the identity)."
+              ? " " + t("Password shortened or simplified to meet the site’s rules (saved in the identity).")
               : "") +
       (report.birthIssue === "preserved"
-        ? " Existing birth date kept as a whole."
+        ? " " + t("Existing birth date kept as a whole.")
         : report.birthIssue === "constraints"
-          ? " Birth date does not meet the site’s rules: its fields were kept."
+          ? " " + t("Birth date does not meet the site’s rules: its fields were kept.")
           : "");
     if (report.filled) {
       status(
-        `${report.filled} field${report.filled > 1 ? "s" : ""} filled.${report.preserved ? ` ${report.preserved} already filled, kept.` : ""}${report.rejected ? ` ${report.rejected} value(s) rejected.` : ""}${passwordNote} Nothing was submitted.`,
+        t("$1 field(s) filled.", report.filled) +
+          (report.preserved ? " " + t("$1 already filled, kept.", report.preserved) : "") +
+          (report.rejected ? " " + t("$1 value(s) rejected.", report.rejected) : "") +
+          passwordNote +
+          " " +
+          t("Nothing was submitted."),
       );
     } else if (report.passwordIssue || report.birthIssue)
       status(
         passwordNote.trim(),
         report.passwordIssue === "constraints" || report.birthIssue === "constraints" || report.passwordIssue === "registration",
       );
-    else if (report.preserved) status("The detected fields are already filled. Tick Overwrite existing to change them.");
-    else if (report.unchanged) status("The selected fields already hold the profile values.");
-    else if (report.rejected) status("Fields found, but their rules rejected the values. No field changed.", true);
+    else if (report.preserved) status(t("The detected fields are already filled. Tick Overwrite existing to change them."));
+    else if (report.unchanged) status(t("The selected fields already hold the profile values."));
+    else if (report.rejected) status(t("Fields found, but their rules rejected the values. No field changed."), true);
     else if (report.blockedAuthentication)
-      status("This looks like a sign-in or account verification form. Aliasfill skips those forms and their passwords.", true);
+      status(t("This looks like a sign-in or account verification form. Aliasfill skips those forms and their passwords."), true);
     else if (report.selectionMismatch)
-      status("Some fields were recognised but are unticked in Fields to fill. Tick the ones to fill.", true);
-    else status("No field matches your selection. Some embedded forms and custom components cannot be reached.", true);
+      status(t("Some fields were recognised but are unticked in Fields to fill. Tick the ones to fill."), true);
+    else status(t("No field matches your selection. Some embedded forms and custom components cannot be reached."), true);
   } catch {
     status(
-      "Cannot access this page. Open a regular web page and try again. Firefox protects its internal pages, its add-on store and some PDFs.",
+      t(
+        "Cannot access this page. Open a regular web page and try again. Firefox protects its internal pages, its add-on store and some PDFs.",
+      ),
       true,
     );
   } finally {
@@ -373,7 +394,7 @@ $("fill-card").addEventListener("click", async () => {
   if (!testCard || busy) return;
   busy = true;
   syncControls();
-  cardStatus("Looking for card fields…");
+  cardStatus(t("Looking for card fields…"));
   try {
     const tabId = await activeTabId();
     await browser.scripting.executeScript({ target: { tabId }, files: ["filler.js"] });
@@ -384,29 +405,35 @@ $("fill-card").addEventListener("click", async () => {
     });
     const report = results[0]?.result;
     if (!report) throw new Error("NO_RESULT");
-    if (report.invalidCard) cardStatus("Invalid or expired test card. Generate a new one.", true);
-    else if (report.readOnlyGroup) cardStatus("A card field is read-only and holds another value. No field changed.", true);
-    else if (report.preservedGroup) cardStatus("Existing values kept as a whole. Tick Overwrite existing to insert the test card.");
-    else if (report.incompatible) cardStatus("A field’s rules reject this test card. No field changed.", true);
+    if (report.invalidCard) cardStatus(t("Invalid or expired test card. Generate a new one."), true);
+    else if (report.readOnlyGroup) cardStatus(t("A card field is read-only and holds another value. No field changed."), true);
+    else if (report.preservedGroup) cardStatus(t("Existing values kept as a whole. Tick Overwrite existing to insert the test card."));
+    else if (report.incompatible) cardStatus(t("A field’s rules reject this test card. No field changed."), true);
     else if (report.filled)
       cardStatus(
-        `${report.filled} card field(s) filled.${report.missing?.length ? ` Not found: ${report.missing.join(", ")}.` : ""}${report.rejected ? ` ${report.rejected} value(s) rejected by the site.` : ""} Nothing was clicked or submitted.`,
+        t("$1 card field(s) filled.", report.filled) +
+          (report.missing?.length ? " " + t("Not found: $1.", report.missing.map((m) => cardFieldNames[m] || m).join(", ")) : "") +
+          (report.rejected ? " " + t("$1 value(s) rejected by the site.", report.rejected) : "") +
+          " " +
+          t("Nothing was clicked or submitted."),
       );
-    else if (report.unchanged) cardStatus("The detected fields already hold this test card.");
-    else cardStatus("No card form recognised. Iframes from another domain and some custom fields cannot be reached.", true);
+    else if (report.unchanged) cardStatus(t("The detected fields already hold this test card."));
+    else cardStatus(t("No card form recognised. Iframes from another domain and some custom fields cannot be reached."), true);
   } catch {
-    cardStatus("Cannot access this page. Open your test form and try again.", true);
+    cardStatus(t("Cannot access this page. Open your test form and try again."), true);
   } finally {
     busy = false;
     syncControls();
   }
 });
+// Card fields fillCard() reports as not found.
+const cardFieldNames = { number: t("number"), expiry: t("expiry"), CVC: t("CVC"), holder: t("holder") };
 async function undoFill(cardMode = false) {
   if (busy) return;
   const notify = cardMode ? cardStatus : status;
   busy = true;
   syncControls();
-  notify("Undoing the last fill…");
+  notify(t("Undoing the last fill…"));
   try {
     const tabId = await activeTabId();
     const results = await browser.scripting.executeScript({
@@ -414,14 +441,16 @@ async function undoFill(cardMode = false) {
       func: () => globalThis.ThrowawayFill?.undo?.() || { available: false, restored: 0, skipped: 0, failed: 0 },
     });
     const report = results[0]?.result;
-    if (!report?.available) notify("Nothing to undo on this page.");
+    if (!report?.available) notify(t("Nothing to undo on this page."));
     else
       notify(
-        `${report.restored} field(s) restored.${report.skipped ? ` ${report.skipped} field(s) edited since or unreachable, kept.` : ""}${report.failed ? ` ${report.failed} restore(s) rejected by the site.` : ""}`,
+        t("$1 field(s) restored.", report.restored) +
+          (report.skipped ? " " + t("$1 field(s) edited since or unreachable, kept.", report.skipped) : "") +
+          (report.failed ? " " + t("$1 restore(s) rejected by the site.", report.failed) : ""),
         !!report.failed,
       );
   } catch {
-    notify("Cannot undo on this page. The fill must belong to the active tab.", true);
+    notify(t("Cannot undo on this page. The fill must belong to the active tab."), true);
   } finally {
     busy = false;
     syncControls();
@@ -443,16 +472,16 @@ async function renderHistory() {
     const all = await AliasfillHistory.list(storage);
     const { historyDays = AliasfillHistory.DEFAULT_DAYS } = await storage.get("historyDays");
     $("history-retention").textContent =
-      historyDays < 0 ? "History off (Settings)." : historyDays > 0 ? `Kept ${historyDays} days.` : "Kept until deleted.";
+      historyDays < 0 ? t("History off (Settings).") : historyDays > 0 ? t("Kept $1 days.", historyDays) : t("Kept until deleted.");
     const entries = AliasfillHistory.search(all, $("history-search").value);
     $("history-empty").hidden = entries.length > 0;
     $("history-empty").textContent = all.length
-      ? "No identity matches this search."
-      : "No identity filled yet. Each fill is kept here, in this browser only.";
+      ? t("No identity matches this search.")
+      : t("No identity filled yet. Each fill is kept here, in this browser only.");
     $("history-clear").disabled = !all.length;
     $("history-list").replaceChildren(...entries.map(historyItem));
   } catch {
-    historyStatus("Local storage unavailable.", true);
+    historyStatus(t("Local storage unavailable."), true);
   }
 }
 function historyItem(entry) {
@@ -480,22 +509,22 @@ function historyItem(entry) {
     return b;
   };
   row.append(
-    button("Copy", async () => {
+    button(t("Copy"), async () => {
       const text = [
-        `Site: ${entry.host}`,
-        `Name: ${p.fullName}`,
-        `E-mail: ${p.email}`,
-        ...(p.username ? [`Username: ${p.username}`] : []),
-        `Password: ${p.password}`,
+        t("Site: $1", entry.host),
+        t("Name: $1", p.fullName),
+        t("E-mail: $1", p.email),
+        ...(p.username ? [t("Username: $1", p.username)] : []),
+        t("Password: $1", p.password),
       ].join("\n");
       try {
         await navigator.clipboard.writeText(text);
-        historyStatus(`Identity used on ${entry.host} copied.`);
+        historyStatus(t("Identity used on $1 copied.", entry.host));
       } catch {
-        historyStatus("Copy unavailable.", true);
+        historyStatus(t("Copy unavailable."), true);
       }
     }),
-    button("Reuse", async () => {
+    button(t("Reuse"), async () => {
       // Back as the current identity; the next fill on this site keeps it instead of generating a new one.
       profile = { ...ThrowawayGenerator.complete(p), reusedFor: entry.host, createdAt: Date.now() };
       revision++;
@@ -503,16 +532,16 @@ function historyItem(entry) {
       render();
       void tmRender();
       showPanel("profile");
-      status(`Identity used on ${entry.host} is back. Fill the form to use it again.`);
+      status(t("Identity used on $1 is back. Fill the form to use it again.", entry.host));
       try {
         await browser.storage.local.set({ profile, revision });
       } catch {
-        status("Identity restored, but saving it locally failed.", true);
+        status(t("Identity restored, but saving it locally failed."), true);
       }
     }),
-    button("Delete", async () => {
+    button(t("Delete"), async () => {
       await AliasfillHistory.remove(browser.storage.local, entry.id);
-      historyStatus(`Entry for ${entry.host} deleted.`);
+      historyStatus(t("Entry for $1 deleted.", entry.host));
       await renderHistory();
     }),
   );
@@ -524,20 +553,20 @@ $("history-search").addEventListener("input", () => void renderHistory());
 let clearArmed = null;
 $("history-clear").addEventListener("click", async () => {
   if (!clearArmed) {
-    $("history-clear").textContent = "Click again to delete all";
-    historyStatus("The whole history will be deleted. This cannot be undone.");
+    $("history-clear").textContent = t("Click again to delete all");
+    historyStatus(t("The whole history will be deleted. This cannot be undone."));
     clearArmed = setTimeout(() => {
       clearArmed = null;
-      $("history-clear").textContent = "Clear history";
+      $("history-clear").textContent = t("Clear history");
       historyStatus("");
     }, 4000);
     return;
   }
   clearTimeout(clearArmed);
   clearArmed = null;
-  $("history-clear").textContent = "Clear history";
+  $("history-clear").textContent = t("Clear history");
   await AliasfillHistory.clear(browser.storage.local);
-  historyStatus("History cleared.");
+  historyStatus(t("History cleared."));
   await renderHistory();
 });
 // ---------------------------------------------------------------------------
@@ -556,20 +585,21 @@ async function tmRender() {
   active = await AliasProviders.active().catch(() => null);
   const on = !!active;
   const name = active?.provider.name || "";
-  $("tm-badge").replaceChildren(document.createElement("i"), on ? ` ${active.provider.short}` : " LOCAL");
+  $("tm-badge").replaceChildren(document.createElement("i"), on ? ` ${active.provider.short}` : ` ${t("LOCAL")}`);
   $("tm-badge").classList.toggle("on", on);
   $("tm-badge").title = on
-    ? `Addresses from ${active.provider.id === "none" ? "your own domain or mailbox (no network)" : name}${canFetchCodes() ? ", codes fetched automatically" : ""}`
-    : "@example.com addresses, nothing leaves the browser";
+    ? (active.provider.id === "none" ? t("Addresses from your own domain or mailbox (no network)") : t("Addresses from $1", name)) +
+      (canFetchCodes() ? t(", codes fetched automatically") : "")
+    : t("@example.com addresses, nothing leaves the browser");
   const alias = profile?.throwaway;
   $("tm-email-note").hidden = !on;
-  $("tm-email-note").textContent = alias ? "DISPOSABLE" : "DISPOSABLE ON FILL";
+  $("tm-email-note").textContent = alias ? t("DISPOSABLE") : t("DISPOSABLE ON FILL");
   $("tm-panel").hidden = !(canFetchCodes() && alias?.id);
   if (alias) $("tm-address").textContent = alias.email;
   $("tm-code").textContent = tmCode?.code || "—";
   $("tm-copy").disabled = $("tm-paste").disabled = !tmCode?.code;
   $("tm-wait").disabled = tmWaiting || !alias;
-  $("tm-wait").textContent = tmWaiting ? "Waiting…" : tmCode ? "Next code" : "Wait for code";
+  $("tm-wait").textContent = tmWaiting ? t("Waiting…") : tmCode ? t("Next code") : t("Wait for code");
   $("tm-link").hidden = !(tmCode && !tmCode.code && tmCode.links?.length);
   $("tm-link").replaceChildren();
   if (tmCode && !tmCode.code && tmCode.links?.length) {
@@ -577,7 +607,7 @@ async function tmRender() {
     a.href = tmCode.links[0].url || tmCode.links[0];
     a.target = "_blank";
     a.rel = "noopener noreferrer";
-    a.textContent = "Open the confirmation link";
+    a.textContent = t("Open the confirmation link");
     $("tm-link").append(a);
   }
 }
@@ -591,12 +621,12 @@ async function ensureAlias() {
   if (!selectedFields.has("email") || !(await AliasProviders.active())) return true;
   const url = await activeTabUrl();
   if (!/^https?:/.test(url)) {
-    status("Open a website’s form and try again.", true);
+    status(t("Open a website’s form and try again."), true);
     return false;
   }
   const host = new URL(url).hostname;
   if (profile.throwaway?.host === host) return true;
-  status(`Creating a disposable address for ${host}…`);
+  status(t("Creating a disposable address for $1…", host));
   try {
     const alias = await AliasProviders.createAlias(url, profile.fullName);
     profile = { ...profile, email: alias.email, throwaway: alias };
@@ -608,8 +638,8 @@ async function ensureAlias() {
   } catch (e) {
     status(
       e.status === 401 || e.status === 403
-        ? `${AliasProviders.errorMessage(active?.provider, e)} Check the settings.`
-        : `Could not create a disposable address: ${e.message}. Nothing was filled.`,
+        ? `${AliasProviders.errorMessage(active?.provider, e)} ${t("Check the settings.")}`
+        : t("Could not create a disposable address: $1. Nothing was filled.", e.message),
       true,
     );
     return false;
@@ -641,7 +671,7 @@ async function handOffCode(tabId) {
   if (autoCode === false || !profile?.throwaway?.id || !canFetchCodes()) return;
   await browser.runtime.sendMessage({ type: "pending-set", host: profile.throwaway.host, alias: profile.throwaway }).catch(() => {});
   await browser.tabs.sendMessage(tabId, { type: "watch-code" }).catch(() => {});
-  tmStatus("The code will be pasted into the page as soon as it arrives.");
+  tmStatus(t("The code will be pasted into the page as soon as it arrives."));
 }
 async function tmPoll(wait) {
   const alias = profile?.throwaway;
@@ -649,7 +679,7 @@ async function tmPoll(wait) {
   const since = tmCode?.message_id || alias.createdAt;
   tmWaiting = wait > 0;
   void tmRender();
-  if (wait) tmStatus("Waiting for an e-mail (up to 2 min). Keep this window open.");
+  if (wait) tmStatus(t("Waiting for an e-mail (up to 2 min). Keep this window open."));
   try {
     let found = null;
     for (let i = 0; i < (wait ? 2 : 1) && !found; i++) found = await active.provider.waitForCode(active.cfg, alias, since, wait);
@@ -658,12 +688,12 @@ async function tmPoll(wait) {
       if (found.code && wait) setTimeout(() => $("tm-paste").click(), 0);
       tmStatus(
         found.code
-          ? `From ${found.from || "?"}${found.subject ? ` · “${found.subject}”` : ""}.`
-          : "E-mail received without a code: confirmation link available.",
+          ? t("From $1", found.from || "?") + (found.subject ? ` · “${found.subject}”` : "") + "."
+          : t("E-mail received without a code: confirmation link available."),
       );
-    } else if (wait) tmStatus("Nothing yet. Try again after asking the site to send the code.");
+    } else if (wait) tmStatus(t("Nothing yet. Try again after asking the site to send the code."));
   } catch (e) {
-    tmStatus(`${active?.provider.name || "Server"} unreachable: ${e.message}`, true);
+    tmStatus(t("$1 unreachable: $2", active?.provider.name || t("Server"), e.message), true);
   } finally {
     tmWaiting = false;
     void tmRender();
@@ -673,9 +703,9 @@ $("tm-wait").addEventListener("click", () => tmPoll(55));
 $("tm-copy").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(tmCode.code);
-    tmStatus("Code copied.");
+    tmStatus(t("Code copied."));
   } catch {
-    tmStatus("Copy unavailable.", true);
+    tmStatus(t("Copy unavailable."), true);
   }
 });
 $("tm-paste").addEventListener("click", async () => {
@@ -684,11 +714,11 @@ $("tm-paste").addEventListener("click", async () => {
     await browser.scripting.executeScript({ target: { tabId }, files: ["otp.js"] });
     const [res] = await browser.scripting.executeScript({ target: { tabId }, func: fillCodeInPage, args: [tmCode.code] });
     tmStatus(
-      res?.result ? `Code pasted (${res.result} field${res.result > 1 ? "s" : ""}). Nothing submitted.` : "No code field found: use Copy.",
+      res?.result ? t("Code pasted ($1 field(s)). Nothing submitted.", res.result) : t("No code field found: use Copy."),
       !res?.result,
     );
   } catch {
-    tmStatus("Cannot access this page. Use Copy.", true);
+    tmStatus(t("Cannot access this page. Use Copy."), true);
   }
 });
 // Runs in the page: one-time-code field, focused field or one-digit boxes.
@@ -713,6 +743,7 @@ $("tm-settings").addEventListener("click", (event) => {
 });
 
 $("version").textContent = `Aliasfill ${browser.runtime.getManifest().version}`;
+AliasfillI18n.localize();
 syncControls();
 (async () => {
   try {
@@ -740,7 +771,7 @@ syncControls();
     if (!testCard && ThrowawayGenerator.isTestCard(saved.testCard)) {
       testCard = saved.testCard;
       renderCard();
-      cardStatus("Last test card restored.");
+      cardStatus(t("Last test card restored."));
     }
     if (!countryTouched && ["random", ...AliasfillCountries.codes()].includes(saved.countryMode))
       $("country-mode").value = saved.countryMode;
@@ -797,7 +828,7 @@ syncControls();
       }
       revision = saved.revision || 1;
       render();
-      status("Last profile restored. Ready to fill a form.");
+      status(t("Last profile restored. Ready to fill a form."));
       if (upgradedProfile) await browser.storage.local.set({ profile });
     }
     if (saved.settingsVersion !== 4) await saveSettings();
@@ -805,7 +836,7 @@ syncControls();
     await tmRender();
     if (profile?.throwaway?.id && canFetchCodes()) void tmPoll(0);
   } catch {
-    status("Local storage unavailable. You can still generate a profile.", true);
+    status(t("Local storage unavailable. You can still generate a profile."), true);
   }
 })();
 

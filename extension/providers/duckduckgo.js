@@ -9,20 +9,22 @@
   P.register({
     id: "duckduckgo",
     short: "DUCK",
-    name: "DuckDuckGo (experimental)",
+    name: t("DuckDuckGo (experimental)"),
     experimental: true,
     codes: false,
     baseUrl: BASE,
-    help: "Unofficial API. The token is the one DuckDuckGo's extension stores after you sign in to Email Protection (see the extension docs). It may stop working at any time.",
-    fields: [{ key: "apiKey", label: "Token", type: "password", required: true }],
+    help: t(
+      "Unofficial API. The token is the one DuckDuckGo's extension stores after you sign in to Email Protection (see the extension docs). It may stop working at any time.",
+    ),
+    fields: [{ key: "apiKey", label: t("Token"), type: "password", required: true }],
     configured: (cfg) => !!cfg.apiKey,
     async createAlias(cfg) {
       const data = await P.http(`${BASE}/api/email/addresses`, { method: "POST", headers: { authorization: `Bearer ${cfg.apiKey}` } });
       return { email: data?.address ? `${data.address}@duck.com` : null };
     },
     async testConnection(cfg) {
-      if (!cfg.apiKey) throw new Error("Paste a token.");
-      return "Token saved. DuckDuckGo has no test endpoint: it is checked when the first address is created.";
+      if (!cfg.apiKey) throw new Error(t("Paste a token."));
+      return t("Token saved. DuckDuckGo has no test endpoint: it is checked when the first address is created.");
     },
   });
 })();

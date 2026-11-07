@@ -12,10 +12,10 @@
     name: "SimpleLogin",
     codes: false,
     baseUrl: "https://app.simplelogin.io",
-    help: "SimpleLogin → API Keys → Create API key. Change the server only if you host SimpleLogin yourself.",
+    help: t("SimpleLogin → API Keys → Create API key. Change the server only if you host SimpleLogin yourself."),
     fields: [
-      { key: "baseUrl", label: "Server URL", type: "url", default: "https://app.simplelogin.io" },
-      { key: "apiKey", label: "API key", type: "password", required: true },
+      { key: "baseUrl", label: t("Server URL"), type: "url", default: "https://app.simplelogin.io" },
+      { key: "apiKey", label: t("API key"), type: "password", required: true },
     ],
     configured: (cfg) => !!cfg.apiKey,
     async createAlias(cfg, { site, note }) {
@@ -28,7 +28,7 @@
     },
     async testConnection(cfg) {
       const me = await P.http(`${base(cfg)}/api/user_info`, { headers: auth(cfg) });
-      return `Signed in as ${me?.name || me?.email || "?"}${me?.is_premium ? " (premium)" : ""}.`;
+      return t("Signed in as $1.", (me?.name || me?.email || "?") + (me?.is_premium ? " (premium)" : ""));
     },
   });
 })();

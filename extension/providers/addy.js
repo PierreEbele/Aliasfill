@@ -12,11 +12,13 @@
     name: "addy.io",
     codes: false,
     baseUrl: "https://app.addy.io",
-    help: "addy.io → Settings → API → Create new API key. The domain is one of your alias domains (anonaddy.me, your username subdomain or a custom one).",
+    help: t(
+      "addy.io → Settings → API → Create new API key. The domain is one of your alias domains (anonaddy.me, your username subdomain or a custom one).",
+    ),
     fields: [
-      { key: "baseUrl", label: "Server URL", type: "url", default: "https://app.addy.io" },
-      { key: "apiKey", label: "API access token", type: "password", required: true },
-      { key: "domain", label: "Alias domain", type: "text", default: "anonaddy.me", required: true },
+      { key: "baseUrl", label: t("Server URL"), type: "url", default: "https://app.addy.io" },
+      { key: "apiKey", label: t("API access token"), type: "password", required: true },
+      { key: "domain", label: t("Alias domain"), type: "text", default: "anonaddy.me", required: true },
     ],
     configured: (cfg) => !!(cfg.apiKey && cfg.domain),
     async createAlias(cfg, { note }) {
@@ -29,7 +31,7 @@
     },
     async testConnection(cfg) {
       const me = await P.http(`${base(cfg)}/api/v1/account-details`, { headers: auth(cfg) });
-      return `Signed in as ${me?.data?.username || "?"}.`;
+      return t("Signed in as $1.", me?.data?.username || "?");
     },
   });
 })();

@@ -8,7 +8,7 @@ const Throwaway = (() => {
 
   function normalizeServer(raw) {
     const url = new URL(String(raw || "").trim());
-    if (url.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(url.hostname)) throw new Error("The server must use HTTPS.");
+    if (url.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(url.hostname)) throw new Error(t("The server must use HTTPS."));
     return url.origin;
   }
 

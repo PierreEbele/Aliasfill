@@ -235,7 +235,7 @@ async function addressForHost(host, pageUrl, create) {
 
 // ---------- Context menu for editable fields ----------
 browser.menus.create(
-  { id: "tm-insert", title: "Insert a disposable address here", contexts: ["editable"] },
+  { id: "tm-insert", title: t("Insert a disposable address here"), contexts: ["editable"] },
   () => void browser.runtime.lastError,
 );
 browser.menus.onClicked.addListener(async (info, tab) => {

@@ -19,7 +19,7 @@ function renderFields(values) {
   $("codes-on").hidden = !p.codes;
   $("codes-off").hidden = !!p.codes;
   $("clear").hidden = !p.fields.some((f) => f.type === "password") && p.id !== "throwaway";
-  $("test").textContent = p.id === "none" ? "Preview an address" : "Test connection";
+  $("test").textContent = p.id === "none" ? t("Preview an address") : t("Test connection");
   const box = $("generic-fields");
   box.replaceChildren();
   for (const f of p.fields) {
@@ -77,9 +77,9 @@ $("provider").addEventListener("change", async () => {
 async function loadDomains(cfg, selected) {
   const data = await Throwaway.request("/v1/domains", { cfg });
   $("domain").replaceChildren(
-    new Option("Server default", ""),
-    new Option("Random domain for each address", "@random"),
-    new Option("Rotate through domains", "@rotate"),
+    new Option(t("Server default"), ""),
+    new Option(t("Random domain for each address"), "@random"),
+    new Option(t("Rotate through domains"), "@rotate"),
   );
   for (const d of data.domains || []) $("domain").add(new Option(d.name, d.name));
   $("domain").value = selected || "";
@@ -113,7 +113,7 @@ async function loadThrowaway() {
   $("api-key").value = cfg.apiKey;
   $("expires-days").value = String(cfg.expiresDays || 0);
   $("max-messages").value = cfg.maxMessages ? String(cfg.maxMessages) : "";
-  if (cfg.server && cfg.apiKey) await loadDomains(cfg, cfg.domain).catch(() => status("Server unreachable or invalid key.", true));
+  if (cfg.server && cfg.apiKey) await loadDomains(cfg, cfg.domain).catch(() => status(t("Server unreachable or invalid key."), true));
 }
 
 // ---------- Form → settings, with access to the provider's API origin only (needs a user gesture) ----------
@@ -123,22 +123,22 @@ async function formConfig() {
   if (p.id === "throwaway") {
     const server = Throwaway.normalizeServer($("server").value);
     const apiKey = $("api-key").value.trim();
-    if (!apiKey) throw new Error("Paste an API key.");
+    if (!apiKey) throw new Error(t("Paste an API key."));
     cfg = { server, apiKey, domain: $("domain").value };
   } else {
     cfg = genericValues();
     if (cfg.baseUrl) cfg.baseUrl = AliasProviders.normalizeBaseUrl(cfg.baseUrl);
     const missing = p.fields.find((f) => f.required && !cfg[f.key]);
-    if (missing) throw new Error(`Fill in “${missing.label}”.`);
+    if (missing) throw new Error(t("Fill in “$1”.", missing.label));
   }
   const origin = AliasProviders.originPattern(p, cfg);
   if (origin && !(await browser.permissions.request({ origins: [origin] })))
-    throw new Error(`Access to ${new URL(origin.slice(0, -2)).host} was denied.`);
+    throw new Error(t("Access to $1 was denied.", new URL(origin.slice(0, -2)).host));
   return cfg;
 }
 
 function failure(e) {
-  return e?.status === 401 || e?.status === 403 ? AliasProviders.errorMessage(provider(), e) : `Failed: ${e?.message || e}`;
+  return e?.status === 401 || e?.status === 403 ? AliasProviders.errorMessage(provider(), e) : t("Failed: $1", e?.message || e);
 }
 
 $("test").addEventListener("click", async () => {
@@ -170,11 +170,11 @@ $("form").addEventListener("submit", async (event) => {
       });
     } else await AliasProviders.saveSettings(p.id, cfg);
     if (!p.configured(p.id === "throwaway" ? cfg : await AliasProviders.settings(p.id)))
-      throw new Error("Some settings are missing: nothing would be generated.");
+      throw new Error(t("Some settings are missing: nothing would be generated."));
     await browser.storage.local.set({ aliasProvider: p.id, ...toggles() });
-    status(`Saved. Next fills will use ${p.id === "none" ? "your own addresses" : p.name}.`);
+    status(p.id === "none" ? t("Saved. Next fills will use your own addresses.") : t("Saved. Next fills will use $1.", p.name));
   } catch (e) {
-    status(e?.status === 401 ? `${AliasProviders.errorMessage(provider(), e)} Nothing was saved.` : failure(e), true);
+    status(e?.status === 401 ? `${AliasProviders.errorMessage(provider(), e)} ${t("Nothing was saved.")}` : failure(e), true);
   }
 });
 
@@ -188,7 +188,7 @@ $("clear").addEventListener("click", async () => {
   }
   renderFields(await AliasProviders.settings(p.id));
   $("api-key").value = "";
-  status("Key deleted. Back to @example.com addresses until another provider is set up.");
+  status(t("Key deleted. Back to @example.com addresses until another provider is set up."));
 });
 
 // ---------- Automation ----------
@@ -205,16 +205,17 @@ for (const id of ["bitwarden-mode", "identity-ttl", "history-days", "auto-fill-c
   $(id).addEventListener("change", async () => {
     await browser.storage.local.set(toggles());
     await browser.runtime.sendMessage({ type: "purge" }).catch(() => {});
-    status("Automation settings saved.");
+    status(t("Automation settings saved."));
   });
 for (const id of Object.keys(TOGGLES))
   $(id).addEventListener("change", async () => {
     await browser.storage.local.set(toggles());
     if ($("auto-prompt").checked || $("auto-code").checked) await browser.permissions.request(ALL_SITES).catch(() => {});
-    status("Automation settings saved.");
+    status(t("Automation settings saved."));
   });
 
 $("version").textContent = `Aliasfill ${browser.runtime.getManifest().version}`;
+AliasfillI18n.localize();
 
 (async () => {
   const flags = await browser.storage.local.get(Object.values(TOGGLES));
@@ -228,8 +229,8 @@ $("version").textContent = `Aliasfill ${browser.runtime.getManifest().version}`;
   renderFields(await AliasProviders.settings(providerId()));
   const active = await AliasProviders.active();
   if (providerId() === "throwaway") await loadThrowaway();
-  if (active && !$("status").textContent) status(`${active.provider.name} is active.`);
-  else if (!active) status("No provider set up yet: identities use @example.com addresses.");
+  if (active && !$("status").textContent) status(t("$1 is active.", active.provider.name));
+  else if (!active) status(t("No provider set up yet: identities use @example.com addresses."));
 })();
 
 // Firefox (MV3) does not grant "all sites" at install time: ask for it (needs a click).

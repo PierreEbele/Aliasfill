@@ -12,7 +12,7 @@
   async function session(cfg) {
     const s = await P.http(`${BASE}/jmap/session`, { headers: auth(cfg) });
     const accountId = s?.primaryAccounts?.[CAPABILITY];
-    if (!accountId) throw new Error("This token has no Masked Email access.");
+    if (!accountId) throw new Error(t("This token has no Masked Email access."));
     return { accountId, username: s.username };
   }
 
@@ -22,8 +22,8 @@
     name: "Fastmail Masked Email",
     codes: false,
     baseUrl: BASE,
-    help: "Fastmail → Settings → Privacy & Security → API tokens → New token, with the Masked Email scope.",
-    fields: [{ key: "apiKey", label: "API token", type: "password", required: true }],
+    help: t("Fastmail → Settings → Privacy & Security → API tokens → New token, with the Masked Email scope."),
+    fields: [{ key: "apiKey", label: t("API token"), type: "password", required: true }],
     configured: (cfg) => !!cfg.apiKey,
     async createAlias(cfg, { url, note }) {
       const { accountId } = await session(cfg);
@@ -38,12 +38,12 @@
       const [name, result] = data?.methodResponses?.[0] || [];
       if (name === "error") throw new Error(result?.description || result?.type || "JMAP error");
       const created = result?.created?.new;
-      if (!created) throw new Error(result?.notCreated?.new?.description || "Fastmail did not create the masked address.");
+      if (!created) throw new Error(result?.notCreated?.new?.description || t("Fastmail did not create the masked address."));
       return { email: created.email, id: created.id };
     },
     async testConnection(cfg) {
       const { username } = await session(cfg);
-      return `Signed in as ${username || "?"}, Masked Email available.`;
+      return t("Signed in as $1, Masked Email available.", username || "?");
     },
   });
 })();

@@ -1,0 +1,971 @@
+{
+  "extDescription": {
+    "message": "Fiktive Identitäten für Anmeldeformulare, mit Wegwerfadressen von Ihrer eigenen Domain oder Ihrem Alias-Dienst."
+  },
+  "m12uibfn": {
+    "message": "$1 (simuliert)"
+  },
+  "m1o2fw9k": {
+    "message": "$1 bereits ausgefüllt, beibehalten."
+  },
+  "mf7dhkm": {
+    "message": "$1 Kartenfeld(er) ausgefüllt."
+  },
+  "m1ert1ay": {
+    "message": "$1 Feld(er) seitdem geändert oder nicht erreichbar, beibehalten."
+  },
+  "mmd1ixs": {
+    "message": "$1 Feld(er) ausgefüllt."
+  },
+  "msiptqs": {
+    "message": "$1 Feld(er) ausgefüllt. Prüfen Sie es und senden Sie das Formular selbst ab."
+  },
+  "m1uxi0rn": {
+    "message": "$1 Feld(er) ausgefüllt. Füllen Sie jetzt E-Mail (Alias-Generator) und Passwort mit Bitwarden aus."
+  },
+  "m1k1lma6": {
+    "message": "$1 Feld(er) wiederhergestellt."
+  },
+  "mom4rhb": {
+    "message": "$1 Feld(er) zum Ausfüllen ausgewählt."
+  },
+  "m1xo6sf2": {
+    "message": "$1 ist aktiv."
+  },
+  "m14q0gb": {
+    "message": "$1 Wiederherstellung(en) von der Seite abgelehnt."
+  },
+  "mffhu4u": {
+    "message": "$1 hat keine Adresse zurückgegeben."
+  },
+  "mj87wy4": {
+    "message": "$1 nicht erreichbar: $2"
+  },
+  "m10sauba": {
+    "message": "$1 Wert(e) von der Seite abgelehnt."
+  },
+  "m18p2xqx": {
+    "message": "$1 Wert(e) abgelehnt."
+  },
+  "m1qstogp": {
+    "message": "$1 · simuliert"
+  },
+  "m13afgba": {
+    "message": "$1/$2 Felder · $3 gesperrt"
+  },
+  "md13xfd": {
+    "message": "(Aliasfill füllt den Rest aus und fügt den Code mit Throwaway Mail ein; Bitwarden erzeugt Alias und Passwort und speichert sie)"
+  },
+  "mr6pb8x": {
+    "message": "(Throwaway Mail → API-Schlüssel → Erstellen)"
+  },
+  "mkn7eat": {
+    "message": "(Mails; leer = Kontostandard)"
+  },
+  "m1i6fy1l": {
+    "message": "(auf der Code-Seite einer Website mit Wegwerfadresse; sonst bietet ein „Code einfügen“-Chip es an)"
+  },
+  "m7dk3o5": {
+    "message": ", Codes werden automatisch abgerufen"
+  },
+  "m1ownkpa": {
+    "message": "1 Tag"
+  },
+  "m3eima2": {
+    "message": "1 Stunde"
+  },
+  "mldjmat": {
+    "message": "1 Jahr"
+  },
+  "mze76fw": {
+    "message": "15/15 Felder · 0 gesperrt"
+  },
+  "migz3wg": {
+    "message": "24 Stunden"
+  },
+  "mxy0wl5": {
+    "message": "30 Tage"
+  },
+  "m1foujjt": {
+    "message": "7 Tage"
+  },
+  "mcmwemv": {
+    "message": "90 Tage"
+  },
+  "m1x8n740": {
+    "message": "@example.com-Adressen, nichts verlässt den Browser"
+  },
+  "m1gnj5zn": {
+    "message": "Ein Kartenfeld ist schreibgeschützt und enthält einen anderen Wert. Kein Feld geändert."
+  },
+  "m1tpf7kt": {
+    "message": "Die Regeln eines Felds lehnen diese Testkarte ab. Kein Feld geändert."
+  },
+  "m1wlucvy": {
+    "message": "API-URL"
+  },
+  "m1pt6yna": {
+    "message": "API-Zugriffstoken"
+  },
+  "m1swq770": {
+    "message": "API-Schlüssel"
+  },
+  "m1etnx6a": {
+    "message": "API-Token"
+  },
+  "m97w6lt": {
+    "message": "Zugriff auf $1 wurde verweigert."
+  },
+  "m10tse38": {
+    "message": "Kontostandard (Throwaway Mail → Konto → Neue Adressen)"
+  },
+  "mv2y2ur": {
+    "message": "Adresse"
+  },
+  "mylfgp1": {
+    "message": "Adressdomain"
+  },
+  "m6b09kx": {
+    "message": "Adresszusatz"
+  },
+  "m16u5rmi": {
+    "message": "Adressformat"
+  },
+  "mk9vs54": {
+    "message": "Adressen werden im Browser erzeugt: eine Catch-all-Domain, die Ihnen gehört, oder Plus-Adressierung Ihres eigenen Postfachs. Nichts wird irgendwohin gesendet."
+  },
+  "mq1qs3g": {
+    "message": "Adressen von $1"
+  },
+  "m1w4yz4n": {
+    "message": "Adressen Ihrer eigenen Domain oder Ihres Postfachs (ohne Netzwerk)"
+  },
+  "mk0pfa9": {
+    "message": "Alias-Domain"
+  },
+  "mhjywrf": {
+    "message": "Aliasfill — Einstellungen"
+  },
+  "m2ic0uc": {
+    "message": "Auf allen Websites erlauben"
+  },
+  "m7noxr": {
+    "message": "Übernommen, aber das lokale Speichern ist fehlgeschlagen."
+  },
+  "mi2znlc": {
+    "message": "Gilt für die nächste Testkarte."
+  },
+  "miz45l6": {
+    "message": "Automatisierung"
+  },
+  "m1uxjilm": {
+    "message": "Automatisierungseinstellungen gespeichert."
+  },
+  "m105a0cf": {
+    "message": "BIN $1 · $2. Geprüft am $3."
+  },
+  "m89iuln": {
+    "message": "BIN laut BinCheck.org der Bank zugeordnet; die übrigen Ziffern werden mit Luhn-Prüfziffer erzeugt. Es wird keine Karte ausgegeben und kein Konto eröffnet. Musternummer, nicht von der Bank bestätigt und nicht von Stripe für seine Sandbox bereitgestellt."
+  },
+  "m1ah2v9z": {
+    "message": "BinCheck-Quelle"
+  },
+  "mmgpsf2": {
+    "message": "Geburtsdatum"
+  },
+  "mgdkxku": {
+    "message": "Das Geburtsdatum erfüllt die Regeln der Website nicht: seine Felder wurden beibehalten."
+  },
+  "m8z9qfb": {
+    "message": "CB / Mastercard"
+  },
+  "m1odcnci": {
+    "message": "CB / Visa"
+  },
+  "mz07s1p": {
+    "message": "CVC"
+  },
+  "murkkhz": {
+    "message": "Kein Zugriff auf diese Seite. Öffnen Sie eine normale Webseite und versuchen Sie es erneut. Firefox schützt seine internen Seiten, seinen Add-on-Store und manche PDFs."
+  },
+  "mwvd7og": {
+    "message": "Kein Zugriff auf diese Seite. Öffnen Sie Ihr Testformular und versuchen Sie es erneut."
+  },
+  "m1349vyh": {
+    "message": "Kein Zugriff auf diese Seite. Verwenden Sie Kopieren."
+  },
+  "mqhuh7r": {
+    "message": "Rückgängig ist auf dieser Seite nicht möglich. Das Ausfüllen muss zum aktiven Tab gehören."
+  },
+  "mwr9lv5": {
+    "message": "Karte bereit, aber das lokale Speichern ist fehlgeschlagen."
+  },
+  "m1bm0xrq": {
+    "message": "Catch-all-Domain"
+  },
+  "m1n8c54v": {
+    "message": "Catch-all-Domain (site.zufall@ihre-domain)"
+  },
+  "mroqfn9": {
+    "message": "Prüfen Sie die Einstellungen."
+  },
+  "m142k4ma": {
+    "message": "Stadt"
+  },
+  "mfk4nzi": {
+    "message": "Verlauf löschen"
+  },
+  "m1ey2qes": {
+    "message": "Erneut klicken, um alles zu löschen"
+  },
+  "m1l0xxoj": {
+    "message": "Schließen"
+  },
+  "m1q3laya": {
+    "message": "Code kopiert."
+  },
+  "m6e6byx": {
+    "message": "Code eingefügt ($1 Feld(er)). Nichts abgesendet."
+  },
+  "m16rqphf": {
+    "message": "Code empfangen und in die Seite eingefügt."
+  },
+  "mn96qwz": {
+    "message": "Code empfangen. Kein Code-Feld auf dieser Seite gefunden."
+  },
+  "m1hra0d8": {
+    "message": "Firma"
+  },
+  "mcl4900": {
+    "message": "Bestätigungs-E-Mail empfangen (ein Link, kein Code)."
+  },
+  "m18zckua": {
+    "message": "Verbunden (Premium)."
+  },
+  "m10e5se2": {
+    "message": "Verbunden."
+  },
+  "m13bzcw5": {
+    "message": "Kopiert"
+  },
+  "ms6g5lw": {
+    "message": "Kopieren"
+  },
+  "mto56if": {
+    "message": "Alles kopieren"
+  },
+  "m1flb125": {
+    "message": "Nummer kopieren"
+  },
+  "m1a7z59s": {
+    "message": "Kopieren nicht verfügbar."
+  },
+  "magpceg": {
+    "message": "Kopieren nicht verfügbar. Sie können die angezeigten Werte von Hand kopieren."
+  },
+  "m1xmaw7l": {
+    "message": "Kopieren nicht verfügbar. Sie können die angezeigten Werte markieren und von Hand kopieren."
+  },
+  "mindkoz": {
+    "message": "Wegwerfadresse konnte nicht erstellt werden: $1. Nichts wurde ausgefüllt."
+  },
+  "m1diicx": {
+    "message": "Land"
+  },
+  "m7iz0ss": {
+    "message": "Land beibehalten: $1 (Ortsangaben gesperrt)."
+  },
+  "mlujg1d": {
+    "message": "Land für das nächste Profil gesetzt. Klicken Sie auf Neue Identität."
+  },
+  "mk0hg80": {
+    "message": "Land: Frankreich"
+  },
+  "mgk7e3h": {
+    "message": "Wegwerfadresse für $1 wird erstellt…"
+  },
+  "mvvlfga": {
+    "message": "Identität wird erstellt…"
+  },
+  "m1g8nalf": {
+    "message": "WEGWERF"
+  },
+  "msqcrhx": {
+    "message": "WEGWERF BEIM AUSFÜLLEN"
+  },
+  "m16zms3r": {
+    "message": "Datentyp"
+  },
+  "moay2cq": {
+    "message": "Löschen"
+  },
+  "mi4tu62": {
+    "message": "Fiktive Identität löschen nach"
+  },
+  "m1hjhks4": {
+    "message": "Wegwerfadresse erkannt:"
+  },
+  "m1gqyxox": {
+    "message": "Domain"
+  },
+  "mgh0hy5": {
+    "message": "Auf dieser Website nicht mehr anbieten"
+  },
+  "m1imf69s": {
+    "message": "DuckDuckGo (experimentell)"
+  },
+  "mdsrlbk": {
+    "message": "E-Mail"
+  },
+  "meq78v5": {
+    "message": "E-Mail ohne Code empfangen: Bestätigungslink verfügbar."
+  },
+  "m1t3jyhd": {
+    "message": "E-Mail: $1"
+  },
+  "m1mf9rtz": {
+    "message": "Geben Sie eine gültige Catch-all-Domain ein."
+  },
+  "mxl3y9y": {
+    "message": "Geben Sie Ihre eigene Adresse für die Plus-Adressierung ein."
+  },
+  "m2pahwg": {
+    "message": "Eintrag für $1 gelöscht."
+  },
+  "m9e2bz4": {
+    "message": "Alle Felder sind gesperrt. Geben Sie mindestens einen Wert frei, um ihn neu zu erzeugen."
+  },
+  "mrbmqh3": {
+    "message": "Vorhandenes Geburtsdatum vollständig beibehalten."
+  },
+  "mtqh55k": {
+    "message": "Vorhandene Werte vollständig beibehalten. Aktivieren Sie Vorhandenes überschreiben, um die Testkarte einzufügen."
+  },
+  "m1jee0pv": {
+    "message": "Läuft ab"
+  },
+  "mocz5wj": {
+    "message": "Ablauf: $1"
+  },
+  "m12jd5tj": {
+    "message": "FRANKREICH · STRIPE-SANDBOX"
+  },
+  "m1tf679x": {
+    "message": "FRANKREICH · SYNTHETISCHE NUMMER"
+  },
+  "mu8zz7x": {
+    "message": "Fehlgeschlagen: $1"
+  },
+  "mi5yjzb": {
+    "message": "Fiktiver Inhaber: $1"
+  },
+  "msg5ofd": {
+    "message": "Fiktives Profil"
+  },
+  "mbgygsm": {
+    "message": "Fastmail hat die maskierte Adresse nicht erstellt."
+  },
+  "m1skadcq": {
+    "message": "Fastmail → Einstellungen → Datenschutz & Sicherheit → API-Tokens → Neues Token, mit dem Bereich Masked Email."
+  },
+  "m4d0paf": {
+    "message": "Feld"
+  },
+  "m1uc22la": {
+    "message": "Felder gefunden, aber ihre Regeln lehnen die Werte ab. Kein Feld geändert."
+  },
+  "m1g5uf32": {
+    "message": "Auszufüllende Felder"
+  },
+  "mdwdroo": {
+    "message": "Ausfüllen"
+  },
+  "m1j9zzdi": {
+    "message": "Karte ausfüllen"
+  },
+  "m1bx523h": {
+    "message": "Code einfügen"
+  },
+  "m1nsmj3y": {
+    "message": "Formular ausfüllen"
+  },
+  "m1q3lxxr": {
+    "message": "Füllen Sie „$1“ aus."
+  },
+  "mxb3d4h": {
+    "message": "Einmalcode-Felder direkt ausfüllen"
+  },
+  "mtyfuqh": {
+    "message": "Ausfüllen: $1"
+  },
+  "m16fb7ko": {
+    "message": "Vorname"
+  },
+  "mkh5d2m": {
+    "message": "Schlüssel dieses Anbieters vergessen"
+  },
+  "m8ryivk": {
+    "message": "Forward Email → My Account → Security → Developer access (API-Token). Die Domain muss in Ihrem Konto eingerichtet sein."
+  },
+  "m7va5tn": {
+    "message": "Frei"
+  },
+  "mfs1c68": {
+    "message": "Von $1"
+  },
+  "m1jb34xe": {
+    "message": "Erzeugen"
+  },
+  "mojqp2w": {
+    "message": "Erzeugen Sie eine Karte für Ihre Testumgebung."
+  },
+  "m1jl2j7j": {
+    "message": "Erzeugen Sie eine Identität oder füllen Sie direkt aus."
+  },
+  "mnxznq8": {
+    "message": "Erzeugen und ausfüllen"
+  },
+  "m1vrodzw": {
+    "message": "Erzeugte Angaben"
+  },
+  "m11ra12z": {
+    "message": "Erzeugtes Passwort"
+  },
+  "m1qfy6dp": {
+    "message": "Verbergen"
+  },
+  "myugfpb": {
+    "message": "Verlauf"
+  },
+  "m1jrusbz": {
+    "message": "Verlauf gelöscht."
+  },
+  "m1cp4l44": {
+    "message": "Verlauf aus (Einstellungen)."
+  },
+  "m7l22en": {
+    "message": "Inhaber"
+  },
+  "m17kaqbm": {
+    "message": "Pro Website verwendete Identitäten"
+  },
+  "m1q31p6j": {
+    "message": "Identität"
+  },
+  "m1jp5rma": {
+    "message": "Identität Nr. $1 · $2"
+  },
+  "mtgqky4": {
+    "message": "Identität wiederhergestellt, aber das lokale Speichern ist fehlgeschlagen."
+  },
+  "m1t5x67i": {
+    "message": "Auf $1 verwendete Identität kopiert."
+  },
+  "m1wcryq2": {
+    "message": "Die auf $1 verwendete Identität ist zurück. Füllen Sie das Formular aus, um sie wiederzuverwenden."
+  },
+  "m1p10gvr": {
+    "message": "Hier eine Wegwerfadresse einfügen"
+  },
+  "m1lin4c6": {
+    "message": "Ungültiger API-Schlüssel für $1."
+  },
+  "mevpvk8": {
+    "message": "Ungültige oder abgelaufene Testkarte. Erzeugen Sie eine neue."
+  },
+  "mlqwbh5": {
+    "message": "Aussteller laut BinCheck: $1"
+  },
+  "m1ove3qo": {
+    "message": "Verlauf der Identitäten pro Website behalten"
+  },
+  "m1cuj889": {
+    "message": "Diesen Wert beim Erzeugen behalten"
+  },
+  "mbjwb7n": {
+    "message": "$1 Tage aufbewahrt."
+  },
+  "m1mfb822": {
+    "message": "Aufbewahrt bis zum Löschen."
+  },
+  "mv83ou3": {
+    "message": "Schlüssel gelöscht. Zurück zu @example.com-Adressen, bis ein anderer Anbieter eingerichtet ist."
+  },
+  "mypoduw": {
+    "message": "LOKAL"
+  },
+  "me5j6io": {
+    "message": "Nachname"
+  },
+  "miu2tze": {
+    "message": "Letztes Profil wiederhergestellt. Bereit zum Ausfüllen."
+  },
+  "m4h335v": {
+    "message": "Letzte Testkarte wiederhergestellt."
+  },
+  "m1wsths9": {
+    "message": "Später"
+  },
+  "msc8mpr": {
+    "message": "Bitwarden E-Mail und Passwort überlassen"
+  },
+  "mtdncrw": {
+    "message": "Gelistete BIN: $1"
+  },
+  "mpxff7b": {
+    "message": "Muster für den lokalen Teil"
+  },
+  "mdm59o3": {
+    "message": "Lokaler Speicher nicht verfügbar."
+  },
+  "mc7tqct": {
+    "message": "Lokaler Speicher nicht verfügbar. Sie können trotzdem ein Profil erzeugen."
+  },
+  "m1vxe7pb": {
+    "message": "Sperren: $1"
+  },
+  "mhvffeb": {
+    "message": "Gesperrt"
+  },
+  "m7e62cz": {
+    "message": "Gesperrt: „$1“."
+  },
+  "mpf2nu4": {
+    "message": "Suche nach Kartenfeldern…"
+  },
+  "mptiocw": {
+    "message": "Suche nach Formularfeldern…"
+  },
+  "m1mxiinv": {
+    "message": "Name: $1"
+  },
+  "mt9d9b9": {
+    "message": "Netzwerk"
+  },
+  "mstcd9k": {
+    "message": "Netzwerk: $1"
+  },
+  "m1dny5gp": {
+    "message": "Nie"
+  },
+  "ma53gup": {
+    "message": "Sendet nie automatisch ab"
+  },
+  "m1vk0gu2": {
+    "message": "Neue Adressen laufen ab nach"
+  },
+  "mupfr4x": {
+    "message": "Neue Adressen stoppen nach"
+  },
+  "m64y71p": {
+    "message": "Neue Identität"
+  },
+  "m150rxjq": {
+    "message": "Neue Identität für jede neue Website"
+  },
+  "mik7f4j": {
+    "message": "Neues Profil bereit. Die Seite wurde nicht geändert."
+  },
+  "mmg28al": {
+    "message": "Nächster Code"
+  },
+  "mdj101m": {
+    "message": "Kein Relay-Profil für diesen Schlüssel."
+  },
+  "m1k25obn": {
+    "message": "Kein Alias-Anbieter eingerichtet (siehe Einstellungen der Erweiterung)."
+  },
+  "m145vuo4": {
+    "message": "Kein Kartenformular erkannt. Iframes einer anderen Domain und manche eigenen Felder sind nicht erreichbar."
+  },
+  "mcig8fl": {
+    "message": "Kein Code-Feld gefunden: verwenden Sie Kopieren."
+  },
+  "m649jd": {
+    "message": "Kein Feld passt zu Ihrer Auswahl. Manche eingebetteten Formulare und eigenen Komponenten sind nicht erreichbar."
+  },
+  "m9wfoiu": {
+    "message": "Kein Verlauf"
+  },
+  "m15kj0x8": {
+    "message": "Keine Identität"
+  },
+  "m1grrj8d": {
+    "message": "Noch keine Identität ausgefüllt. Jedes Ausfüllen wird hier gespeichert, nur in diesem Browser."
+  },
+  "mw52abd": {
+    "message": "Keine Identität passt zu dieser Suche."
+  },
+  "m1qbu7zp": {
+    "message": "Keine bekannte BIN für diese Bank und dieses Netzwerk. Wählen Sie ein anderes Netzwerk."
+  },
+  "mh5wts0": {
+    "message": "Kein Netzwerk nötig. Beispiel für example.com: $1"
+  },
+  "m1p92h34": {
+    "message": "Noch kein Anbieter eingerichtet: Identitäten verwenden @example.com-Adressen."
+  },
+  "m1a96jdx": {
+    "message": "Kein Dienst"
+  },
+  "m1vi14cr": {
+    "message": "Nicht gefunden: $1."
+  },
+  "m1yi6k93": {
+    "message": "Auf dieser Seite gibt es nichts rückgängig zu machen."
+  },
+  "m1dnx5no": {
+    "message": "Nichts wurde angeklickt oder abgesendet."
+  },
+  "m106gadq": {
+    "message": "Nichts wurde gespeichert."
+  },
+  "mpgselw": {
+    "message": "Nichts wurde abgesendet."
+  },
+  "mo3qx69": {
+    "message": "Noch nichts. Versuchen Sie es erneut, nachdem die Website den Code senden soll."
+  },
+  "msy0cg8": {
+    "message": "Nummernart"
+  },
+  "mxtl675": {
+    "message": "Nummer: $1"
+  },
+  "m1b1lsdx": {
+    "message": "Auf Anmeldeformularen eine neue Identität anbieten"
+  },
+  "mfjm7in": {
+    "message": "Offizieller Stripe-Test"
+  },
+  "m13tdu5y": {
+    "message": "Offizielle Stripe-Testnummern, fest pro Netzwerk. Die Bank ist nur eine simulierte Bezeichnung: Diese Karten werden nicht von den angezeigten Banken ausgegeben und ermöglichen keine echte Zahlung."
+  },
+  "m1mf0nu3": {
+    "message": "Offizielle Stripe-Testnummern. Die Bank ist nur eine simulierte Bezeichnung: keine echte Zahlung möglich."
+  },
+  "m1uqlryr": {
+    "message": "Öffnen Sie das Formular einer Website und versuchen Sie es erneut."
+  },
+  "m6g0wrz": {
+    "message": "Link öffnen"
+  },
+  "m14y8zwd": {
+    "message": "Bestätigungslink öffnen"
+  },
+  "m1jvfpdz": {
+    "message": "Vorhandenes überschreiben"
+  },
+  "mcf437c": {
+    "message": "Passwort"
+  },
+  "mvmwbwe": {
+    "message": "Das Passwort erfüllt die Regeln der Website nicht: keines der beiden Felder wurde geändert."
+  },
+  "mblygko": {
+    "message": "Passwort gekürzt oder vereinfacht, um die Regeln der Website zu erfüllen (in der Identität gespeichert)."
+  },
+  "m1z09wwq": {
+    "message": "Passwort übersprungen: nicht als Anmeldung erkannt."
+  },
+  "m1razsmh": {
+    "message": "Passwort: $1"
+  },
+  "mc6boga": {
+    "message": "Passwörter zusammen behalten, um eine abweichende Bestätigung zu vermeiden."
+  },
+  "m1dqva14": {
+    "message": "Einfügen"
+  },
+  "mc2zx6w": {
+    "message": "Fügen Sie ein Token ein."
+  },
+  "m3ym6f2": {
+    "message": "Fügen Sie einen API-Schlüssel ein."
+  },
+  "m8k1bsm": {
+    "message": "Code sofort nach Empfang in die Seite einfügen"
+  },
+  "mkb2lhr": {
+    "message": "Telefon"
+  },
+  "m43xcak": {
+    "message": "Aus diesen Domains wählen (keine angehakt: alle Domains, die der Schlüssel nutzen darf)"
+  },
+  "my7uici": {
+    "message": "Plus-Adressierung (sie+site@ihr-postfach)"
+  },
+  "m116lrsj": {
+    "message": "Postleitzahl"
+  },
+  "m1bm6duy": {
+    "message": "Adresse als Vorschau"
+  },
+  "mbnj0dw": {
+    "message": "Profil in die Zwischenablage kopiert."
+  },
+  "mhkanh4": {
+    "message": "Profil kopiert."
+  },
+  "m15baibm": {
+    "message": "Profil bereit, aber das lokale Speichern ist fehlgeschlagen."
+  },
+  "miqcbst": {
+    "message": "Profil neu erzeugt. Gesperrte Werte wurden beibehalten."
+  },
+  "mi2496q": {
+    "message": "Zufällig"
+  },
+  "m8pxcyi": {
+    "message": "Zufällige Domain für jede Adresse"
+  },
+  "m9f95ck": {
+    "message": "Zufallsnummer im Format dieses Landes: hier ist kein Bereich für Fiktion reserviert, sie kann also jemandem gehören."
+  },
+  "m1fh9u3x": {
+    "message": "Region / Bundesland"
+  },
+  "m1n1527n": {
+    "message": "Wiederverwenden"
+  },
+  "m12e5fji": {
+    "message": "Domains abwechselnd verwenden"
+  },
+  "m1aezhsg": {
+    "message": "SYNTHETISCHE KARTE — MUSTER, KEINE KARTE DER STRIPE-SANDBOX"
+  },
+  "mlewgh4": {
+    "message": "Speichern"
+  },
+  "mg3oiiv": {
+    "message": "Gespeichert. Die nächsten Ausfüllvorgänge verwenden $1."
+  },
+  "m16hbezb": {
+    "message": "Gespeichert. Die nächsten Ausfüllvorgänge verwenden Ihre eigenen Adressen."
+  },
+  "m1m07lxf": {
+    "message": "Website, Name oder Adresse suchen"
+  },
+  "m1jsk6hm": {
+    "message": "Im Verlauf suchen"
+  },
+  "mud9alu": {
+    "message": "Server"
+  },
+  "mw8xqrr": {
+    "message": "Server-URL"
+  },
+  "m1ca3vkr": {
+    "message": "Serverstandard"
+  },
+  "m1qwfbb1": {
+    "message": "Server nicht erreichbar oder Schlüssel ungültig."
+  },
+  "mktdb8o": {
+    "message": "Einstellungen"
+  },
+  "mmgtgs1": {
+    "message": "Einstellungen übernommen, aber das lokale Speichern ist fehlgeschlagen."
+  },
+  "mbi2jq4": {
+    "message": "Anzeigen"
+  },
+  "m1a58yhz": {
+    "message": "Anmeldeformular erkannt. Neue Identität erzeugen und ausfüllen?"
+  },
+  "m1nqv84v": {
+    "message": "Angemeldet als $1 · $2 Domain(s) verfügbar."
+  },
+  "m1lqtg95": {
+    "message": "Angemeldet als $1, Masked Email verfügbar."
+  },
+  "mw1q7vr": {
+    "message": "Angemeldet als $1."
+  },
+  "md2ox5t": {
+    "message": "SimpleLogin → API Keys → Create API key. Ändern Sie den Server nur, wenn Sie SimpleLogin selbst hosten."
+  },
+  "m3j8da1": {
+    "message": "Simulierte Bank"
+  },
+  "me3j3zu": {
+    "message": "Simulierte Bank: $1 (nicht wirklich ausgegeben)"
+  },
+  "m1y5ewkz": {
+    "message": "Website: $1"
+  },
+  "m1y13yyz": {
+    "message": "Einige Felder wurden erkannt, sind aber unter Auszufüllende Felder abgewählt. Haken Sie die gewünschten an."
+  },
+  "m1mvlp6w": {
+    "message": "Einige Einstellungen fehlen: es würde nichts erzeugt."
+  },
+  "m1wp20rt": {
+    "message": "Quelle: $1"
+  },
+  "mh8vs89": {
+    "message": "Senden Sie das Formular ab; der Code wird eingefügt, sobald er ankommt."
+  },
+  "m1pleygh": {
+    "message": "Synthetische Nummer bereit, mit der gelisteten BIN der Bank. Nur für Formularmuster."
+  },
+  "m1jcnvm4": {
+    "message": "Synthetisch · Bank-BIN"
+  },
+  "m1dme1np": {
+    "message": "TEST"
+  },
+  "m1mh76t": {
+    "message": "TESTKARTE — STRIPE-SANDBOX"
+  },
+  "m1ddgqby": {
+    "message": "Test-CVC: $1"
+  },
+  "mem56k9": {
+    "message": "Testkarte"
+  },
+  "m1tzi49j": {
+    "message": "Testkarte kopiert."
+  },
+  "m1nsys6m": {
+    "message": "Testkarte bereit. Die offizielle Nummer ist pro Netzwerk fest."
+  },
+  "m1qezdtj": {
+    "message": "Verbindung testen"
+  },
+  "m194q9yg": {
+    "message": "Testnummer kopiert."
+  },
+  "m1awhxux": {
+    "message": "Der Browser hat Aliasfill auf Websites noch nicht erlaubt; es kann daher Anmeldeformulare nicht erkennen und Codes nicht selbst einfügen."
+  },
+  "m7wo1uj": {
+    "message": "Der Code wird eingefügt, sobald er ankommt."
+  },
+  "m1aze0z": {
+    "message": "Der Code wird in die Seite eingefügt, sobald er ankommt."
+  },
+  "m1yul5bg": {
+    "message": "Die erkannten Felder enthalten bereits diese Testkarte."
+  },
+  "m59xoy5": {
+    "message": "Die erkannten Felder sind bereits ausgefüllt. Aktivieren Sie Vorhandenes überschreiben, um sie zu ändern."
+  },
+  "m6coef5": {
+    "message": "Die ausgewählten Felder enthalten bereits die Profilwerte."
+  },
+  "m15n79yw": {
+    "message": "Der Server muss HTTPS verwenden."
+  },
+  "m9os6h2": {
+    "message": "Der gesamte Verlauf wird gelöscht. Das kann nicht rückgängig gemacht werden."
+  },
+  "m19wnz4d": {
+    "message": "Das sieht nach einem Anmelde- oder Kontobestätigungsformular aus. Aliasfill überspringt diese Formulare und ihre Passwörter."
+  },
+  "msltx5o": {
+    "message": "Dieses Token hat keinen Zugriff auf Masked Email."
+  },
+  "m19y1frs": {
+    "message": "Haken Sie mindestens ein auszufüllendes Feld an."
+  },
+  "ma7vsmh": {
+    "message": "Anrede"
+  },
+  "mg5fefm": {
+    "message": "Token"
+  },
+  "m1epnapi": {
+    "message": "Token gespeichert. DuckDuckGo hat keinen Testendpunkt: es wird beim Erstellen der ersten Adresse geprüft."
+  },
+  "mvmlwpb": {
+    "message": "Rückgängig"
+  },
+  "m3fppe9": {
+    "message": "Letztes Ausfüllen auf dieser Seite rückgängig machen"
+  },
+  "m1lfz5sz": {
+    "message": "Letztes Ausfüllen wird rückgängig gemacht…"
+  },
+  "munnn3s": {
+    "message": "Entsperren: $1"
+  },
+  "m1elqjzu": {
+    "message": "Entsperrt: „$1“."
+  },
+  "m1rw8vu2": {
+    "message": "Inoffizielle API. Das Token ist das, das die DuckDuckGo-Erweiterung nach der Anmeldung bei Email Protection speichert (siehe Doku der Erweiterung). Es kann jederzeit aufhören zu funktionieren."
+  },
+  "m198snmg": {
+    "message": "Bis zum manuellen Löschen"
+  },
+  "m7s11ax": {
+    "message": "Benutzername"
+  },
+  "mw2am0k": {
+    "message": "Benutzername: $1"
+  },
+  "m1m2g8kq": {
+    "message": "Wert"
+  },
+  "mtwjadi": {
+    "message": "Wert wird beim Erzeugen behalten"
+  },
+  "m1kh9uwn": {
+    "message": "Bestätigungscode"
+  },
+  "mcovvvq": {
+    "message": "Bestätigungscodes können nur mit Throwaway Mail abgerufen werden, das die Mails selbst empfängt: mit diesem Anbieter lesen Sie den Code in Ihrem Postfach."
+  },
+  "m1f56o8s": {
+    "message": "Auf Code warten"
+  },
+  "meotdap": {
+    "message": "Warte auf eine E-Mail (bis zu 2 Min.). Lassen Sie dieses Fenster offen."
+  },
+  "mje9zqi": {
+    "message": "Warte…"
+  },
+  "m1fw5xqq": {
+    "message": "Woher kommen die Adressen?"
+  },
+  "m1tfoj9y": {
+    "message": "Ihre Adresse"
+  },
+  "m1xbdyns": {
+    "message": "Ihr eigener Throwaway-Mail-Server: echte Wegwerfadressen, und der Bestätigungscode, den sie empfangen, wird in die Seite eingefügt."
+  },
+  "m1epig15": {
+    "message": "Kontostandard"
+  },
+  "mc63u04": {
+    "message": "addy.io → Settings → API → Create new API key. Die Domain ist eine Ihrer Alias-Domains (anonaddy.me, die Subdomain Ihres Benutzernamens oder eine eigene)."
+  },
+  "mw9ejwe": {
+    "message": "Ablaufdatum"
+  },
+  "m1n64z2n": {
+    "message": "Inhaber"
+  },
+  "m1vg5ikq": {
+    "message": "https://mail.example.com"
+  },
+  "m7q2940": {
+    "message": "Nummer"
+  },
+  "m1ezgf5o": {
+    "message": "Anbieter"
+  },
+  "mbn08n6": {
+    "message": "relay.firefox.com → Settings → API key."
+  },
+  "m1mvb5aj": {
+    "message": "tm_…"
+  },
+  "mqce41o": {
+    "message": "{site} = Name der Website, {random} = 6 zufällige Zeichen"
+  },
+  "m1p9b6et": {
+    "message": "„Ausfüllen“ wählt die Felder auf der Seite. „Gesperrt“ behält den Wert beim Erzeugen."
+  }
+}

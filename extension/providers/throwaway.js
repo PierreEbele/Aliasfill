@@ -7,7 +7,7 @@
     short: "THROWAWAY",
     name: "Throwaway Mail",
     codes: true,
-    help: "Your own Throwaway Mail server: real disposable addresses, and the verification code they receive is pasted into the page.",
+    help: t("Your own Throwaway Mail server: real disposable addresses, and the verification code they receive is pasted into the page."),
     fields: [],
     loadSettings: () => Throwaway.config(),
     apiBase: (cfg) => cfg.server,
@@ -18,7 +18,7 @@
     async testConnection(cfg) {
       const me = await Throwaway.request("/v1/auth/me", { cfg });
       const data = await Throwaway.request("/v1/domains", { cfg });
-      return `Signed in as ${me.user?.name || me.user?.email || "?"} · ${data.domains?.length || 0} domain(s) available.`;
+      return t("Signed in as $1 · $2 domain(s) available.", me.user?.name || me.user?.email || "?", data.domains?.length || 0);
     },
     waitForCode: (_cfg, alias, since, wait) => Throwaway.waitForCode(alias.id, since, wait),
   });

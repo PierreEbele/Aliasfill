@@ -2,22 +2,24 @@
   "use strict";
   // Country sheets (data/*.js), loaded before this file.
   const countries = root.AliasfillCountries;
+  // Marks a text for translation (scripts/i18n.mjs); it is translated where it is shown.
+  const N_ = (text) => text;
   const fields = Object.freeze({
-    title: "Title",
-    firstName: "First name",
-    lastName: "Last name",
-    username: "Username",
-    company: "Company",
-    address: "Address",
-    address2: "Address line 2",
-    city: "City",
-    postalCode: "Postal code",
-    region: "Region / State",
-    country: "Country",
-    email: "E-mail",
-    phone: "Phone",
-    birthDate: "Birth date",
-    password: "Password",
+    title: N_("Title"),
+    firstName: N_("First name"),
+    lastName: N_("Last name"),
+    username: N_("Username"),
+    company: N_("Company"),
+    address: N_("Address"),
+    address2: N_("Address line 2"),
+    city: N_("City"),
+    postalCode: N_("Postal code"),
+    region: N_("Region / State"),
+    country: N_("Country"),
+    email: N_("E-mail"),
+    phone: N_("Phone"),
+    birthDate: N_("Birth date"),
+    password: N_("Password"),
   });
   // Fields added by version 4 of the settings: added to a selection saved before them.
   const fieldsAddedInV4 = ["title", "username", "company", "address2", "region"];

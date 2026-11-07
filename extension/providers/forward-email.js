@@ -13,11 +13,11 @@
     name: "Forward Email",
     codes: false,
     baseUrl: "https://api.forwardemail.net",
-    help: "Forward Email → My Account → Security → Developer access (API token). The domain must be set up in your account.",
+    help: t("Forward Email → My Account → Security → Developer access (API token). The domain must be set up in your account."),
     fields: [
-      { key: "baseUrl", label: "API URL", type: "url", default: "https://api.forwardemail.net" },
-      { key: "apiKey", label: "API token", type: "password", required: true },
-      { key: "domain", label: "Domain", type: "text", placeholder: "example.net", required: true },
+      { key: "baseUrl", label: t("API URL"), type: "url", default: "https://api.forwardemail.net" },
+      { key: "apiKey", label: t("API token"), type: "password", required: true },
+      { key: "domain", label: t("Domain"), type: "text", placeholder: "example.net", required: true },
     ],
     configured: (cfg) => !!(cfg.apiKey && cfg.domain),
     async createAlias(cfg, { site, note }) {
@@ -31,7 +31,7 @@
     },
     async testConnection(cfg) {
       const me = await P.http(`${base(cfg)}/v1/account`, { headers: auth(cfg) });
-      return `Signed in as ${me?.email || "?"}.`;
+      return t("Signed in as $1.", me?.email || "?");
     },
   });
 })();

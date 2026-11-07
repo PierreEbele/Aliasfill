@@ -1,6 +1,7 @@
 // Chrome MV3 background entry (Firefox loads the same files through "background.scripts").
 importScripts(
   "compat.js",
+  "i18n.js",
   "data/index.js",
   "data/at.js",
   "data/au.js",

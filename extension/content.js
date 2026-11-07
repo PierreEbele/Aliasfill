@@ -62,7 +62,7 @@
     const card = ui().querySelector(".card");
     // Parsed in an inert document, then moved in (callers escape page-provided text with esc()).
     const doc = new DOMParser().parseFromString(
-      `<div class="top"><span class="mark">A</span><span class="title">Aliasfill</span><button class="x" data-a="close" title="Close">✕</button></div>${html}`,
+      `<div class="top"><span class="mark">A</span><span class="title">Aliasfill</span><button class="x" data-a="close" title="${esc(t("Close"))}">✕</button></div>${html}`,
       "text/html",
     );
     card.replaceChildren(...doc.body.childNodes);
@@ -80,9 +80,9 @@
   function propose() {
     if (proposed || !signupForm()) return;
     proposed = true;
-    const card = render(`<p>Sign-up form detected. Generate a new identity and fill it in?</p>
-      <div class="row"><button class="b primary" data-a="fill">Generate and fill</button><button class="b ghost" data-a="later">Later</button></div>
-      <p class="muted" style="margin:8px 0 0"><a data-a="never" href="#" style="color:inherit">Don’t offer on this site again</a></p>`);
+    const card = render(`<p>${esc(t("Sign-up form detected. Generate a new identity and fill it in?"))}</p>
+      <div class="row"><button class="b primary" data-a="fill">${esc(t("Generate and fill"))}</button><button class="b ghost" data-a="later">${esc(t("Later"))}</button></div>
+      <p class="muted" style="margin:8px 0 0"><a data-a="never" href="#" style="color:inherit">${esc(t("Don’t offer on this site again"))}</a></p>`);
     card.addEventListener("click", async (e) => {
       const a = e.target.closest("[data-a]")?.dataset.a;
       if (!a) return;
@@ -93,21 +93,21 @@
         return close();
       }
       if (a === "fill") {
-        render(`<p><span class="spin"></span>Creating identity…</p>`);
+        render(`<p><span class="spin"></span>${esc(t("Creating identity…"))}</p>`);
         const r = await send({ type: "fill-new" }).catch((err) => ({ error: err.message }));
         if (r?.error)
           return render(
-            `<p>${esc(r.error)}</p><div class="row"><button class="b ghost" data-a="close">Close</button></div>`,
+            `<p>${esc(r.error)}</p><div class="row"><button class="b ghost" data-a="close">${esc(t("Close"))}</button></div>`,
           ).addEventListener("click", close);
         const n = r?.report?.filled || 0;
         if (r?.bitwarden) {
           render(
-            `<p><strong>${esc(r.name)}</strong></p><p>${n} field${n > 1 ? "s" : ""} filled. Now fill the e-mail (alias generator) and password with Bitwarden.</p>${r.codes ? `<p class="muted">The code will be pasted as soon as it arrives.</p>` : ""}`,
+            `<p><strong>${esc(r.name)}</strong></p><p>${esc(t("$1 field(s) filled. Now fill the e-mail (alias generator) and password with Bitwarden.", n))}</p>${r.codes ? `<p class="muted">${esc(t("The code will be pasted as soon as it arrives."))}</p>` : ""}`,
           ).addEventListener("click", (e2) => e2.target.closest("[data-a=close]") && close());
           return void watchEmail();
         }
         render(
-          `<p><strong>${esc(r.name)}</strong><br><span class="muted">${esc(r.email)}${r.provider ? ` · ${esc(r.provider)}` : ""}</span></p><p>${n} field${n > 1 ? "s" : ""} filled. Check it, then submit the form yourself.</p>`,
+          `<p><strong>${esc(r.name)}</strong><br><span class="muted">${esc(r.email)}${r.provider ? ` · ${esc(r.provider)}` : ""}</span></p><p>${esc(t("$1 field(s) filled. Check it, then submit the form yourself.", n))}</p>`,
         ).addEventListener("click", (e2) => e2.target.closest("[data-a=close]") && close());
         if (r.codes) void watchCode();
       }
@@ -133,7 +133,7 @@
           const r = await send({ type: "adopt-email", email }).catch(() => null);
           if (r?.ok) {
             render(
-              `<p>Disposable address recognised: <span class="muted">${esc(r.email)}</span></p><p class="muted">Submit the form; the code will be pasted as soon as it arrives.</p>`,
+              `<p>${esc(t("Disposable address recognised:"))} <span class="muted">${esc(r.email)}</span></p><p class="muted">${esc(t("Submit the form; the code will be pasted as soon as it arrives."))}</p>`,
             ).addEventListener("click", (e) => e.target.closest("[data-a=close]") && close());
             return void watchCode();
           }
@@ -167,7 +167,7 @@
     button.title = "Aliasfill";
     const value = document.createElement("span");
     value.textContent = code;
-    button.append("Fill code ", value);
+    button.append(t("Fill code") + " ", value);
     sh.append(style, button);
     sh.querySelector("button").addEventListener("click", (e) => {
       e.preventDefault();
@@ -224,14 +224,14 @@
   }
   function showCode(code, pasted) {
     const card =
-      render(`<p>${pasted ? "Code received and pasted into the page." : "Code received. No code field found on this page."}</p><div class="code">${esc(code)}</div>
-      <div class="row"><button class="b ${pasted ? "ghost" : "primary"}" data-a="copy">Copy</button>${pasted ? "" : `<button class="b ghost" data-a="retry">Paste</button>`}</div>`);
+      render(`<p>${esc(pasted ? t("Code received and pasted into the page.") : t("Code received. No code field found on this page."))}</p><div class="code">${esc(code)}</div>
+      <div class="row"><button class="b ${pasted ? "ghost" : "primary"}" data-a="copy">${esc(t("Copy"))}</button>${pasted ? "" : `<button class="b ghost" data-a="retry">${esc(t("Paste"))}</button>`}</div>`);
     card.addEventListener("click", async (e) => {
       const a = e.target.closest("[data-a]")?.dataset.a;
       if (a === "close") close();
       if (a === "copy") {
         await navigator.clipboard.writeText(code).catch(() => {});
-        e.target.textContent = "Copied";
+        e.target.textContent = t("Copied");
       }
       if (a === "retry" && pasteCode(code)) showCode(code, true);
     });
@@ -256,7 +256,7 @@
         }
         if (r?.link && /^https?:\/\//i.test(r.link)) {
           return render(
-            `<p>Confirmation e-mail received (a link, no code).</p><div class="row"><a class="b primary" style="all:unset;cursor:pointer;background:#18181b;color:#fff;padding:7px 10px;border-radius:8px;font-weight:600;font-size:12px" href="${esc(r.link)}" target="_blank" rel="noopener noreferrer">Open link</a></div>`,
+            `<p>${esc(t("Confirmation e-mail received (a link, no code)."))}</p><div class="row"><a class="b primary" style="all:unset;cursor:pointer;background:#18181b;color:#fff;padding:7px 10px;border-radius:8px;font-weight:600;font-size:12px" href="${esc(r.link)}" target="_blank" rel="noopener noreferrer">${esc(t("Open link"))}</a></div>`,
           ).addEventListener("click", (e) => e.target.closest("[data-a=close]") && close());
         }
         if (r?.error) await new Promise((res) => setTimeout(res, 5000));

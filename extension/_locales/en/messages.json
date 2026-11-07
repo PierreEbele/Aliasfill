@@ -1,0 +1,971 @@
+{
+  "extDescription": {
+    "message": "Fake identities for sign-up forms, with disposable addresses from your own domain or alias service."
+  },
+  "m12uibfn": {
+    "message": "$1 (simulated)"
+  },
+  "m1o2fw9k": {
+    "message": "$1 already filled, kept."
+  },
+  "mf7dhkm": {
+    "message": "$1 card field(s) filled."
+  },
+  "m1ert1ay": {
+    "message": "$1 field(s) edited since or unreachable, kept."
+  },
+  "mmd1ixs": {
+    "message": "$1 field(s) filled."
+  },
+  "msiptqs": {
+    "message": "$1 field(s) filled. Check it, then submit the form yourself."
+  },
+  "m1uxi0rn": {
+    "message": "$1 field(s) filled. Now fill the e-mail (alias generator) and password with Bitwarden."
+  },
+  "m1k1lma6": {
+    "message": "$1 field(s) restored."
+  },
+  "mom4rhb": {
+    "message": "$1 field(s) selected for filling."
+  },
+  "m1xo6sf2": {
+    "message": "$1 is active."
+  },
+  "m14q0gb": {
+    "message": "$1 restore(s) rejected by the site."
+  },
+  "mffhu4u": {
+    "message": "$1 returned no address."
+  },
+  "mj87wy4": {
+    "message": "$1 unreachable: $2"
+  },
+  "m10sauba": {
+    "message": "$1 value(s) rejected by the site."
+  },
+  "m18p2xqx": {
+    "message": "$1 value(s) rejected."
+  },
+  "m1qstogp": {
+    "message": "$1 · simulated"
+  },
+  "m13afgba": {
+    "message": "$1/$2 fields · $3 locked"
+  },
+  "md13xfd": {
+    "message": "(Aliasfill fills the rest and pastes the code with Throwaway Mail; Bitwarden generates the alias and password and saves them)"
+  },
+  "mr6pb8x": {
+    "message": "(Throwaway Mail → API keys → Create)"
+  },
+  "mkn7eat": {
+    "message": "(mails; empty = account default)"
+  },
+  "m1i6fy1l": {
+    "message": "(on a code page of a site with a disposable address; otherwise a “Fill code” chip offers it)"
+  },
+  "m7dk3o5": {
+    "message": ", codes fetched automatically"
+  },
+  "m1ownkpa": {
+    "message": "1 day"
+  },
+  "m3eima2": {
+    "message": "1 hour"
+  },
+  "mldjmat": {
+    "message": "1 year"
+  },
+  "mze76fw": {
+    "message": "15/15 fields · 0 locked"
+  },
+  "migz3wg": {
+    "message": "24 hours"
+  },
+  "mxy0wl5": {
+    "message": "30 days"
+  },
+  "m1foujjt": {
+    "message": "7 days"
+  },
+  "mcmwemv": {
+    "message": "90 days"
+  },
+  "m1x8n740": {
+    "message": "@example.com addresses, nothing leaves the browser"
+  },
+  "m1gnj5zn": {
+    "message": "A card field is read-only and holds another value. No field changed."
+  },
+  "m1tpf7kt": {
+    "message": "A field’s rules reject this test card. No field changed."
+  },
+  "m1wlucvy": {
+    "message": "API URL"
+  },
+  "m1pt6yna": {
+    "message": "API access token"
+  },
+  "m1swq770": {
+    "message": "API key"
+  },
+  "m1etnx6a": {
+    "message": "API token"
+  },
+  "m97w6lt": {
+    "message": "Access to $1 was denied."
+  },
+  "m10tse38": {
+    "message": "Account default (Throwaway Mail → Account → New addresses)"
+  },
+  "mv2y2ur": {
+    "message": "Address"
+  },
+  "mylfgp1": {
+    "message": "Address domain"
+  },
+  "m6b09kx": {
+    "message": "Address line 2"
+  },
+  "m16u5rmi": {
+    "message": "Address style"
+  },
+  "mk9vs54": {
+    "message": "Addresses are made up in the browser: a catch-all domain you own, or plus-addressing on your own mailbox. Nothing is sent anywhere."
+  },
+  "mq1qs3g": {
+    "message": "Addresses from $1"
+  },
+  "m1w4yz4n": {
+    "message": "Addresses from your own domain or mailbox (no network)"
+  },
+  "mk0pfa9": {
+    "message": "Alias domain"
+  },
+  "mhjywrf": {
+    "message": "Aliasfill — Settings"
+  },
+  "m2ic0uc": {
+    "message": "Allow on all sites"
+  },
+  "m7noxr": {
+    "message": "Applied, but saving it locally failed."
+  },
+  "mi2znlc": {
+    "message": "Applies to the next test card."
+  },
+  "miz45l6": {
+    "message": "Automation"
+  },
+  "m1uxjilm": {
+    "message": "Automation settings saved."
+  },
+  "m105a0cf": {
+    "message": "BIN $1 · $2. Checked on $3."
+  },
+  "m89iuln": {
+    "message": "BIN attributed to the bank by BinCheck.org; the other digits are generated with a Luhn check digit. No card is issued and no account is created. Mock-up number, not certified by the bank and not provided by Stripe for its sandbox."
+  },
+  "m1ah2v9z": {
+    "message": "BinCheck source"
+  },
+  "mmgpsf2": {
+    "message": "Birth date"
+  },
+  "mgdkxku": {
+    "message": "Birth date does not meet the site’s rules: its fields were kept."
+  },
+  "m8z9qfb": {
+    "message": "CB / Mastercard"
+  },
+  "m1odcnci": {
+    "message": "CB / Visa"
+  },
+  "mz07s1p": {
+    "message": "CVC"
+  },
+  "murkkhz": {
+    "message": "Cannot access this page. Open a regular web page and try again. Firefox protects its internal pages, its add-on store and some PDFs."
+  },
+  "mwvd7og": {
+    "message": "Cannot access this page. Open your test form and try again."
+  },
+  "m1349vyh": {
+    "message": "Cannot access this page. Use Copy."
+  },
+  "mqhuh7r": {
+    "message": "Cannot undo on this page. The fill must belong to the active tab."
+  },
+  "mwr9lv5": {
+    "message": "Card ready, but saving it locally failed."
+  },
+  "m1bm0xrq": {
+    "message": "Catch-all domain"
+  },
+  "m1n8c54v": {
+    "message": "Catch-all domain (site.random@your-domain)"
+  },
+  "mroqfn9": {
+    "message": "Check the settings."
+  },
+  "m142k4ma": {
+    "message": "City"
+  },
+  "mfk4nzi": {
+    "message": "Clear history"
+  },
+  "m1ey2qes": {
+    "message": "Click again to delete all"
+  },
+  "m1l0xxoj": {
+    "message": "Close"
+  },
+  "m1q3laya": {
+    "message": "Code copied."
+  },
+  "m6e6byx": {
+    "message": "Code pasted ($1 field(s)). Nothing submitted."
+  },
+  "m16rqphf": {
+    "message": "Code received and pasted into the page."
+  },
+  "mn96qwz": {
+    "message": "Code received. No code field found on this page."
+  },
+  "m1hra0d8": {
+    "message": "Company"
+  },
+  "mcl4900": {
+    "message": "Confirmation e-mail received (a link, no code)."
+  },
+  "m18zckua": {
+    "message": "Connected (premium)."
+  },
+  "m10e5se2": {
+    "message": "Connected."
+  },
+  "m13bzcw5": {
+    "message": "Copied"
+  },
+  "ms6g5lw": {
+    "message": "Copy"
+  },
+  "mto56if": {
+    "message": "Copy all"
+  },
+  "m1flb125": {
+    "message": "Copy number"
+  },
+  "m1a7z59s": {
+    "message": "Copy unavailable."
+  },
+  "magpceg": {
+    "message": "Copy unavailable. You can copy the displayed values by hand."
+  },
+  "m1xmaw7l": {
+    "message": "Copy unavailable. You can select the displayed values and copy them by hand."
+  },
+  "mindkoz": {
+    "message": "Could not create a disposable address: $1. Nothing was filled."
+  },
+  "m1diicx": {
+    "message": "Country"
+  },
+  "m7iz0ss": {
+    "message": "Country kept: $1 (location details locked)."
+  },
+  "mlujg1d": {
+    "message": "Country set for the next profile. Click New identity."
+  },
+  "mk0hg80": {
+    "message": "Country: France"
+  },
+  "mgk7e3h": {
+    "message": "Creating a disposable address for $1…"
+  },
+  "mvvlfga": {
+    "message": "Creating identity…"
+  },
+  "m1g8nalf": {
+    "message": "DISPOSABLE"
+  },
+  "msqcrhx": {
+    "message": "DISPOSABLE ON FILL"
+  },
+  "m16zms3r": {
+    "message": "Data type"
+  },
+  "moay2cq": {
+    "message": "Delete"
+  },
+  "mi4tu62": {
+    "message": "Delete the fake identity after"
+  },
+  "m1hjhks4": {
+    "message": "Disposable address recognised:"
+  },
+  "m1gqyxox": {
+    "message": "Domain"
+  },
+  "mgh0hy5": {
+    "message": "Don’t offer on this site again"
+  },
+  "m1imf69s": {
+    "message": "DuckDuckGo (experimental)"
+  },
+  "mdsrlbk": {
+    "message": "E-mail"
+  },
+  "meq78v5": {
+    "message": "E-mail received without a code: confirmation link available."
+  },
+  "m1t3jyhd": {
+    "message": "E-mail: $1"
+  },
+  "m1mf9rtz": {
+    "message": "Enter a valid catch-all domain."
+  },
+  "mxl3y9y": {
+    "message": "Enter your own address for plus-addressing."
+  },
+  "m2pahwg": {
+    "message": "Entry for $1 deleted."
+  },
+  "m9e2bz4": {
+    "message": "Every field is locked. Set at least one value to Free to regenerate it."
+  },
+  "mrbmqh3": {
+    "message": "Existing birth date kept as a whole."
+  },
+  "mtqh55k": {
+    "message": "Existing values kept as a whole. Tick Overwrite existing to insert the test card."
+  },
+  "m1jee0pv": {
+    "message": "Expires"
+  },
+  "mocz5wj": {
+    "message": "Expiry: $1"
+  },
+  "m12jd5tj": {
+    "message": "FRANCE · STRIPE SANDBOX"
+  },
+  "m1tf679x": {
+    "message": "FRANCE · SYNTHETIC NUMBER"
+  },
+  "mu8zz7x": {
+    "message": "Failed: $1"
+  },
+  "mi5yjzb": {
+    "message": "Fake holder: $1"
+  },
+  "msg5ofd": {
+    "message": "Fake profile"
+  },
+  "mbgygsm": {
+    "message": "Fastmail did not create the masked address."
+  },
+  "m1skadcq": {
+    "message": "Fastmail → Settings → Privacy & Security → API tokens → New token, with the Masked Email scope."
+  },
+  "m4d0paf": {
+    "message": "Field"
+  },
+  "m1uc22la": {
+    "message": "Fields found, but their rules rejected the values. No field changed."
+  },
+  "m1g5uf32": {
+    "message": "Fields to fill"
+  },
+  "mdwdroo": {
+    "message": "Fill"
+  },
+  "m1j9zzdi": {
+    "message": "Fill card"
+  },
+  "m1bx523h": {
+    "message": "Fill code"
+  },
+  "m1nsmj3y": {
+    "message": "Fill form"
+  },
+  "m1q3lxxr": {
+    "message": "Fill in “$1”."
+  },
+  "mxb3d4h": {
+    "message": "Fill one-time-code fields directly"
+  },
+  "mtyfuqh": {
+    "message": "Fill: $1"
+  },
+  "m16fb7ko": {
+    "message": "First name"
+  },
+  "mkh5d2m": {
+    "message": "Forget this provider’s key"
+  },
+  "m8ryivk": {
+    "message": "Forward Email → My Account → Security → Developer access (API token). The domain must be set up in your account."
+  },
+  "m7va5tn": {
+    "message": "Free"
+  },
+  "mfs1c68": {
+    "message": "From $1"
+  },
+  "m1jb34xe": {
+    "message": "Generate"
+  },
+  "mojqp2w": {
+    "message": "Generate a card for your test environment."
+  },
+  "m1jl2j7j": {
+    "message": "Generate an identity or fill directly."
+  },
+  "mnxznq8": {
+    "message": "Generate and fill"
+  },
+  "m1vrodzw": {
+    "message": "Generated details"
+  },
+  "m11ra12z": {
+    "message": "Generated password"
+  },
+  "m1qfy6dp": {
+    "message": "Hide"
+  },
+  "myugfpb": {
+    "message": "History"
+  },
+  "m1jrusbz": {
+    "message": "History cleared."
+  },
+  "m1cp4l44": {
+    "message": "History off (Settings)."
+  },
+  "m7l22en": {
+    "message": "Holder"
+  },
+  "m17kaqbm": {
+    "message": "Identities used per site"
+  },
+  "m1q31p6j": {
+    "message": "Identity"
+  },
+  "m1jp5rma": {
+    "message": "Identity #$1 · $2"
+  },
+  "mtgqky4": {
+    "message": "Identity restored, but saving it locally failed."
+  },
+  "m1t5x67i": {
+    "message": "Identity used on $1 copied."
+  },
+  "m1wcryq2": {
+    "message": "Identity used on $1 is back. Fill the form to use it again."
+  },
+  "m1p10gvr": {
+    "message": "Insert a disposable address here"
+  },
+  "m1lin4c6": {
+    "message": "Invalid $1 API key."
+  },
+  "mevpvk8": {
+    "message": "Invalid or expired test card. Generate a new one."
+  },
+  "mlqwbh5": {
+    "message": "Issuer per BinCheck: $1"
+  },
+  "m1ove3qo": {
+    "message": "Keep the history of identities per site"
+  },
+  "m1cuj889": {
+    "message": "Keep this value when generating"
+  },
+  "mbjwb7n": {
+    "message": "Kept $1 days."
+  },
+  "m1mfb822": {
+    "message": "Kept until deleted."
+  },
+  "mv83ou3": {
+    "message": "Key deleted. Back to @example.com addresses until another provider is set up."
+  },
+  "mypoduw": {
+    "message": "LOCAL"
+  },
+  "me5j6io": {
+    "message": "Last name"
+  },
+  "miu2tze": {
+    "message": "Last profile restored. Ready to fill a form."
+  },
+  "m4h335v": {
+    "message": "Last test card restored."
+  },
+  "m1wsths9": {
+    "message": "Later"
+  },
+  "msc8mpr": {
+    "message": "Let Bitwarden handle e-mail and password"
+  },
+  "mtdncrw": {
+    "message": "Listed BIN: $1"
+  },
+  "mpxff7b": {
+    "message": "Local part pattern"
+  },
+  "mdm59o3": {
+    "message": "Local storage unavailable."
+  },
+  "mc7tqct": {
+    "message": "Local storage unavailable. You can still generate a profile."
+  },
+  "m1vxe7pb": {
+    "message": "Lock: $1"
+  },
+  "mhvffeb": {
+    "message": "Locked"
+  },
+  "m7e62cz": {
+    "message": "Locked: “$1”."
+  },
+  "mpf2nu4": {
+    "message": "Looking for card fields…"
+  },
+  "mptiocw": {
+    "message": "Looking for form fields…"
+  },
+  "m1mxiinv": {
+    "message": "Name: $1"
+  },
+  "mt9d9b9": {
+    "message": "Network"
+  },
+  "mstcd9k": {
+    "message": "Network: $1"
+  },
+  "m1dny5gp": {
+    "message": "Never"
+  },
+  "ma53gup": {
+    "message": "Never submits automatically"
+  },
+  "m1vk0gu2": {
+    "message": "New addresses expire after"
+  },
+  "mupfr4x": {
+    "message": "New addresses stop after"
+  },
+  "m64y71p": {
+    "message": "New identity"
+  },
+  "m150rxjq": {
+    "message": "New identity for every new site"
+  },
+  "mik7f4j": {
+    "message": "New profile ready. The page was not changed."
+  },
+  "mmg28al": {
+    "message": "Next code"
+  },
+  "mdj101m": {
+    "message": "No Relay profile for this key."
+  },
+  "m1k25obn": {
+    "message": "No alias provider is set up (see the extension settings)."
+  },
+  "m145vuo4": {
+    "message": "No card form recognised. Iframes from another domain and some custom fields cannot be reached."
+  },
+  "mcig8fl": {
+    "message": "No code field found: use Copy."
+  },
+  "m649jd": {
+    "message": "No field matches your selection. Some embedded forms and custom components cannot be reached."
+  },
+  "m9wfoiu": {
+    "message": "No history"
+  },
+  "m15kj0x8": {
+    "message": "No identity"
+  },
+  "m1grrj8d": {
+    "message": "No identity filled yet. Each fill is kept here, in this browser only."
+  },
+  "mw52abd": {
+    "message": "No identity matches this search."
+  },
+  "m1qbu7zp": {
+    "message": "No known BIN for this bank/network combination. Pick another network."
+  },
+  "mh5wts0": {
+    "message": "No network needed. Example for example.com: $1"
+  },
+  "m1p92h34": {
+    "message": "No provider set up yet: identities use @example.com addresses."
+  },
+  "m1a96jdx": {
+    "message": "No service"
+  },
+  "m1vi14cr": {
+    "message": "Not found: $1."
+  },
+  "m1yi6k93": {
+    "message": "Nothing to undo on this page."
+  },
+  "m1dnx5no": {
+    "message": "Nothing was clicked or submitted."
+  },
+  "m106gadq": {
+    "message": "Nothing was saved."
+  },
+  "mpgselw": {
+    "message": "Nothing was submitted."
+  },
+  "mo3qx69": {
+    "message": "Nothing yet. Try again after asking the site to send the code."
+  },
+  "msy0cg8": {
+    "message": "Number type"
+  },
+  "mxtl675": {
+    "message": "Number: $1"
+  },
+  "m1b1lsdx": {
+    "message": "Offer a new identity on sign-up forms"
+  },
+  "mfjm7in": {
+    "message": "Official Stripe test"
+  },
+  "m13tdu5y": {
+    "message": "Official Stripe test numbers, fixed per network. The bank is a simulated label: these cards are not issued by the banks shown and cannot make any real payment."
+  },
+  "m1mf0nu3": {
+    "message": "Official Stripe test numbers. The bank is a simulated label: no real payment is possible."
+  },
+  "m1uqlryr": {
+    "message": "Open a website’s form and try again."
+  },
+  "m6g0wrz": {
+    "message": "Open link"
+  },
+  "m14y8zwd": {
+    "message": "Open the confirmation link"
+  },
+  "m1jvfpdz": {
+    "message": "Overwrite existing"
+  },
+  "mcf437c": {
+    "message": "Password"
+  },
+  "mvmwbwe": {
+    "message": "Password does not meet the site’s rules: neither field was changed."
+  },
+  "mblygko": {
+    "message": "Password shortened or simplified to meet the site’s rules (saved in the identity)."
+  },
+  "m1z09wwq": {
+    "message": "Password skipped: not recognised as a sign-up."
+  },
+  "m1razsmh": {
+    "message": "Password: $1"
+  },
+  "mc6boga": {
+    "message": "Passwords kept together to avoid a mismatched confirmation."
+  },
+  "m1dqva14": {
+    "message": "Paste"
+  },
+  "mc2zx6w": {
+    "message": "Paste a token."
+  },
+  "m3ym6f2": {
+    "message": "Paste an API key."
+  },
+  "m8k1bsm": {
+    "message": "Paste the code into the page as soon as it arrives"
+  },
+  "mkb2lhr": {
+    "message": "Phone"
+  },
+  "m43xcak": {
+    "message": "Pick among these domains (none ticked: every domain the key may use)"
+  },
+  "my7uici": {
+    "message": "Plus-addressing (you+site@your-mailbox)"
+  },
+  "m116lrsj": {
+    "message": "Postal code"
+  },
+  "m1bm6duy": {
+    "message": "Preview an address"
+  },
+  "mbnj0dw": {
+    "message": "Profile copied to the clipboard."
+  },
+  "mhkanh4": {
+    "message": "Profile copied."
+  },
+  "m15baibm": {
+    "message": "Profile ready, but saving it locally failed."
+  },
+  "miqcbst": {
+    "message": "Profile regenerated. Locked values were kept."
+  },
+  "mi2496q": {
+    "message": "Random"
+  },
+  "m8pxcyi": {
+    "message": "Random domain for each address"
+  },
+  "m9f95ck": {
+    "message": "Random number in this country's format: no range is reserved for fiction here, so it may belong to someone."
+  },
+  "m1fh9u3x": {
+    "message": "Region / State"
+  },
+  "m1n1527n": {
+    "message": "Reuse"
+  },
+  "m12e5fji": {
+    "message": "Rotate through domains"
+  },
+  "m1aezhsg": {
+    "message": "SYNTHETIC CARD — MOCK-UP, NOT A STRIPE SANDBOX CARD"
+  },
+  "mlewgh4": {
+    "message": "Save"
+  },
+  "mg3oiiv": {
+    "message": "Saved. Next fills will use $1."
+  },
+  "m16hbezb": {
+    "message": "Saved. Next fills will use your own addresses."
+  },
+  "m1m07lxf": {
+    "message": "Search a site, name or address"
+  },
+  "m1jsk6hm": {
+    "message": "Search the history"
+  },
+  "mud9alu": {
+    "message": "Server"
+  },
+  "mw8xqrr": {
+    "message": "Server URL"
+  },
+  "m1ca3vkr": {
+    "message": "Server default"
+  },
+  "m1qwfbb1": {
+    "message": "Server unreachable or invalid key."
+  },
+  "mktdb8o": {
+    "message": "Settings"
+  },
+  "mmgtgs1": {
+    "message": "Settings applied, but saving them locally failed."
+  },
+  "mbi2jq4": {
+    "message": "Show"
+  },
+  "m1a58yhz": {
+    "message": "Sign-up form detected. Generate a new identity and fill it in?"
+  },
+  "m1nqv84v": {
+    "message": "Signed in as $1 · $2 domain(s) available."
+  },
+  "m1lqtg95": {
+    "message": "Signed in as $1, Masked Email available."
+  },
+  "mw1q7vr": {
+    "message": "Signed in as $1."
+  },
+  "md2ox5t": {
+    "message": "SimpleLogin → API Keys → Create API key. Change the server only if you host SimpleLogin yourself."
+  },
+  "m3j8da1": {
+    "message": "Simulated bank"
+  },
+  "me3j3zu": {
+    "message": "Simulated bank: $1 (not actually issued)"
+  },
+  "m1y5ewkz": {
+    "message": "Site: $1"
+  },
+  "m1y13yyz": {
+    "message": "Some fields were recognised but are unticked in Fields to fill. Tick the ones to fill."
+  },
+  "m1mvlp6w": {
+    "message": "Some settings are missing: nothing would be generated."
+  },
+  "m1wp20rt": {
+    "message": "Source: $1"
+  },
+  "mh8vs89": {
+    "message": "Submit the form; the code will be pasted as soon as it arrives."
+  },
+  "m1pleygh": {
+    "message": "Synthetic number ready, with the listed bank BIN. For form mock-ups only."
+  },
+  "m1jcnvm4": {
+    "message": "Synthetic · bank BIN"
+  },
+  "m1dme1np": {
+    "message": "TEST"
+  },
+  "m1mh76t": {
+    "message": "TEST CARD — STRIPE SANDBOX"
+  },
+  "m1ddgqby": {
+    "message": "Test CVC: $1"
+  },
+  "mem56k9": {
+    "message": "Test card"
+  },
+  "m1tzi49j": {
+    "message": "Test card copied."
+  },
+  "m1nsys6m": {
+    "message": "Test card ready. The official number is fixed per network."
+  },
+  "m1qezdtj": {
+    "message": "Test connection"
+  },
+  "m194q9yg": {
+    "message": "Test number copied."
+  },
+  "m1awhxux": {
+    "message": "The browser has not yet allowed Aliasfill on websites, so it cannot detect sign-up forms or paste codes on its own."
+  },
+  "m7wo1uj": {
+    "message": "The code will be pasted as soon as it arrives."
+  },
+  "m1aze0z": {
+    "message": "The code will be pasted into the page as soon as it arrives."
+  },
+  "m1yul5bg": {
+    "message": "The detected fields already hold this test card."
+  },
+  "m59xoy5": {
+    "message": "The detected fields are already filled. Tick Overwrite existing to change them."
+  },
+  "m6coef5": {
+    "message": "The selected fields already hold the profile values."
+  },
+  "m15n79yw": {
+    "message": "The server must use HTTPS."
+  },
+  "m9os6h2": {
+    "message": "The whole history will be deleted. This cannot be undone."
+  },
+  "m19wnz4d": {
+    "message": "This looks like a sign-in or account verification form. Aliasfill skips those forms and their passwords."
+  },
+  "msltx5o": {
+    "message": "This token has no Masked Email access."
+  },
+  "m19y1frs": {
+    "message": "Tick at least one field to fill."
+  },
+  "ma7vsmh": {
+    "message": "Title"
+  },
+  "mg5fefm": {
+    "message": "Token"
+  },
+  "m1epnapi": {
+    "message": "Token saved. DuckDuckGo has no test endpoint: it is checked when the first address is created."
+  },
+  "mvmlwpb": {
+    "message": "Undo"
+  },
+  "m3fppe9": {
+    "message": "Undo the last fill on this page"
+  },
+  "m1lfz5sz": {
+    "message": "Undoing the last fill…"
+  },
+  "munnn3s": {
+    "message": "Unlock: $1"
+  },
+  "m1elqjzu": {
+    "message": "Unlocked: “$1”."
+  },
+  "m1rw8vu2": {
+    "message": "Unofficial API. The token is the one DuckDuckGo's extension stores after you sign in to Email Protection (see the extension docs). It may stop working at any time."
+  },
+  "m198snmg": {
+    "message": "Until deleted by hand"
+  },
+  "m7s11ax": {
+    "message": "Username"
+  },
+  "mw2am0k": {
+    "message": "Username: $1"
+  },
+  "m1m2g8kq": {
+    "message": "Value"
+  },
+  "mtwjadi": {
+    "message": "Value kept when generating"
+  },
+  "m1kh9uwn": {
+    "message": "Verification code"
+  },
+  "mcovvvq": {
+    "message": "Verification codes can only be fetched with Throwaway Mail, which receives the mail itself: with this provider, read the code in your mailbox."
+  },
+  "m1f56o8s": {
+    "message": "Wait for code"
+  },
+  "meotdap": {
+    "message": "Waiting for an e-mail (up to 2 min). Keep this window open."
+  },
+  "mje9zqi": {
+    "message": "Waiting…"
+  },
+  "m1fw5xqq": {
+    "message": "Where do addresses come from?"
+  },
+  "m1tfoj9y": {
+    "message": "Your address"
+  },
+  "m1xbdyns": {
+    "message": "Your own Throwaway Mail server: real disposable addresses, and the verification code they receive is pasted into the page."
+  },
+  "m1epig15": {
+    "message": "account default"
+  },
+  "mc63u04": {
+    "message": "addy.io → Settings → API → Create new API key. The domain is one of your alias domains (anonaddy.me, your username subdomain or a custom one)."
+  },
+  "mw9ejwe": {
+    "message": "expiry"
+  },
+  "m1n64z2n": {
+    "message": "holder"
+  },
+  "m1vg5ikq": {
+    "message": "https://mail.example.com"
+  },
+  "m7q2940": {
+    "message": "number"
+  },
+  "m1ezgf5o": {
+    "message": "provider"
+  },
+  "mbn08n6": {
+    "message": "relay.firefox.com → Settings → API key."
+  },
+  "m1mvb5aj": {
+    "message": "tm_…"
+  },
+  "mqce41o": {
+    "message": "{site} = site name, {random} = 6 random characters"
+  },
+  "m1p9b6et": {
+    "message": "“Fill” picks the fields on the page. “Locked” keeps the value when you generate."
+  }
+}

@@ -1,0 +1,971 @@
+{
+  "extDescription": {
+    "message": "Identidades ficticias para formularios de registro, con direcciones desechables de tu propio dominio o servicio de alias."
+  },
+  "m12uibfn": {
+    "message": "$1 (simulado)"
+  },
+  "m1o2fw9k": {
+    "message": "$1 ya rellenado(s), conservado(s)."
+  },
+  "mf7dhkm": {
+    "message": "$1 campo(s) de tarjeta rellenado(s)."
+  },
+  "m1ert1ay": {
+    "message": "$1 campo(s) modificado(s) desde entonces o inaccesible(s), conservado(s)."
+  },
+  "mmd1ixs": {
+    "message": "$1 campo(s) rellenado(s)."
+  },
+  "msiptqs": {
+    "message": "$1 campo(s) rellenado(s). Revísalo y envía el formulario tú mismo."
+  },
+  "m1uxi0rn": {
+    "message": "$1 campo(s) rellenado(s). Ahora rellena el correo (generador de alias) y la contraseña con Bitwarden."
+  },
+  "m1k1lma6": {
+    "message": "$1 campo(s) restaurado(s)."
+  },
+  "mom4rhb": {
+    "message": "$1 campo(s) seleccionado(s) para rellenar."
+  },
+  "m1xo6sf2": {
+    "message": "$1 está activo."
+  },
+  "m14q0gb": {
+    "message": "$1 restauración(es) rechazada(s) por el sitio."
+  },
+  "mffhu4u": {
+    "message": "$1 no devolvió ninguna dirección."
+  },
+  "mj87wy4": {
+    "message": "$1 inaccesible: $2"
+  },
+  "m10sauba": {
+    "message": "$1 valor(es) rechazado(s) por el sitio."
+  },
+  "m18p2xqx": {
+    "message": "$1 valor(es) rechazado(s)."
+  },
+  "m1qstogp": {
+    "message": "$1 · simulado"
+  },
+  "m13afgba": {
+    "message": "$1/$2 campos · $3 bloqueado(s)"
+  },
+  "md13xfd": {
+    "message": "(Aliasfill rellena el resto y pega el código con Throwaway Mail; Bitwarden genera el alias y la contraseña y los guarda)"
+  },
+  "mr6pb8x": {
+    "message": "(Throwaway Mail → Claves de API → Crear)"
+  },
+  "mkn7eat": {
+    "message": "(correos; vacío = valor de la cuenta)"
+  },
+  "m1i6fy1l": {
+    "message": "(en la página del código de un sitio con dirección desechable; si no, una etiqueta «Rellenar código» lo ofrece)"
+  },
+  "m7dk3o5": {
+    "message": ", códigos obtenidos automáticamente"
+  },
+  "m1ownkpa": {
+    "message": "1 día"
+  },
+  "m3eima2": {
+    "message": "1 hora"
+  },
+  "mldjmat": {
+    "message": "1 año"
+  },
+  "mze76fw": {
+    "message": "15/15 campos · 0 bloqueados"
+  },
+  "migz3wg": {
+    "message": "24 horas"
+  },
+  "mxy0wl5": {
+    "message": "30 días"
+  },
+  "m1foujjt": {
+    "message": "7 días"
+  },
+  "mcmwemv": {
+    "message": "90 días"
+  },
+  "m1x8n740": {
+    "message": "Direcciones @example.com, nada sale del navegador"
+  },
+  "m1gnj5zn": {
+    "message": "Un campo de tarjeta es de solo lectura y contiene otro valor. Ningún campo cambiado."
+  },
+  "m1tpf7kt": {
+    "message": "Las reglas de un campo rechazan esta tarjeta de prueba. Ningún campo cambiado."
+  },
+  "m1wlucvy": {
+    "message": "URL de la API"
+  },
+  "m1pt6yna": {
+    "message": "Token de acceso a la API"
+  },
+  "m1swq770": {
+    "message": "Clave de API"
+  },
+  "m1etnx6a": {
+    "message": "Token de API"
+  },
+  "m97w6lt": {
+    "message": "Acceso a $1 denegado."
+  },
+  "m10tse38": {
+    "message": "Valor de la cuenta (Throwaway Mail → Cuenta → Nuevas direcciones)"
+  },
+  "mv2y2ur": {
+    "message": "Dirección"
+  },
+  "mylfgp1": {
+    "message": "Dominio de las direcciones"
+  },
+  "m6b09kx": {
+    "message": "Línea 2 de la dirección"
+  },
+  "m16u5rmi": {
+    "message": "Estilo de dirección"
+  },
+  "mk9vs54": {
+    "message": "Las direcciones se crean en el navegador: un dominio catch-all tuyo o el direccionamiento «plus» de tu propio buzón. No se envía nada a ningún sitio."
+  },
+  "mq1qs3g": {
+    "message": "Direcciones de $1"
+  },
+  "m1w4yz4n": {
+    "message": "Direcciones de tu propio dominio o buzón (sin red)"
+  },
+  "mk0pfa9": {
+    "message": "Dominio de alias"
+  },
+  "mhjywrf": {
+    "message": "Aliasfill — Ajustes"
+  },
+  "m2ic0uc": {
+    "message": "Permitir en todos los sitios"
+  },
+  "m7noxr": {
+    "message": "Aplicado, pero no se pudo guardar localmente."
+  },
+  "mi2znlc": {
+    "message": "Se aplica a la próxima tarjeta de prueba."
+  },
+  "miz45l6": {
+    "message": "Automatización"
+  },
+  "m1uxjilm": {
+    "message": "Ajustes de automatización guardados."
+  },
+  "m105a0cf": {
+    "message": "BIN $1 · $2. Comprobado el $3."
+  },
+  "m89iuln": {
+    "message": "BIN atribuido al banco por BinCheck.org; los demás dígitos se generan con un dígito de control de Luhn. No se emite ninguna tarjeta ni se crea ninguna cuenta. Número de maqueta, no certificado por el banco ni proporcionado por Stripe para su sandbox."
+  },
+  "m1ah2v9z": {
+    "message": "Fuente BinCheck"
+  },
+  "mmgpsf2": {
+    "message": "Fecha de nacimiento"
+  },
+  "mgdkxku": {
+    "message": "La fecha de nacimiento no cumple las reglas del sitio: se conservaron sus campos."
+  },
+  "m8z9qfb": {
+    "message": "CB / Mastercard"
+  },
+  "m1odcnci": {
+    "message": "CB / Visa"
+  },
+  "mz07s1p": {
+    "message": "CVC"
+  },
+  "murkkhz": {
+    "message": "No se puede acceder a esta página. Abre una página web normal y vuelve a intentarlo. Firefox protege sus páginas internas, su tienda de complementos y algunos PDF."
+  },
+  "mwvd7og": {
+    "message": "No se puede acceder a esta página. Abre tu formulario de prueba y vuelve a intentarlo."
+  },
+  "m1349vyh": {
+    "message": "No se puede acceder a esta página. Usa Copiar."
+  },
+  "mqhuh7r": {
+    "message": "No se puede deshacer en esta página. El relleno debe pertenecer a la pestaña activa."
+  },
+  "mwr9lv5": {
+    "message": "Tarjeta lista, pero no se pudo guardar localmente."
+  },
+  "m1bm0xrq": {
+    "message": "Dominio catch-all"
+  },
+  "m1n8c54v": {
+    "message": "Dominio catch-all (sitio.aleatorio@tu-dominio)"
+  },
+  "mroqfn9": {
+    "message": "Revisa los ajustes."
+  },
+  "m142k4ma": {
+    "message": "Ciudad"
+  },
+  "mfk4nzi": {
+    "message": "Borrar historial"
+  },
+  "m1ey2qes": {
+    "message": "Haz clic de nuevo para borrarlo todo"
+  },
+  "m1l0xxoj": {
+    "message": "Cerrar"
+  },
+  "m1q3laya": {
+    "message": "Código copiado."
+  },
+  "m6e6byx": {
+    "message": "Código pegado ($1 campo(s)). No se envió nada."
+  },
+  "m16rqphf": {
+    "message": "Código recibido y pegado en la página."
+  },
+  "mn96qwz": {
+    "message": "Código recibido. No hay ningún campo de código en esta página."
+  },
+  "m1hra0d8": {
+    "message": "Empresa"
+  },
+  "mcl4900": {
+    "message": "Correo de confirmación recibido (un enlace, sin código)."
+  },
+  "m18zckua": {
+    "message": "Conectado (premium)."
+  },
+  "m10e5se2": {
+    "message": "Conectado."
+  },
+  "m13bzcw5": {
+    "message": "Copiado"
+  },
+  "ms6g5lw": {
+    "message": "Copiar"
+  },
+  "mto56if": {
+    "message": "Copiar todo"
+  },
+  "m1flb125": {
+    "message": "Copiar número"
+  },
+  "m1a7z59s": {
+    "message": "Copia no disponible."
+  },
+  "magpceg": {
+    "message": "Copia no disponible. Puedes copiar a mano los valores mostrados."
+  },
+  "m1xmaw7l": {
+    "message": "Copia no disponible. Puedes seleccionar los valores mostrados y copiarlos a mano."
+  },
+  "mindkoz": {
+    "message": "No se pudo crear una dirección desechable: $1. No se rellenó nada."
+  },
+  "m1diicx": {
+    "message": "País"
+  },
+  "m7iz0ss": {
+    "message": "País conservado: $1 (datos de ubicación bloqueados)."
+  },
+  "mlujg1d": {
+    "message": "País elegido para el próximo perfil. Haz clic en Nueva identidad."
+  },
+  "mk0hg80": {
+    "message": "País: Francia"
+  },
+  "mgk7e3h": {
+    "message": "Creando una dirección desechable para $1…"
+  },
+  "mvvlfga": {
+    "message": "Creando la identidad…"
+  },
+  "m1g8nalf": {
+    "message": "DESECHABLE"
+  },
+  "msqcrhx": {
+    "message": "DESECHABLE AL RELLENAR"
+  },
+  "m16zms3r": {
+    "message": "Tipo de datos"
+  },
+  "moay2cq": {
+    "message": "Eliminar"
+  },
+  "mi4tu62": {
+    "message": "Borrar la identidad ficticia después de"
+  },
+  "m1hjhks4": {
+    "message": "Dirección desechable reconocida:"
+  },
+  "m1gqyxox": {
+    "message": "Dominio"
+  },
+  "mgh0hy5": {
+    "message": "No volver a ofrecer en este sitio"
+  },
+  "m1imf69s": {
+    "message": "DuckDuckGo (experimental)"
+  },
+  "mdsrlbk": {
+    "message": "Correo"
+  },
+  "meq78v5": {
+    "message": "Correo recibido sin código: enlace de confirmación disponible."
+  },
+  "m1t3jyhd": {
+    "message": "Correo: $1"
+  },
+  "m1mf9rtz": {
+    "message": "Introduce un dominio catch-all válido."
+  },
+  "mxl3y9y": {
+    "message": "Introduce tu propia dirección para el direccionamiento «plus»."
+  },
+  "m2pahwg": {
+    "message": "Entrada de $1 eliminada."
+  },
+  "m9e2bz4": {
+    "message": "Todos los campos están bloqueados. Libera al menos un valor para regenerarlo."
+  },
+  "mrbmqh3": {
+    "message": "Fecha de nacimiento existente conservada entera."
+  },
+  "mtqh55k": {
+    "message": "Valores existentes conservados enteros. Marca Sobrescribir lo existente para insertar la tarjeta de prueba."
+  },
+  "m1jee0pv": {
+    "message": "Caduca"
+  },
+  "mocz5wj": {
+    "message": "Caducidad: $1"
+  },
+  "m12jd5tj": {
+    "message": "FRANCIA · SANDBOX DE STRIPE"
+  },
+  "m1tf679x": {
+    "message": "FRANCIA · NÚMERO SINTÉTICO"
+  },
+  "mu8zz7x": {
+    "message": "Error: $1"
+  },
+  "mi5yjzb": {
+    "message": "Titular ficticio: $1"
+  },
+  "msg5ofd": {
+    "message": "Perfil ficticio"
+  },
+  "mbgygsm": {
+    "message": "Fastmail no creó la dirección enmascarada."
+  },
+  "m1skadcq": {
+    "message": "Fastmail → Ajustes → Privacidad y seguridad → Tokens de API → Nuevo token, con el alcance Masked Email."
+  },
+  "m4d0paf": {
+    "message": "Campo"
+  },
+  "m1uc22la": {
+    "message": "Campos encontrados, pero sus reglas rechazan los valores. Ningún campo cambiado."
+  },
+  "m1g5uf32": {
+    "message": "Campos para rellenar"
+  },
+  "mdwdroo": {
+    "message": "Rellenar"
+  },
+  "m1j9zzdi": {
+    "message": "Rellenar tarjeta"
+  },
+  "m1bx523h": {
+    "message": "Rellenar código"
+  },
+  "m1nsmj3y": {
+    "message": "Rellenar formulario"
+  },
+  "m1q3lxxr": {
+    "message": "Rellena «$1»."
+  },
+  "mxb3d4h": {
+    "message": "Rellenar directamente los campos de código de un solo uso"
+  },
+  "mtyfuqh": {
+    "message": "Rellenar: $1"
+  },
+  "m16fb7ko": {
+    "message": "Nombre"
+  },
+  "mkh5d2m": {
+    "message": "Olvidar la clave de este proveedor"
+  },
+  "m8ryivk": {
+    "message": "Forward Email → My Account → Security → Developer access (token de API). El dominio debe estar configurado en tu cuenta."
+  },
+  "m7va5tn": {
+    "message": "Libre"
+  },
+  "mfs1c68": {
+    "message": "De $1"
+  },
+  "m1jb34xe": {
+    "message": "Generar"
+  },
+  "mojqp2w": {
+    "message": "Genera una tarjeta para tu entorno de pruebas."
+  },
+  "m1jl2j7j": {
+    "message": "Genera una identidad o rellena directamente."
+  },
+  "mnxznq8": {
+    "message": "Generar y rellenar"
+  },
+  "m1vrodzw": {
+    "message": "Datos generados"
+  },
+  "m11ra12z": {
+    "message": "Contraseña generada"
+  },
+  "m1qfy6dp": {
+    "message": "Ocultar"
+  },
+  "myugfpb": {
+    "message": "Historial"
+  },
+  "m1jrusbz": {
+    "message": "Historial borrado."
+  },
+  "m1cp4l44": {
+    "message": "Historial desactivado (Ajustes)."
+  },
+  "m7l22en": {
+    "message": "Titular"
+  },
+  "m17kaqbm": {
+    "message": "Identidades usadas por sitio"
+  },
+  "m1q31p6j": {
+    "message": "Identidad"
+  },
+  "m1jp5rma": {
+    "message": "Identidad n.º $1 · $2"
+  },
+  "mtgqky4": {
+    "message": "Identidad restaurada, pero no se pudo guardar localmente."
+  },
+  "m1t5x67i": {
+    "message": "Identidad usada en $1 copiada."
+  },
+  "m1wcryq2": {
+    "message": "La identidad usada en $1 ha vuelto. Rellena el formulario para usarla de nuevo."
+  },
+  "m1p10gvr": {
+    "message": "Insertar aquí una dirección desechable"
+  },
+  "m1lin4c6": {
+    "message": "Clave de API de $1 no válida."
+  },
+  "mevpvk8": {
+    "message": "Tarjeta de prueba no válida o caducada. Genera una nueva."
+  },
+  "mlqwbh5": {
+    "message": "Emisor según BinCheck: $1"
+  },
+  "m1ove3qo": {
+    "message": "Guardar el historial de identidades por sitio"
+  },
+  "m1cuj889": {
+    "message": "Conservar este valor al generar"
+  },
+  "mbjwb7n": {
+    "message": "Se guarda $1 días."
+  },
+  "m1mfb822": {
+    "message": "Se guarda hasta que se borre."
+  },
+  "mv83ou3": {
+    "message": "Clave eliminada. Se vuelve a las direcciones @example.com hasta que se configure otro proveedor."
+  },
+  "mypoduw": {
+    "message": "LOCAL"
+  },
+  "me5j6io": {
+    "message": "Apellidos"
+  },
+  "miu2tze": {
+    "message": "Último perfil restaurado. Listo para rellenar un formulario."
+  },
+  "m4h335v": {
+    "message": "Última tarjeta de prueba restaurada."
+  },
+  "m1wsths9": {
+    "message": "Más tarde"
+  },
+  "msc8mpr": {
+    "message": "Dejar el correo y la contraseña a Bitwarden"
+  },
+  "mtdncrw": {
+    "message": "BIN registrado: $1"
+  },
+  "mpxff7b": {
+    "message": "Patrón de la parte local"
+  },
+  "mdm59o3": {
+    "message": "Almacenamiento local no disponible."
+  },
+  "mc7tqct": {
+    "message": "Almacenamiento local no disponible. Aún puedes generar un perfil."
+  },
+  "m1vxe7pb": {
+    "message": "Bloquear: $1"
+  },
+  "mhvffeb": {
+    "message": "Bloqueado"
+  },
+  "m7e62cz": {
+    "message": "Bloqueado: «$1»."
+  },
+  "mpf2nu4": {
+    "message": "Buscando campos de tarjeta…"
+  },
+  "mptiocw": {
+    "message": "Buscando campos del formulario…"
+  },
+  "m1mxiinv": {
+    "message": "Nombre: $1"
+  },
+  "mt9d9b9": {
+    "message": "Red"
+  },
+  "mstcd9k": {
+    "message": "Red: $1"
+  },
+  "m1dny5gp": {
+    "message": "Nunca"
+  },
+  "ma53gup": {
+    "message": "Nunca envía nada automáticamente"
+  },
+  "m1vk0gu2": {
+    "message": "Las nuevas direcciones caducan después de"
+  },
+  "mupfr4x": {
+    "message": "Las nuevas direcciones se detienen después de"
+  },
+  "m64y71p": {
+    "message": "Nueva identidad"
+  },
+  "m150rxjq": {
+    "message": "Nueva identidad para cada sitio nuevo"
+  },
+  "mik7f4j": {
+    "message": "Nuevo perfil listo. La página no se ha modificado."
+  },
+  "mmg28al": {
+    "message": "Código siguiente"
+  },
+  "mdj101m": {
+    "message": "No hay perfil de Relay para esta clave."
+  },
+  "m1k25obn": {
+    "message": "No hay ningún proveedor de alias configurado (consulta los ajustes de la extensión)."
+  },
+  "m145vuo4": {
+    "message": "No se reconoce ningún formulario de tarjeta. Los iframes de otro dominio y algunos campos personalizados son inaccesibles."
+  },
+  "mcig8fl": {
+    "message": "No se encontró ningún campo de código: usa Copiar."
+  },
+  "m649jd": {
+    "message": "Ningún campo coincide con tu selección. Algunos formularios incrustados y componentes personalizados son inaccesibles."
+  },
+  "m9wfoiu": {
+    "message": "Sin historial"
+  },
+  "m15kj0x8": {
+    "message": "Ninguna identidad"
+  },
+  "m1grrj8d": {
+    "message": "Aún no se ha rellenado ninguna identidad. Cada relleno se guarda aquí, solo en este navegador."
+  },
+  "mw52abd": {
+    "message": "Ninguna identidad coincide con esta búsqueda."
+  },
+  "m1qbu7zp": {
+    "message": "No se conoce ningún BIN para este banco y esta red. Elige otra red."
+  },
+  "mh5wts0": {
+    "message": "No hace falta red. Ejemplo para example.com: $1"
+  },
+  "m1p92h34": {
+    "message": "Aún no hay proveedor configurado: las identidades usan direcciones @example.com."
+  },
+  "m1a96jdx": {
+    "message": "Ningún servicio"
+  },
+  "m1vi14cr": {
+    "message": "No encontrado: $1."
+  },
+  "m1yi6k93": {
+    "message": "Nada que deshacer en esta página."
+  },
+  "m1dnx5no": {
+    "message": "No se hizo clic ni se envió nada."
+  },
+  "m106gadq": {
+    "message": "No se guardó nada."
+  },
+  "mpgselw": {
+    "message": "No se envió nada."
+  },
+  "mo3qx69": {
+    "message": "Todavía nada. Vuelve a intentarlo después de pedir al sitio que envíe el código."
+  },
+  "msy0cg8": {
+    "message": "Tipo de número"
+  },
+  "mxtl675": {
+    "message": "Número: $1"
+  },
+  "m1b1lsdx": {
+    "message": "Ofrecer una nueva identidad en los formularios de registro"
+  },
+  "mfjm7in": {
+    "message": "Prueba oficial de Stripe"
+  },
+  "m13tdu5y": {
+    "message": "Números de prueba oficiales de Stripe, fijos por red. El banco es una etiqueta simulada: estas tarjetas no las emiten los bancos mostrados y no permiten ningún pago real."
+  },
+  "m1mf0nu3": {
+    "message": "Números de prueba oficiales de Stripe. El banco es una etiqueta simulada: no es posible ningún pago real."
+  },
+  "m1uqlryr": {
+    "message": "Abre el formulario de un sitio web y vuelve a intentarlo."
+  },
+  "m6g0wrz": {
+    "message": "Abrir enlace"
+  },
+  "m14y8zwd": {
+    "message": "Abrir el enlace de confirmación"
+  },
+  "m1jvfpdz": {
+    "message": "Sobrescribir lo existente"
+  },
+  "mcf437c": {
+    "message": "Contraseña"
+  },
+  "mvmwbwe": {
+    "message": "La contraseña no cumple las reglas del sitio: no se cambió ninguno de los dos campos."
+  },
+  "mblygko": {
+    "message": "Contraseña acortada o simplificada para cumplir las reglas del sitio (guardada en la identidad)."
+  },
+  "m1z09wwq": {
+    "message": "Contraseña omitida: no se reconoce como un registro."
+  },
+  "m1razsmh": {
+    "message": "Contraseña: $1"
+  },
+  "mc6boga": {
+    "message": "Contraseñas mantenidas juntas para evitar una confirmación distinta."
+  },
+  "m1dqva14": {
+    "message": "Pegar"
+  },
+  "mc2zx6w": {
+    "message": "Pega un token."
+  },
+  "m3ym6f2": {
+    "message": "Pega una clave de API."
+  },
+  "m8k1bsm": {
+    "message": "Pegar el código en la página en cuanto llegue"
+  },
+  "mkb2lhr": {
+    "message": "Teléfono"
+  },
+  "m43xcak": {
+    "message": "Elegir entre estos dominios (ninguno marcado: todos los dominios que puede usar la clave)"
+  },
+  "my7uici": {
+    "message": "Direccionamiento «plus» (tu+sitio@tu-buzon)"
+  },
+  "m116lrsj": {
+    "message": "Código postal"
+  },
+  "m1bm6duy": {
+    "message": "Vista previa de una dirección"
+  },
+  "mbnj0dw": {
+    "message": "Perfil copiado al portapapeles."
+  },
+  "mhkanh4": {
+    "message": "Perfil copiado."
+  },
+  "m15baibm": {
+    "message": "Perfil listo, pero no se pudo guardar localmente."
+  },
+  "miqcbst": {
+    "message": "Perfil regenerado. Se conservaron los valores bloqueados."
+  },
+  "mi2496q": {
+    "message": "Aleatorio"
+  },
+  "m8pxcyi": {
+    "message": "Dominio aleatorio para cada dirección"
+  },
+  "m9f95ck": {
+    "message": "Número aleatorio con el formato de este país: aquí no hay ningún rango reservado a la ficción, así que puede pertenecer a alguien."
+  },
+  "m1fh9u3x": {
+    "message": "Región / Estado"
+  },
+  "m1n1527n": {
+    "message": "Reutilizar"
+  },
+  "m12e5fji": {
+    "message": "Alternar entre dominios"
+  },
+  "m1aezhsg": {
+    "message": "TARJETA SINTÉTICA — MAQUETA, NO ES UNA TARJETA DEL SANDBOX DE STRIPE"
+  },
+  "mlewgh4": {
+    "message": "Guardar"
+  },
+  "mg3oiiv": {
+    "message": "Guardado. Los próximos rellenos usarán $1."
+  },
+  "m16hbezb": {
+    "message": "Guardado. Los próximos rellenos usarán tus propias direcciones."
+  },
+  "m1m07lxf": {
+    "message": "Buscar un sitio, un nombre o una dirección"
+  },
+  "m1jsk6hm": {
+    "message": "Buscar en el historial"
+  },
+  "mud9alu": {
+    "message": "Servidor"
+  },
+  "mw8xqrr": {
+    "message": "URL del servidor"
+  },
+  "m1ca3vkr": {
+    "message": "Valor del servidor"
+  },
+  "m1qwfbb1": {
+    "message": "Servidor inaccesible o clave no válida."
+  },
+  "mktdb8o": {
+    "message": "Ajustes"
+  },
+  "mmgtgs1": {
+    "message": "Ajustes aplicados, pero no se pudieron guardar localmente."
+  },
+  "mbi2jq4": {
+    "message": "Mostrar"
+  },
+  "m1a58yhz": {
+    "message": "Formulario de registro detectado. ¿Generar una nueva identidad y rellenarlo?"
+  },
+  "m1nqv84v": {
+    "message": "Sesión iniciada como $1 · $2 dominio(s) disponible(s)."
+  },
+  "m1lqtg95": {
+    "message": "Sesión iniciada como $1, Masked Email disponible."
+  },
+  "mw1q7vr": {
+    "message": "Sesión iniciada como $1."
+  },
+  "md2ox5t": {
+    "message": "SimpleLogin → API Keys → Create API key. Cambia el servidor solo si alojas SimpleLogin tú mismo."
+  },
+  "m3j8da1": {
+    "message": "Banco simulado"
+  },
+  "me3j3zu": {
+    "message": "Banco simulado: $1 (tarjeta no emitida)"
+  },
+  "m1y5ewkz": {
+    "message": "Sitio: $1"
+  },
+  "m1y13yyz": {
+    "message": "Se reconocieron algunos campos, pero están desmarcados en Campos para rellenar. Marca los que quieras rellenar."
+  },
+  "m1mvlp6w": {
+    "message": "Faltan ajustes: no se generaría nada."
+  },
+  "m1wp20rt": {
+    "message": "Fuente: $1"
+  },
+  "mh8vs89": {
+    "message": "Envía el formulario; el código se pegará en cuanto llegue."
+  },
+  "m1pleygh": {
+    "message": "Número sintético listo, con el BIN registrado del banco. Solo para maquetas de formularios."
+  },
+  "m1jcnvm4": {
+    "message": "Sintético · BIN bancario"
+  },
+  "m1dme1np": {
+    "message": "PRUEBA"
+  },
+  "m1mh76t": {
+    "message": "TARJETA DE PRUEBA — SANDBOX DE STRIPE"
+  },
+  "m1ddgqby": {
+    "message": "CVC de prueba: $1"
+  },
+  "mem56k9": {
+    "message": "Tarjeta de prueba"
+  },
+  "m1tzi49j": {
+    "message": "Tarjeta de prueba copiada."
+  },
+  "m1nsys6m": {
+    "message": "Tarjeta de prueba lista. El número oficial es fijo por red."
+  },
+  "m1qezdtj": {
+    "message": "Probar la conexión"
+  },
+  "m194q9yg": {
+    "message": "Número de prueba copiado."
+  },
+  "m1awhxux": {
+    "message": "El navegador aún no ha permitido Aliasfill en los sitios web, así que no puede detectar formularios de registro ni pegar códigos por sí solo."
+  },
+  "m7wo1uj": {
+    "message": "El código se pegará en cuanto llegue."
+  },
+  "m1aze0z": {
+    "message": "El código se pegará en la página en cuanto llegue."
+  },
+  "m1yul5bg": {
+    "message": "Los campos detectados ya contienen esta tarjeta de prueba."
+  },
+  "m59xoy5": {
+    "message": "Los campos detectados ya están rellenados. Marca Sobrescribir lo existente para cambiarlos."
+  },
+  "m6coef5": {
+    "message": "Los campos seleccionados ya contienen los valores del perfil."
+  },
+  "m15n79yw": {
+    "message": "El servidor debe usar HTTPS."
+  },
+  "m9os6h2": {
+    "message": "Se borrará todo el historial. No se puede deshacer."
+  },
+  "m19wnz4d": {
+    "message": "Parece un formulario de inicio de sesión o de verificación de cuenta. Aliasfill omite esos formularios y sus contraseñas."
+  },
+  "msltx5o": {
+    "message": "Este token no tiene acceso a Masked Email."
+  },
+  "m19y1frs": {
+    "message": "Marca al menos un campo para rellenar."
+  },
+  "ma7vsmh": {
+    "message": "Tratamiento"
+  },
+  "mg5fefm": {
+    "message": "Token"
+  },
+  "m1epnapi": {
+    "message": "Token guardado. DuckDuckGo no tiene un punto de prueba: se comprueba al crear la primera dirección."
+  },
+  "mvmlwpb": {
+    "message": "Deshacer"
+  },
+  "m3fppe9": {
+    "message": "Deshacer el último relleno en esta página"
+  },
+  "m1lfz5sz": {
+    "message": "Deshaciendo el último relleno…"
+  },
+  "munnn3s": {
+    "message": "Desbloquear: $1"
+  },
+  "m1elqjzu": {
+    "message": "Desbloqueado: «$1»."
+  },
+  "m1rw8vu2": {
+    "message": "API no oficial. El token es el que guarda la extensión de DuckDuckGo tras iniciar sesión en Email Protection (consulta la documentación de la extensión). Puede dejar de funcionar en cualquier momento."
+  },
+  "m198snmg": {
+    "message": "Hasta borrarlo a mano"
+  },
+  "m7s11ax": {
+    "message": "Nombre de usuario"
+  },
+  "mw2am0k": {
+    "message": "Nombre de usuario: $1"
+  },
+  "m1m2g8kq": {
+    "message": "Valor"
+  },
+  "mtwjadi": {
+    "message": "Valor conservado al generar"
+  },
+  "m1kh9uwn": {
+    "message": "Código de verificación"
+  },
+  "mcovvvq": {
+    "message": "Los códigos de verificación solo se pueden obtener con Throwaway Mail, que recibe el correo él mismo: con este proveedor, lee el código en tu buzón."
+  },
+  "m1f56o8s": {
+    "message": "Esperar el código"
+  },
+  "meotdap": {
+    "message": "Esperando un correo (hasta 2 min). Mantén esta ventana abierta."
+  },
+  "mje9zqi": {
+    "message": "Esperando…"
+  },
+  "m1fw5xqq": {
+    "message": "¿De dónde vienen las direcciones?"
+  },
+  "m1tfoj9y": {
+    "message": "Tu dirección"
+  },
+  "m1xbdyns": {
+    "message": "Tu propio servidor Throwaway Mail: direcciones desechables reales, y el código de verificación que reciben se pega en la página."
+  },
+  "m1epig15": {
+    "message": "valor de la cuenta"
+  },
+  "mc63u04": {
+    "message": "addy.io → Settings → API → Create new API key. El dominio es uno de tus dominios de alias (anonaddy.me, el subdominio de tu nombre de usuario o uno propio)."
+  },
+  "mw9ejwe": {
+    "message": "caducidad"
+  },
+  "m1n64z2n": {
+    "message": "titular"
+  },
+  "m1vg5ikq": {
+    "message": "https://mail.example.com"
+  },
+  "m7q2940": {
+    "message": "número"
+  },
+  "m1ezgf5o": {
+    "message": "proveedor"
+  },
+  "mbn08n6": {
+    "message": "relay.firefox.com → Settings → API key."
+  },
+  "m1mvb5aj": {
+    "message": "tm_…"
+  },
+  "mqce41o": {
+    "message": "{site} = nombre del sitio, {random} = 6 caracteres aleatorios"
+  },
+  "m1p9b6et": {
+    "message": "«Rellenar» elige los campos de la página. «Bloqueado» conserva el valor al generar."
+  }
+}
