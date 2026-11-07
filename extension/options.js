@@ -83,8 +83,29 @@ async function loadDomains(cfg, selected) {
   );
   for (const d of data.domains || []) $("domain").add(new Option(d.name, d.name));
   $("domain").value = selected || "";
+  const { domainPool } = await Throwaway.config();
+  $("domain-pool-list").replaceChildren(
+    ...(data.domains || []).map((d) => {
+      const label = document.createElement("label");
+      label.className = "check";
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      box.value = d.name;
+      box.checked = domainPool.includes(d.name);
+      label.append(box, ` ${d.name}`);
+      return label;
+    }),
+  );
+  syncDomainPool();
   return data.domains?.length || 0;
 }
+
+// The domain list only matters for a random or rotating domain.
+function syncDomainPool() {
+  $("domain-pool").hidden = !Throwaway.CHOICES.includes($("domain").value) || !$("domain-pool-list").children.length;
+}
+$("domain").addEventListener("change", syncDomainPool);
+const domainPool = () => [...$("domain-pool-list").querySelectorAll("input:checked")].map((x) => x.value);
 
 async function loadThrowaway() {
   const cfg = await Throwaway.config();
@@ -143,6 +164,7 @@ $("form").addEventListener("submit", async (event) => {
         tmServer: cfg.server,
         tmApiKey: cfg.apiKey,
         tmDomain: cfg.domain,
+        tmDomainPool: Throwaway.CHOICES.includes(cfg.domain) ? domainPool() : [],
         tmExpiresDays: Number($("expires-days").value) || 0,
         tmMaxMessages: Number($("max-messages").value) || 0,
       });
@@ -190,6 +212,8 @@ for (const id of Object.keys(TOGGLES))
     if ($("auto-prompt").checked || $("auto-code").checked) await browser.permissions.request(ALL_SITES).catch(() => {});
     status("Automation settings saved.");
   });
+
+$("version").textContent = `Aliasfill ${browser.runtime.getManifest().version}`;
 
 (async () => {
   const flags = await browser.storage.local.get(Object.values(TOGGLES));

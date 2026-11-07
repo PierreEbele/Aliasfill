@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="options.css" />
   </head>
   <body class="options">
-    <h1>Settings</h1>
+    <h1>Settings <span id="version" class="hint"></span></h1>
     <div id="perm-banner" class="perm" hidden>
       <p>The browser has not yet allowed Aliasfill on websites, so it cannot detect sign-up forms or paste codes on its own.</p>
       <button id="perm-grant" class="primary" type="button">Allow on all sites</button>
@@ -26,6 +26,10 @@
         <select id="domain">
           <option value="">Server default</option>
         </select>
+        <div id="domain-pool" hidden>
+          <span class="hint">Pick among these domains (none ticked: every domain the key may use)</span>
+          <div id="domain-pool-list"></div>
+        </div>
         <label for="expires-days">New addresses expire after</label>
         <select id="expires-days">
           <option value="0">Account default (Throwaway Mail → Account → New addresses)</option>

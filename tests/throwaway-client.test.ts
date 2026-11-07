@@ -56,10 +56,18 @@ describe("Throwaway Mail client", () => {
     await tm.createAddress("https://a.example/", "x");
     store.tmDomain = "b.example.test";
     await tm.createAddress("https://b.example/", "x");
+    store.tmDomain = "@rotate";
+    store.tmDomainPool = ["a.example.test", "c.example.test"];
+    await tm.createAddress("https://c.example/", "x");
+    store.tmDomain = "a.example.test"; // a fixed domain ignores the pool
+    await tm.createAddress("https://d.example/", "x");
     expect(bodies[0]).toMatchObject({ domain_choice: "random" });
     expect(bodies[0].preferred_domain).toBeUndefined();
     expect(bodies[1]).toMatchObject({ preferred_domain: "b.example.test" });
     expect(bodies[1].domain_choice).toBeUndefined();
+    expect(bodies[0].domain_pool).toBeUndefined();
+    expect(bodies[2]).toMatchObject({ domain_choice: "rotate", domain_pool: ["a.example.test", "c.example.test"] });
+    expect(bodies[3].domain_pool).toBeUndefined();
   });
 
   it("reports an invalid key and refuses plain-http servers", async () => {

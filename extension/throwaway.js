@@ -2,7 +2,7 @@
 // Throwaway Mail API client (Bearer API key). Shared by the popup and the options page.
 // The key stays in this browser profile's extension storage (browser.storage.local) and is only sent to the configured server.
 const Throwaway = (() => {
-  const KEYS = ["tmServer", "tmApiKey", "tmDomain", "tmExpiresDays", "tmMaxMessages"];
+  const KEYS = ["tmServer", "tmApiKey", "tmDomain", "tmDomainPool", "tmExpiresDays", "tmMaxMessages"];
 
   const CHOICES = ["@random", "@rotate"];
 
@@ -18,6 +18,8 @@ const Throwaway = (() => {
       server: saved.tmServer || "",
       apiKey: saved.tmApiKey || "",
       domain: saved.tmDomain || "",
+      // Domains a random or rotating choice picks among (empty: every domain the key may use).
+      domainPool: Array.isArray(saved.tmDomainPool) ? saved.tmDomainPool : [],
       expiresDays: Number(saved.tmExpiresDays) || 0,
       maxMessages: Number(saved.tmMaxMessages) || 0,
     };
@@ -61,6 +63,7 @@ const Throwaway = (() => {
         // "@random" / "@rotate" pick among the server's domains; a name is preferred, not forced: the server skips
         // a domain this site is known to reject.
         ...(CHOICES.includes(c.domain) ? { domain_choice: c.domain.slice(1) } : c.domain ? { preferred_domain: c.domain } : {}),
+        ...(CHOICES.includes(c.domain) && c.domainPool.length ? { domain_pool: c.domainPool } : {}),
         ...(c.expiresDays ? { expires_in_days: c.expiresDays } : {}),
         ...(c.maxMessages ? { max_messages: c.maxMessages } : {}),
       },
