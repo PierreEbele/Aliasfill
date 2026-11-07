@@ -576,6 +576,7 @@ $("tm-settings").addEventListener("click", (event) => {
   window.close();
 });
 
+$("version").textContent = `Aliasfill ${browser.runtime.getManifest().version}`;
 syncControls();
 (async () => {
   try {
