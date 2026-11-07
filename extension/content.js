@@ -48,12 +48,12 @@
       .code{font:600 22px ui-monospace,monospace;letter-spacing:3px;margin:4px 0 10px;color:#18181b}
       .row{display:flex;gap:6px}
       button.b{all:unset;cursor:pointer;text-align:center;padding:7px 10px;border-radius:8px;font-weight:600;font-size:12px}
-      .primary{background:#18181b;color:#fff;flex:1}.primary:hover{background:#3f3f46}
-      .ghost{color:#3f3f46;border:1px solid #e4e4e7}.ghost:hover{background:#f4f4f5}
+      button.primary{background:#18181b;color:#fff;flex:1}button.primary:hover{background:#3f3f46}
+      button.ghost{color:#3f3f46;border:1px solid #e4e4e7}button.ghost:hover{background:#f4f4f5}
       .muted{color:#71717a;font-size:11px}
       .spin{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:6px;animation:p 1.2s infinite}
       @keyframes p{50%{opacity:.25}}
-      @media (prefers-color-scheme:dark){.card{background:#18181b;color:#fafafa;border-color:#3f3f46}.mark{background:#fafafa;color:#18181b}p{color:#a1a1aa}.code{color:#fafafa}.primary{background:#fafafa;color:#18181b}.primary:hover{background:#d4d4d8}.ghost{color:#e4e4e7;border-color:#3f3f46}.ghost:hover,.x:hover{background:#27272a}}
+      @media (prefers-color-scheme:dark){.card{background:#18181b;color:#fafafa;border-color:#3f3f46}.mark{background:#fafafa;color:#18181b}p{color:#a1a1aa}.code{color:#fafafa}button.primary{background:#fafafa;color:#18181b}button.primary:hover{background:#d4d4d8}button.ghost{color:#e4e4e7;border-color:#3f3f46}button.ghost:hover,.x:hover{background:#27272a}}
     </style><div class="card" part="card"></div>`;
     document.documentElement.append(host);
     return root;
