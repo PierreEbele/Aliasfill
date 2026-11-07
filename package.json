@@ -1,6 +1,6 @@
 {
   "name": "aliasfill",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": true,
   "description": "Browser extension: fake identities for sign-up forms, with a disposable address from your own domain or alias service",
   "license": "MIT",
