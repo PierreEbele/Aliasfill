@@ -34,6 +34,11 @@ AliasfillCountries.register({
       "Hermans",
     ],
   },
+  // Titles by language, first one shown; all of them are recognised in a form's title select.
+  titles: { fr: { female: ["Mme", "Madame"], male: ["M.", "Monsieur"] }, nl: { female: ["Mevr.", "Mevrouw"], male: ["Dhr.", "De heer"] } },
+  companySuffixes: ["SRL", "SA", "BV", "NV"],
+  // Second address line: # is a number, @ a letter.
+  address2: ["Boîte #", "Bus #"],
   // Street names by language; each place says which list it uses.
   streets: {
     fr: [

@@ -33,6 +33,15 @@ AliasfillCountries.register({
       "Rossi",
     ],
   },
+  // Titles by language, first one shown; all of them are recognised in a form's title select.
+  titles: {
+    de: { female: ["Frau"], male: ["Herr"] },
+    fr: { female: ["Mme", "Madame"], male: ["M.", "Monsieur"] },
+    it: { female: ["Sig.ra", "Signora"], male: ["Sig.", "Signore"] },
+  },
+  companySuffixes: ["AG", "GmbH", "Sàrl", "SA"],
+  // Second address line: # is a number, @ a letter.
+  address2: ["Wohnung #", "Appartement #", "Postfach #"],
   // Street names by language; each place says which list it uses.
   streets: {
     de: ["Bahnhofstrasse", "Hauptstrasse", "Dorfstrasse", "Kirchweg", "Schulstrasse", "Gartenstrasse", "Seestrasse", "Industriestrasse"],

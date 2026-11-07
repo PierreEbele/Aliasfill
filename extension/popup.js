@@ -161,7 +161,7 @@ function syncControls() {
 }
 async function saveSettings() {
   try {
-    await browser.storage.local.set({ selectedFields: [...selectedFields], lockedFields: [...lockedFields], settingsVersion: 3 });
+    await browser.storage.local.set({ selectedFields: [...selectedFields], lockedFields: [...lockedFields], settingsVersion: 4 });
   } catch {
     status("Settings applied, but saving them locally failed.", true);
   }
@@ -205,7 +205,12 @@ function render() {
     "full-name": "fullName",
     "first-name": "firstName",
     "last-name": "lastName",
+    civility: "title",
+    username: "username",
+    company: "company",
     address: "address",
+    address2: "address2",
+    region: "region",
     city: "city",
     "postal-code": "postalCode",
     country: "country",
@@ -262,7 +267,7 @@ $("generate").addEventListener("click", async () => {
 $("copy").addEventListener("click", async () => {
   if (!profile) return;
   const text = Object.entries(fieldLabels)
-    .map(([key, label]) => `${label}: ${key === "birthDate" ? profile[key].split("-").reverse().join("/") : profile[key]}`)
+    .map(([key, label]) => `${label}: ${key === "birthDate" ? profile[key].split("-").reverse().join("/") : (profile[key] ?? "")}`)
     .join("\n");
   try {
     await navigator.clipboard.writeText(text);
@@ -619,6 +624,8 @@ syncControls();
       $("country-mode").value = saved.countryMode;
     if (!settingsTouched) {
       if (Array.isArray(saved.selectedFields)) selectedFields = new Set(saved.selectedFields.filter((key) => fieldKeys.includes(key)));
+      // Fields added since the selection was saved are offered first, so the older checks below still apply.
+      selectedFields = new Set(ThrowawayGenerator.upgradeSelection([...selectedFields], saved.settingsVersion));
       if (
         (!saved.settingsVersion || saved.settingsVersion < 2) &&
         fieldKeys.filter((key) => key !== "password" && key !== "birthDate").every((key) => selectedFields.has(key))
@@ -661,12 +668,17 @@ syncControls();
         profile = { ...profile, password: ThrowawayGenerator.generatePassword() };
         upgradedProfile = true;
       }
+      const completed = ThrowawayGenerator.complete(profile);
+      if (completed !== profile) {
+        profile = completed;
+        upgradedProfile = true;
+      }
       revision = saved.revision || 1;
       render();
       status("Last profile restored. Ready to fill a form.");
       if (upgradedProfile) await browser.storage.local.set({ profile });
     }
-    if (saved.settingsVersion !== 3) await saveSettings();
+    if (saved.settingsVersion !== 4) await saveSettings();
     syncControls();
     await tmRender();
     if (profile?.throwaway?.id && canFetchCodes()) void tmPoll(0);

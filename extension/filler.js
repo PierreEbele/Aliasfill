@@ -3,9 +3,25 @@
   // The popup reinjects this file on each fill; keep the last transaction alive.
   if (root.ThrowawayFill?.version === "2.0") return;
   let lastFill = null;
-  const fieldKeys = ["firstName", "lastName", "address", "city", "postalCode", "country", "email", "phone", "birthDate", "password"];
+  const fieldKeys = [
+    "title",
+    "firstName",
+    "lastName",
+    "username",
+    "company",
+    "address",
+    "address2",
+    "city",
+    "postalCode",
+    "region",
+    "country",
+    "email",
+    "phone",
+    "birthDate",
+    "password",
+  ];
   function allowed(key, selected) {
-    if (key === "fullName" || key === "username") return selected.has("firstName") && selected.has("lastName");
+    if (key === "fullName") return selected.has("firstName") && selected.has("lastName");
     if (key === "phoneNational" || key === "phoneCountryCode") return selected.has("phone");
     if (["birthDay", "birthMonth", "birthYear"].includes(key)) return selected.has("birthDate");
     return selected.has(key);
@@ -38,11 +54,16 @@
       .replace(/[^a-z0-9]+/g, " ")
       .trim();
   const rules = [
+    [
+      "title",
+      /^(title|titre|civilite|salutation|anrede|tratamiento|titolo|aanhef|honorific(?: prefix)?|name prefix)$|\b(civilite|anrede|aanhef)\b/,
+    ],
     ["firstName", /\b(first\s*name|given\s*name|forename|prenom|vorname|nombre|nome di battesimo|voornaam|fname)\b/],
     ["lastName", /\b(last\s*name|sur\s*name|family\s*name|nom de famille|nachname|familienname|apellido\w*|cognome|achternaam|lname)\b/],
     ["email", /\b(e\s*mail|emailaddress|courriel|correo(?: electronico)?|posta elettronica)\b/],
     ["postalCode", /\b(post\s*(?:al\s*)?code|zip\s*(?:code)?|zipcode|code postal|codigo postal|postleitzahl|plz|postcode|cap)\b/],
     ["country", /\b(country(?:\s*(?:code|name))?|pays|pais|land|paese)\b/],
+    ["region", /\b(state|province|region|departement|bundesland|kanton|canton|provincia|regione|provincie|county)\b/],
     ["city", /\b(city|town|ville|localite|ciudad|citta|stadt|ort|woonplaats)\b/],
     ["phone", /\b(phone(?:\s*number)?|telephone|tel|mobile|portable|telefon(?:nummer)?|telefono|cellulare|telefoon)\b/],
     ["address2", /\b(address\s*(?:line\s*)?2|adresse\s*2|complement|apartment|suite|building|batiment)\b/],
@@ -60,6 +81,9 @@
     "street-address": "address",
     "address-line1": "address",
     "address-line2": "address2",
+    "address-level1": "region",
+    "honorific-prefix": "title",
+    organization: "company",
     "address-level2": "city",
     "postal-code": "postalCode",
     country: "country",
@@ -113,7 +137,7 @@
       return "email";
     if (
       auto &&
-      /^(username|current-password|one-time-code|cc-.+|bday.*|sex|organization.*|address-level[134]|address-line3|tel-(area-code|local.*|extension))$/.test(
+      /^(username|current-password|one-time-code|cc-.+|bday.*|sex|organization-title|address-level[34]|address-line3|tel-(area-code|local.*|extension))$/.test(
         auto,
       )
     )
@@ -140,6 +164,14 @@
       texts.some((text) => /^(user ?name|nom d utilisateur|pseudo|pseudonyme|benutzername|nombre de usuario)\b/.test(text))
     )
       return "username";
+    if (
+      texts.some((text) =>
+        /^(company|company name|business name|entreprise|societe|raison sociale|organisation|organization|firma|firmenname|unternehmen|empresa|azienda|ragione sociale|bedrijf|bedrijfsnaam)\b/.test(
+          text,
+        ),
+      )
+    )
+      return "company";
     if (
       texts.some((text) =>
         /\b(search|recherche|captcha|honeypot|website|url|password|mot de passe|username|login|subject|objet|message|company|entreprise|organisation|organization|fax|birth|naissance|iban|card number|account number)\b/.test(
@@ -190,8 +222,15 @@
     return controls;
   }
   function selectValue(el, key, data) {
-    const candidates = key === "country" ? data.countryAliases : [data[key]];
-    const expected = candidates.map(normalize);
+    const candidates =
+      key === "country"
+        ? data.countryAliases
+        : key === "title"
+          ? data.titleAliases || [data.title]
+          : key === "region"
+            ? [data.region, data.regionCode]
+            : [data[key]];
+    const expected = candidates.filter(Boolean).map(normalize);
     for (const option of el.options) {
       if (option.disabled || option.parentElement?.disabled || !option.value) continue;
       if (expected.includes(normalize(option.value)) || expected.includes(normalize(option.textContent))) return option.value;
@@ -212,6 +251,7 @@
             .padEnd(3, "7")
       );
     if (el.tagName === "SELECT") return selectValue(el, key, data);
+    if (key === "region" && el.maxLength > 0 && el.maxLength <= 3) return data.regionCode || null;
     if (key === "country")
       return /code|iso/.test(normalize(el.name + " " + el.id)) || (el.maxLength > 0 && el.maxLength <= 3)
         ? data.countryCode
@@ -619,7 +659,7 @@
     for (const el of scan(root.document)) {
       if (!visible(el)) continue;
       const key = classify(el);
-      if (!key || key === "address2") continue;
+      if (!key) continue;
       const group = el.form || el.closest('[role="form"]') || el.getRootNode();
       if (!groups.has(group)) groups.set(group, []);
       groups.get(group).push({ el, key });
@@ -737,8 +777,12 @@
         else report.excluded++;
         continue;
       }
-      // A country without a range reserved for fiction has no phone: its fields are left alone.
-      if (["phone", "phoneNational", "phoneCountryCode"].includes(key) && !data.phone) {
+      // A country without a range reserved for fiction has no phone, and an identity saved by an older version
+      // may lack the newer details: those fields are left alone.
+      if (
+        (["phone", "phoneNational", "phoneCountryCode"].includes(key) && !data.phone) ||
+        (["title", "company", "address2", "region"].includes(key) && !data[key])
+      ) {
         report.excluded++;
         continue;
       }

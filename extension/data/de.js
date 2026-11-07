@@ -33,6 +33,11 @@ AliasfillCountries.register({
       "Yılmaz",
     ],
   },
+  // Titles, first one shown; all of them are recognised in a form's title select.
+  titles: { female: ["Frau"], male: ["Herr"] },
+  companySuffixes: ["GmbH", "KG", "& Partner", "UG"],
+  // Second address line: # is a number, @ a letter.
+  address2: ["Wohnung #", "Hinterhaus", "#. OG"],
   streets: [
     "Hauptstraße",
     "Schulstraße",

@@ -33,6 +33,11 @@ AliasfillCountries.register({
       "Wong",
     ],
   },
+  // Titles by language, first one shown; all of them are recognised in a form's title select.
+  titles: { en: { female: ["Ms.", "Mrs."], male: ["Mr."] }, fr: { female: ["Mme", "Madame"], male: ["M.", "Monsieur"] } },
+  companySuffixes: ["Inc.", "Ltd.", "Ltée", "& Associates"],
+  // Second address line: # is a number, @ a letter.
+  address2: ["Apt #", "Suite #", "Unit #"],
   // Street names by language; each place says which list it uses.
   streets: {
     en: ["Main Street", "King Street", "Queen Street", "Maple Avenue", "Church Street", "Victoria Street", "Park Avenue", "Elm Street"],

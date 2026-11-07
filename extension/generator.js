@@ -3,19 +3,47 @@
   // Country sheets (data/*.js), loaded before this file.
   const countries = root.AliasfillCountries;
   const fields = Object.freeze({
+    title: "Title",
     firstName: "First name",
     lastName: "Last name",
+    username: "Username",
+    company: "Company",
     address: "Address",
+    address2: "Address line 2",
     city: "City",
     postalCode: "Postal code",
+    region: "Region / State",
     country: "Country",
     email: "E-mail",
     phone: "Phone",
     birthDate: "Birth date",
     password: "Password",
   });
-  const localFields = ["country", "address", "city", "postalCode", "phone"];
+  // Fields added by version 4 of the settings: added to a selection saved before them.
+  const fieldsAddedInV4 = ["title", "username", "company", "address2", "region"];
+  const upgradeSelection = (selected, version = 0) => (version < 4 ? [...new Set([...selected, ...fieldsAddedInV4])] : selected);
+  const localFields = ["country", "address", "city", "postalCode", "region", "phone"];
   const isCountryLocked = (locks) => localFields.some((key) => locks.includes(key));
+  // Words usable in an e-mail or a username: no accents, spaces or punctuation.
+  const ascii = (text) =>
+    text
+      .replace(/ı/g, "i")
+      .replace(/ß/g, "ss")
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "");
+  // English titles and words for the sex, also recognised in a title or gender select.
+  const englishTitles = { female: ["Mrs", "Ms", "Miss", "Madam", "Female", "Woman", "F"], male: ["Mr", "Sir", "Male", "Man", "M"] };
+  const titlesOf = (sheet, place) => (sheet.titles.female ? sheet.titles : sheet.titles[place?.language] || Object.values(sheet.titles)[0]);
+  function genderOf(firstName) {
+    for (const code of countries.codes()) {
+      const { names } = countries.get(code);
+      if (names.female.includes(firstName)) return "female";
+      if (names.male.includes(firstName)) return "male";
+    }
+    return null;
+  }
   function integer(max) {
     const range = 0x100000000;
     const limit = range - (range % max);
@@ -224,11 +252,15 @@
     const keepCountry = previous && isCountryLocked([...locks]) && codes.includes(previous.countryCode);
     const countryCode = keepCountry ? previous.countryCode : codes.includes(countryMode) ? countryMode : pick(codes);
     const sheet = countries.get(countryCode);
-    const firstName = pick([...sheet.names.female, ...sheet.names.male]),
+    // The title follows the first name: a kept first name or title keeps its gender.
+    const keptGender = previous && (locks.has("firstName") || locks.has("title")) ? previous.gender || genderOf(previous.firstName) : null;
+    const gender = keptGender || pick(["female", "male"]);
+    const firstName = pick(sheet.names[gender]),
       lastName = pick(sheet.names.last);
     const place = pick(sheet.places);
-    // Multilingual countries keep street names by language, each place naming its own.
+    // Multilingual countries keep street names and titles by language, each place naming its own.
     const streets = Array.isArray(sheet.streets) ? sheet.streets : sheet.streets[place.language];
+    const titles = titlesOf(sheet, place);
     // No phone for a country without a range reserved for fiction.
     const phone = sheet.phone ? sheet.phone.generate(rand, place) : { national: "", phone: "" };
     const profile = {
@@ -237,18 +269,22 @@
       countryAliases: [...sheet.countryAliases],
       phoneCountryCode: sheet.phoneCountryCode,
       countryCode,
+      gender,
+      title: titles[gender][0],
+      titleAliases: [...titles[gender], ...englishTitles[gender]],
       firstName,
       lastName,
       fullName: `${firstName} ${lastName}`,
+      company: `${pick(sheet.names.last)} ${pick(sheet.companySuffixes)}`,
       address: sheet.address(integer(150) + 1, pick(streets)),
-      address2: "",
+      address2: pick(sheet.address2)
+        .replace("#", () => String(integer(40) + 1))
+        .replace("@", () => pick("ABCDEF")),
       city: place.city,
       region: place.region,
+      regionCode: place.regionCode || "",
       postalCode: sheet.postalCode(place, rand),
-      email: `${firstName}.${lastName}.${token}@example.com`
-        .normalize("NFKD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase(),
+      email: `${ascii(firstName)}.${ascii(lastName)}.${token}@example.com`,
       phone: phone.phone,
       phoneNational: phone.national,
       birthDate: generateBirthDate(),
@@ -256,18 +292,40 @@
     };
     if (previous) {
       for (const key of locks) if (typeof previous[key] === "string") profile[key] = previous[key];
-      if (locks.has("city") && typeof previous.region === "string") profile.region = previous.region;
+      if (locks.has("title") && Array.isArray(previous.titleAliases)) profile.titleAliases = previous.titleAliases;
+      // A kept town keeps its region.
+      if (locks.has("city") && !locks.has("region") && typeof previous.region === "string") profile.region = previous.region;
+      if ((locks.has("city") || locks.has("region")) && typeof previous.regionCode === "string") profile.regionCode = previous.regionCode;
       if (locks.has("phone")) {
         profile.phoneNational = previous.phoneNational;
         profile.phoneCountryCode = previous.phoneCountryCode;
       }
     }
     profile.fullName = `${profile.firstName} ${profile.lastName}`;
+    // The username follows the final name (kept values included).
+    if (!locks.has("username") || typeof previous?.username !== "string") {
+      const first = ascii(profile.firstName),
+        last = ascii(profile.lastName);
+      profile.username =
+        pick([`${first}.${last}`, `${first}${last}`, `${first[0]}${last}`, `${first}_${last}`]).slice(0, 18) + String(integer(90) + 10);
+    }
     profile.createdAt = Date.now(); // for automatic expiry (background.js)
     return profile;
   }
+  // An identity saved by an older version, with the fields it lacks (title, region…) added.
+  function complete(profile) {
+    if (!profile || !countries.get(profile.countryCode)) return profile;
+    const missing = ["gender", "title", "titleAliases", "username", "company", "address2", "region", "regionCode"].filter(
+      (key) => profile[key] === undefined,
+    );
+    if (!missing.length) return profile;
+    const fresh = generate(profile.countryCode, profile, ["firstName", "lastName", "city", "postalCode", "address"]);
+    return { ...profile, ...Object.fromEntries(missing.map((key) => [key, fresh[key]])) };
+  }
   root.ThrowawayGenerator = {
     generate,
+    complete,
+    upgradeSelection,
     generatePassword,
     passwordVariants,
     generateBirthDate,

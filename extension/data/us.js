@@ -43,6 +43,11 @@ AliasfillCountries.register({
       "Nguyen",
     ],
   },
+  // Titles, first one shown; all of them are recognised in a form's title select.
+  titles: { female: ["Ms.", "Mrs."], male: ["Mr."] },
+  companySuffixes: ["LLC", "Inc.", "& Co.", "Group"],
+  // Second address line: # is a number, @ a letter.
+  address2: ["Apt #", "Suite #", "Unit #"],
   streets: [
     "Maple Avenue",
     "Oak Street",

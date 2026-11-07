@@ -33,6 +33,11 @@ AliasfillCountries.register({
       "Navarro",
     ],
   },
+  // Titles, first one shown; all of them are recognised in a form's title select.
+  titles: { female: ["Sra."], male: ["Sr."] },
+  companySuffixes: ["S.L.", "S.A.", "y Asociados"],
+  // Second address line: # is a number, @ a letter.
+  address2: ["#º @", "Piso #, puerta @", "Escalera @"],
   streets: [
     "Calle Mayor",
     "Calle Real",

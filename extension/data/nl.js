@@ -44,6 +44,11 @@ AliasfillCountries.register({
       "Brouwer",
     ],
   },
+  // Titles, first one shown; all of them are recognised in a form's title select.
+  titles: { female: ["Mevr.", "Mevrouw"], male: ["Dhr.", "De heer"] },
+  companySuffixes: ["B.V.", "& Zn.", "V.O.F."],
+  // Second address line: # is a number, @ a letter.
+  address2: ["#-hoog", "Unit #"],
   streets: [
     "Kerkstraat",
     "Dorpsstraat",

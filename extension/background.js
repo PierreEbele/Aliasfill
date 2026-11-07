@@ -41,6 +41,7 @@ async function settings() {
     "lockedFields",
     "countryMode",
     "profile",
+    "settingsVersion",
   ]);
   return {
     bitwardenMode: s.bitwardenMode === true,
@@ -49,10 +50,12 @@ async function settings() {
     // Fill a code field on sight instead of offering a "Fill code" chip (off by default).
     autoFillCode: s.autoFillCode === true,
     alwaysNew: s.alwaysNew !== false,
-    selectedFields: Array.isArray(s.selectedFields) ? s.selectedFields : Object.keys(ThrowawayGenerator.fields),
+    selectedFields: Array.isArray(s.selectedFields)
+      ? ThrowawayGenerator.upgradeSelection(s.selectedFields, s.settingsVersion)
+      : Object.keys(ThrowawayGenerator.fields),
     lockedFields: Array.isArray(s.lockedFields) ? s.lockedFields : [],
     countryMode: s.countryMode || "random",
-    profile: s.profile || null,
+    profile: ThrowawayGenerator.complete(s.profile) || null,
   };
 }
 

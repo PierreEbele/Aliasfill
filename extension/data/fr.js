@@ -33,6 +33,11 @@ AliasfillCountries.register({
       "Benali",
     ],
   },
+  // Titles, first one shown; all of them are recognised in a form's title select.
+  titles: { female: ["Mme", "Madame"], male: ["M.", "Monsieur"] },
+  companySuffixes: ["SARL", "SAS", "& Associés", "Conseil"],
+  // Second address line: # is a number, @ a letter.
+  address2: ["Appartement #", "Bâtiment @", "Résidence du Parc, appartement #"],
   streets: [
     "rue des Tilleuls",
     "rue de la Fontaine",

@@ -47,6 +47,11 @@ AliasfillCountries.register({
       "Moretti",
     ],
   },
+  // Titles, first one shown; all of them are recognised in a form's title select.
+  titles: { female: ["Sig.ra"], male: ["Sig."] },
+  companySuffixes: ["S.r.l.", "S.p.A.", "& C."],
+  // Second address line: # is a number, @ a letter.
+  address2: ["Scala @", "Interno #", "Piano #"],
   streets: [
     "Via Roma",
     "Via Garibaldi",
