@@ -25,6 +25,11 @@ function showPanel(name) {
 }
 $("tab-profile").addEventListener("click", () => showPanel("profile"));
 $("tab-card").addEventListener("click", () => showPanel("card"));
+// One option per country sheet (data/*.js), sorted by name.
+for (const sheet of AliasfillCountries.codes()
+  .map(AliasfillCountries.get)
+  .sort((a, b) => a.countryEnglish.localeCompare(b.countryEnglish)))
+  $("country-mode").add(new Option(sheet.countryEnglish, sheet.code));
 for (const [key, name] of Object.entries(ThrowawayGenerator.banks)) $("card-bank").add(new Option(name + " (simulated)", key));
 function syncCardSettings() {
   const bankMode = $("card-mode").value === "bank-bin";
@@ -280,7 +285,10 @@ $("fill").addEventListener("click", async () => {
     const { bitwardenMode } = await browser.storage.local.get("bitwardenMode");
     if (!bitwardenMode && !(await ensureAlias())) return;
     const tabId = await activeTabId();
-    await browser.scripting.executeScript({ target: { tabId }, files: ["generator.js", "filler.js"] });
+    await browser.scripting.executeScript({
+      target: { tabId },
+      files: ["data/index.js", ...AliasfillCountries.files, "generator.js", "filler.js"],
+    });
     const results = await browser.scripting.executeScript({
       target: { tabId },
       func: (data, options) => globalThis.ThrowawayFill.fill(data, options),
@@ -606,7 +614,8 @@ syncControls();
       renderCard();
       cardStatus("Last test card restored.");
     }
-    if (!countryTouched && ["random", "FR", "GB", "US"].includes(saved.countryMode)) $("country-mode").value = saved.countryMode;
+    if (!countryTouched && ["random", ...AliasfillCountries.codes()].includes(saved.countryMode))
+      $("country-mode").value = saved.countryMode;
     if (!settingsTouched) {
       if (Array.isArray(saved.selectedFields)) selectedFields = new Set(saved.selectedFields.filter((key) => fieldKeys.includes(key)));
       if (

@@ -1,146 +1,7 @@
 (function (root) {
   "use strict";
-  // Given names and surnames that fit the identity's country (common, not tied to anyone in particular).
-  const names = {
-    FR: {
-      first: [
-        "Camille",
-        "Léa",
-        "Manon",
-        "Chloé",
-        "Inès",
-        "Jade",
-        "Louise",
-        "Zoé",
-        "Lucas",
-        "Hugo",
-        "Théo",
-        "Nathan",
-        "Louis",
-        "Gabriel",
-        "Arthur",
-        "Jules",
-        "Yanis",
-        "Sofiane",
-        "Amina",
-        "Clément",
-      ],
-      last: [
-        "Martin",
-        "Bernard",
-        "Dubois",
-        "Thomas",
-        "Robert",
-        "Richard",
-        "Petit",
-        "Durand",
-        "Leroy",
-        "Moreau",
-        "Simon",
-        "Laurent",
-        "Lefebvre",
-        "Michel",
-        "Garcia",
-        "Fournier",
-        "Girard",
-        "Bonnet",
-        "Mercier",
-        "Benali",
-      ],
-    },
-    GB: {
-      first: [
-        "Olivia",
-        "Amelia",
-        "Isla",
-        "Ava",
-        "Freya",
-        "Lily",
-        "Grace",
-        "Poppy",
-        "Oliver",
-        "George",
-        "Harry",
-        "Noah",
-        "Jack",
-        "Leo",
-        "Arthur",
-        "Oscar",
-        "Alfie",
-        "Freddie",
-        "Priya",
-        "Aisha",
-      ],
-      last: [
-        "Smith",
-        "Jones",
-        "Taylor",
-        "Brown",
-        "Williams",
-        "Wilson",
-        "Johnson",
-        "Davies",
-        "Patel",
-        "Wright",
-        "Robinson",
-        "Thompson",
-        "Evans",
-        "Walker",
-        "White",
-        "Roberts",
-        "Green",
-        "Hall",
-        "Wood",
-        "Khan",
-      ],
-    },
-    US: {
-      first: [
-        "Emma",
-        "Olivia",
-        "Ava",
-        "Sophia",
-        "Mia",
-        "Harper",
-        "Evelyn",
-        "Abigail",
-        "Liam",
-        "Noah",
-        "James",
-        "Elijah",
-        "Benjamin",
-        "Lucas",
-        "Mason",
-        "Ethan",
-        "Mateo",
-        "Daniel",
-        "Maya",
-        "Jayden",
-      ],
-      last: [
-        "Smith",
-        "Johnson",
-        "Williams",
-        "Brown",
-        "Jones",
-        "Garcia",
-        "Miller",
-        "Davis",
-        "Rodriguez",
-        "Martinez",
-        "Hernandez",
-        "Lopez",
-        "Wilson",
-        "Anderson",
-        "Thomas",
-        "Taylor",
-        "Moore",
-        "Jackson",
-        "Lee",
-        "Nguyen",
-      ],
-    },
-  };
+  // Country sheets (data/*.js), loaded before this file.
+  const countries = root.AliasfillCountries;
   const fields = Object.freeze({
     firstName: "First name",
     lastName: "Last name",
@@ -155,49 +16,6 @@
   });
   const localFields = ["country", "address", "city", "postalCode", "phone"];
   const isCountryLocked = (locks) => localFields.some((key) => locks.includes(key));
-  const countries = {
-    FR: {
-      country: "France",
-      countryEnglish: "France",
-      postalCode: "00000",
-      phoneCountryCode: "+33",
-      countryAliases: ["FR", "FRA", "France", "République française", "French Republic", "Frankreich", "Francia", "Frankrijk"],
-    },
-    GB: {
-      country: "United Kingdom",
-      countryEnglish: "United Kingdom",
-      postalCode: "ZZ1 1ZZ",
-      phoneCountryCode: "+44",
-      countryAliases: [
-        "GB",
-        "GBR",
-        "UK",
-        "United Kingdom",
-        "Great Britain",
-        "Royaume-Uni",
-        "Vereinigtes Königreich",
-        "Reino Unido",
-        "Regno Unito",
-      ],
-    },
-    US: {
-      country: "United States",
-      countryEnglish: "United States",
-      postalCode: "00000",
-      phoneCountryCode: "+1",
-      countryAliases: [
-        "US",
-        "USA",
-        "United States",
-        "United States of America",
-        "États-Unis",
-        "Etats Unis",
-        "Vereinigte Staaten",
-        "Estados Unidos",
-        "Stati Uniti",
-      ],
-    },
-  };
   function integer(max) {
     const range = 0x100000000;
     const limit = range - (range % max);
@@ -208,6 +26,13 @@
     return buffer[0] % max;
   }
   const pick = (items) => items[integer(items.length)];
+  // Randomness handed to the country sheets.
+  const rand = Object.freeze({
+    integer,
+    pick,
+    digits: (n) => Array.from({ length: n }, () => integer(10)).join(""),
+    letters: (n, alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ") => Array.from({ length: n }, () => pick(alphabet)).join(""),
+  });
   function validBirthDate(value) {
     if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
     const date = new Date(value + "T00:00:00Z");
@@ -350,7 +175,7 @@
       network: entry ? (networkCode === "visa" ? "Visa" : "Mastercard") : network.label,
       number: entry ? syntheticNumber(entry.bin) : network.number,
       ...(entry ? { bin: entry.bin, binIssuer: entry.issuer, binSource: entry.source, binChecked: "2026-10-20" } : {}),
-      holder: holder || `${pick(firstNames)} ${pick(lastNames)}`,
+      holder: holder || generate().fullName,
       expiryMonth,
       expiryYear,
       expiry: `${expiryMonth}/${expiryYear.slice(-2)}`,
@@ -395,53 +220,41 @@
   function generate(countryMode = "random", previous = null, lockedFields = []) {
     const locks = new Set(lockedFields.filter((key) => Object.hasOwn(fields, key)));
     const token = Array.from(root.crypto.getRandomValues(new Uint8Array(5)), (n) => n.toString(16).padStart(2, "0")).join("");
-    const keepCountry = previous && isCountryLocked([...locks]) && Object.hasOwn(countries, previous.countryCode);
-    const countryCode = keepCountry
-      ? previous.countryCode
-      : Object.hasOwn(countries, countryMode)
-        ? countryMode
-        : pick(Object.keys(countries));
-    const locale = countries[countryCode];
-    const firstName = pick(names[countryCode].first),
-      lastName = pick(names[countryCode].last);
-    const fr = countryCode === "FR",
-      uk = countryCode === "GB";
-    // France: audiovisual block reserved by ARCEP, decision 2025-2215, §2.5.12.
-    const national = fr
-      ? `063998${String(integer(10000)).padStart(4, "0")}`
-      : uk
-        ? `07700900${String(integer(1000)).padStart(3, "0")}`
-        : `20255501${String(integer(100)).padStart(2, "0")}`;
-    const phone = fr
-      ? `+33 ${national[1]} ${national.slice(2).match(/\d{2}/g).join(" ")}`
-      : uk
-        ? `+44 ${national.slice(1, 5)} ${national.slice(5)}`
-        : `+1 202 555 ${national.slice(-4)}`;
+    const codes = countries.codes();
+    const keepCountry = previous && isCountryLocked([...locks]) && codes.includes(previous.countryCode);
+    const countryCode = keepCountry ? previous.countryCode : codes.includes(countryMode) ? countryMode : pick(codes);
+    const sheet = countries.get(countryCode);
+    const firstName = pick([...sheet.names.female, ...sheet.names.male]),
+      lastName = pick(sheet.names.last);
+    const place = pick(sheet.places);
+    // No phone for a country without a range reserved for fiction.
+    const phone = sheet.phone ? sheet.phone.generate(rand, place) : { national: "", phone: "" };
     const profile = {
-      ...locale,
-      countryAliases: [...locale.countryAliases],
+      country: sheet.country,
+      countryEnglish: sheet.countryEnglish,
+      countryAliases: [...sheet.countryAliases],
+      phoneCountryCode: sheet.phoneCountryCode,
       countryCode,
       firstName,
       lastName,
       fullName: `${firstName} ${lastName}`,
-      address: `${integer(900) + 100} ${fr ? "rue de la Démonstration" : "Demo Test Lane"} ${token.slice(0, 4).toUpperCase()}`,
+      address: sheet.address(integer(150) + 1, pick(sheet.streets)),
       address2: "",
-      city: pick(
-        fr
-          ? ["Exempleville", "Test-sur-Démo", "Démo-les-Bains", "Val-des-Exemples"]
-          : ["Examplebrook", "Testford", "Mockhaven", "Demovale"],
-      ),
+      city: place.city,
+      region: place.region,
+      postalCode: sheet.postalCode(place, rand),
       email: `${firstName}.${lastName}.${token}@example.com`
         .normalize("NFKD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase(),
-      phone,
-      phoneNational: national,
+      phone: phone.phone,
+      phoneNational: phone.national,
       birthDate: generateBirthDate(),
       password: generatePassword(),
     };
     if (previous) {
       for (const key of locks) if (typeof previous[key] === "string") profile[key] = previous[key];
+      if (locks.has("city") && typeof previous.region === "string") profile.region = previous.region;
       if (locks.has("phone")) {
         profile.phoneNational = previous.phoneNational;
         profile.phoneCountryCode = previous.phoneCountryCode;

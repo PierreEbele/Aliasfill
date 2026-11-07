@@ -3,9 +3,13 @@ import path from "node:path";
 import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 
-// The extension's identity generator (extension/generator.js), run as in the browser.
+// The extension's identity generator (extension/generator.js) and its country sheets, run as in the browser.
+const ext = (f: string) => fs.readFileSync(path.join(__dirname, "../extension", f), "utf8");
 const sandbox: Record<string, any> = { crypto };
-vm.runInNewContext(fs.readFileSync(path.join(__dirname, "../extension/generator.js"), "utf8"), sandbox);
+vm.createContext(sandbox);
+vm.runInContext(ext("data/index.js"), sandbox);
+for (const f of sandbox.AliasfillCountries.files) vm.runInContext(ext(f), sandbox);
+vm.runInContext(ext("generator.js"), sandbox);
 const G = sandbox.ThrowawayGenerator;
 
 const kinds = [/[A-Z]/, /[a-z]/, /[0-9]/, /[^A-Za-z0-9]/];

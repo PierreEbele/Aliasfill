@@ -37,6 +37,10 @@
   "background": {
     "scripts": [
       "compat.js",
+      "data/index.js",
+      "data/fr.js",
+      "data/gb.js",
+      "data/us.js",
       "generator.js",
       "throwaway.js",
       "providers/index.js",

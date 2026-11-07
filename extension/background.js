@@ -99,7 +99,10 @@ async function fillNewIdentity(tabId, pageUrl) {
   }
   const { revision = 0 } = await browser.storage.local.get("revision");
   await browser.storage.local.set({ profile, revision: keepPrevious ? revision : revision + 1 });
-  await browser.scripting.executeScript({ target: { tabId }, files: ["generator.js", "filler.js"] });
+  await browser.scripting.executeScript({
+    target: { tabId },
+    files: ["data/index.js", ...AliasfillCountries.files, "generator.js", "filler.js"],
+  });
   const [res] = await browser.scripting.executeScript({
     target: { tabId },
     func: (data, options) => globalThis.ThrowawayFill.fill(data, options),

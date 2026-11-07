@@ -1,0 +1,83 @@
+// United Kingdom. Real towns with their postcode district and county, common street names and a random
+// house number: the address is credible but never tied to the generated name.
+AliasfillCountries.register({
+  code: "GB",
+  country: "United Kingdom",
+  countryEnglish: "United Kingdom",
+  countryAliases: [
+    "GB",
+    "GBR",
+    "UK",
+    "United Kingdom",
+    "Great Britain",
+    "Royaume-Uni",
+    "Vereinigtes Königreich",
+    "Reino Unido",
+    "Regno Unito",
+  ],
+  phoneCountryCode: "+44",
+  // Common given names and surnames, not tied to anyone in particular.
+  names: {
+    female: ["Olivia", "Amelia", "Isla", "Ava", "Freya", "Lily", "Grace", "Poppy", "Priya", "Aisha", "Emily", "Sophie"],
+    male: ["Oliver", "George", "Harry", "Noah", "Jack", "Leo", "Arthur", "Oscar", "Alfie", "Freddie", "Thomas", "Mohammed"],
+    last: [
+      "Smith",
+      "Jones",
+      "Taylor",
+      "Brown",
+      "Williams",
+      "Wilson",
+      "Johnson",
+      "Davies",
+      "Patel",
+      "Wright",
+      "Robinson",
+      "Thompson",
+      "Evans",
+      "Walker",
+      "White",
+      "Roberts",
+      "Green",
+      "Hall",
+      "Wood",
+      "Khan",
+    ],
+  },
+  streets: [
+    "High Street",
+    "Station Road",
+    "Church Lane",
+    "Victoria Road",
+    "Mill Lane",
+    "Park Avenue",
+    "The Crescent",
+    "Queen's Road",
+    "Manor Close",
+    "Orchard Way",
+    "Green Lane",
+    "Kingsway",
+  ],
+  places: [
+    { city: "York", region: "North Yorkshire", postal: "YO1" },
+    { city: "Norwich", region: "Norfolk", postal: "NR1" },
+    { city: "Exeter", region: "Devon", postal: "EX1" },
+    { city: "Carlisle", region: "Cumbria", postal: "CA1" },
+    { city: "Preston", region: "Lancashire", postal: "PR1" },
+    { city: "Maidstone", region: "Kent", postal: "ME14" },
+    { city: "Swindon", region: "Wiltshire", postal: "SN1" },
+    { city: "Hexham", region: "Northumberland", postal: "NE46" },
+    { city: "Perth", region: "Perth and Kinross", postal: "PH1" },
+    { city: "Bangor", region: "Gwynedd", postal: "LL57" },
+  ],
+  postalPattern: /^[A-Z]{1,2}\d{1,2} \d[ABD-HJLNP-UW-Z]{2}$/,
+  postalCode: (place, rand) => `${place.postal} ${rand.integer(9) + 1}${rand.letters(2, "ABDEFGHJLNPQRSTUWXYZ")}`,
+  address: (number, street) => `${number} ${street}`,
+  phone: {
+    // Ofcom, numbers reserved for drama purposes: 07700 900000 to 07700 900999.
+    source: "https://www.ofcom.org.uk/phones-and-broadband/phone-numbers/numbers-for-drama",
+    generate(rand) {
+      const national = "07700900" + rand.digits(3);
+      return { national, phone: `+44 ${national.slice(1, 5)} ${national.slice(5)}` };
+    },
+  },
+});
