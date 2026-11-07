@@ -8,6 +8,16 @@
 
 Browser extension for Firefox and Chrome/Chromium that fills sign-up forms with a fake identity and a disposable e-mail address for the site.
 
+![One click fills a sign-up form with a fake identity and a disposable address, then the verification code pastes itself](docs/media/demo.gif)
+
+<details><summary>The popup: identity, country, history per site</summary>
+
+![The popup generating a German identity, then searching the history of identities per site](docs/media/popup.gif)
+
+</details>
+
+Demo video (32 s): [docs/media/aliasfill-demo.mp4](docs/media/aliasfill-demo.mp4). The shop in the demo is fictional; screenshots for the stores are in [docs/media](docs/media).
+
 `extension/` holds the extension, for Firefox and Chrome/Chromium (Edge, Brave, Vivaldi…) from one codebase. It fills sign-up forms with a fake identity (name, address, phone, birth date, password, test card) and a **disposable e-mail address for the site**. It started inside [Throwaway Mail](https://github.com/PierreEbele/throwaway-mail), a self-hosted disposable address server, and now lives here on its own.
 
 It works **without a Throwaway Mail server**: the address can come from your own catch-all domain, plus-addressing on your mailbox, or an alias service you already use. Only a Throwaway Mail server reads the mail it receives, so verification-code autofill is available with Throwaway Mail only; with any other provider you read the code in your mailbox.
