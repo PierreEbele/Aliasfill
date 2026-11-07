@@ -81,3 +81,12 @@ body.options {
 .options h1 {
   font-size: 18px;
 }
+/* A setting's hint goes under its text, aligned with it, not in a column of its own. */
+.toggles .check {
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.toggles .check .hint {
+  flex-basis: 100%;
+  padding-left: 21px;
+}
