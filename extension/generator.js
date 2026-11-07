@@ -227,6 +227,8 @@
     const firstName = pick([...sheet.names.female, ...sheet.names.male]),
       lastName = pick(sheet.names.last);
     const place = pick(sheet.places);
+    // Multilingual countries keep street names by language, each place naming its own.
+    const streets = Array.isArray(sheet.streets) ? sheet.streets : sheet.streets[place.language];
     // No phone for a country without a range reserved for fiction.
     const phone = sheet.phone ? sheet.phone.generate(rand, place) : { national: "", phone: "" };
     const profile = {
@@ -238,7 +240,7 @@
       firstName,
       lastName,
       fullName: `${firstName} ${lastName}`,
-      address: sheet.address(integer(150) + 1, pick(sheet.streets)),
+      address: sheet.address(integer(150) + 1, pick(streets)),
       address2: "",
       city: place.city,
       region: place.region,

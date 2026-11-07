@@ -5,7 +5,18 @@
   "use strict";
   const sheets = {};
   root.AliasfillCountries = {
-    files: ["data/fr.js", "data/gb.js", "data/us.js"],
+    files: [
+      "data/be.js",
+      "data/ca.js",
+      "data/ch.js",
+      "data/de.js",
+      "data/es.js",
+      "data/fr.js",
+      "data/gb.js",
+      "data/it.js",
+      "data/nl.js",
+      "data/us.js",
+    ],
     register(sheet) {
       sheets[sheet.code] = Object.freeze(sheet);
     },

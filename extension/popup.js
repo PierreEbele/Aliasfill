@@ -212,9 +212,10 @@ function render() {
     email: "email",
     phone: "phone",
   }))
-    $(id).textContent = profile[key];
+    $(id).textContent = profile[key] || "—";
   $("avatar").textContent = profile.firstName[0] + profile.lastName[0];
   $("edition").textContent = `Identity #${revision} · ${profile.country}`;
+  $("phone").title = profile.phone ? "" : "No phone range is reserved for fiction in this country: phone fields are left empty.";
   $("password").value = profile.password;
   $("birth-date").textContent = profile.birthDate.split("-").reverse().join("/");
   $("password").type = "password";

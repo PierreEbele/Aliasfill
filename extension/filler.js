@@ -737,6 +737,11 @@
         else report.excluded++;
         continue;
       }
+      // A country without a range reserved for fiction has no phone: its fields are left alone.
+      if (["phone", "phoneNational", "phoneCountryCode"].includes(key) && !data.phone) {
+        report.excluded++;
+        continue;
+      }
       const existing = String(el.value || "").trim();
       const placeholderSelect =
         el.tagName === "SELECT" &&
