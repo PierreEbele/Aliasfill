@@ -10,6 +10,10 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      # addons.mozilla.org API credentials (repository secrets); without them the AMO step is skipped.
+      AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+      AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -27,3 +31,10 @@ jobs:
         run: gh release create "$GITHUB_REF_NAME" dist/* --title "Aliasfill $GITHUB_REF_NAME" --generate-notes --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}
+      - name: Submit the new version to addons.mozilla.org
+        if: env.AMO_JWT_ISSUER != '' && env.AMO_JWT_SECRET != ''
+        # Listed channel: Mozilla reviews the version, then publishes and signs it (Firefox updates users automatically).
+        # --approval-timeout 0: the job does not wait for the review.
+        run: >-
+          pnpm exec web-ext sign --source-dir extension --ignore-files "store/**" --channel listed
+          --api-key "$AMO_JWT_ISSUER" --api-secret "$AMO_JWT_SECRET" --approval-timeout 0
