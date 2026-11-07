@@ -16,7 +16,7 @@ function cardStatus(message, error = false) {
   $("card-status").dataset.tone = error ? "error" : "normal";
 }
 function showPanel(name) {
-  for (const key of ["profile", "card"]) {
+  for (const key of ["profile", "card", "history"]) {
     $(key + "-panel").hidden = key !== name;
     $("tab-" + key).setAttribute("aria-pressed", String(key === name));
   }
@@ -25,6 +25,10 @@ function showPanel(name) {
 }
 $("tab-profile").addEventListener("click", () => showPanel("profile"));
 $("tab-card").addEventListener("click", () => showPanel("card"));
+$("tab-history").addEventListener("click", () => {
+  showPanel("history");
+  void renderHistory();
+});
 // One option per country sheet (data/*.js), sorted by name.
 for (const sheet of AliasfillCountries.codes()
   .map(AliasfillCountries.get)
@@ -317,6 +321,9 @@ $("fill").addEventListener("click", async () => {
     // Bitwarden mode: the page waits for the e-mail filled by Bitwarden, then the code.
     if (bitwardenMode) await browser.tabs.sendMessage(tabId, { type: "watch-email" }).catch(() => {});
     if (report.filled && profile.throwaway) void handOffCode(tabId);
+    const pageUrl = await activeTabUrl();
+    if (report.filled && /^https?:/.test(pageUrl))
+      await AliasfillHistory.record(browser.storage.local, new URL(pageUrl).hostname, profile).catch(() => {});
     const passwordNote =
       (report.passwordIssue === "preserved"
         ? " Passwords kept together to avoid a mismatched confirmation."
@@ -420,6 +427,117 @@ async function undoFill(cardMode = false) {
 $("undo").addEventListener("click", () => undoFill(false));
 $("undo-card").addEventListener("click", () => undoFill(true));
 // ---------------------------------------------------------------------------
+// History: the identity used on each site, kept in this browser only (history.js).
+// ---------------------------------------------------------------------------
+function historyStatus(message, error = false) {
+  $("history-status").textContent = message;
+  $("history-status").dataset.tone = error ? "error" : "normal";
+}
+async function renderHistory() {
+  const storage = browser.storage.local;
+  try {
+    await AliasfillHistory.purge(storage);
+    const all = await AliasfillHistory.list(storage);
+    const { historyDays = AliasfillHistory.DEFAULT_DAYS } = await storage.get("historyDays");
+    $("history-retention").textContent =
+      historyDays < 0 ? "History off (Settings)." : historyDays > 0 ? `Kept ${historyDays} days.` : "Kept until deleted.";
+    const entries = AliasfillHistory.search(all, $("history-search").value);
+    $("history-empty").hidden = entries.length > 0;
+    $("history-empty").textContent = all.length
+      ? "No identity matches this search."
+      : "No identity filled yet. Each fill is kept here, in this browser only.";
+    $("history-clear").disabled = !all.length;
+    $("history-list").replaceChildren(...entries.map(historyItem));
+  } catch {
+    historyStatus("Local storage unavailable.", true);
+  }
+}
+function historyItem(entry) {
+  const p = entry.profile;
+  const item = document.createElement("li");
+  const head = document.createElement("div");
+  head.className = "history-head";
+  const host = document.createElement("strong");
+  host.textContent = entry.host;
+  const date = document.createElement("span");
+  date.className = "meta";
+  date.textContent = new Date(entry.usedAt).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" });
+  head.append(host, date);
+  const who = document.createElement("div");
+  who.textContent = [p.fullName, p.email].filter(Boolean).join(" · ");
+  const row = document.createElement("div");
+  row.className = "row";
+  const button = (label, onClick) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "link";
+    b.textContent = label;
+    b.setAttribute("aria-label", `${label}: ${entry.host}`);
+    b.addEventListener("click", onClick);
+    return b;
+  };
+  row.append(
+    button("Copy", async () => {
+      const text = [
+        `Site: ${entry.host}`,
+        `Name: ${p.fullName}`,
+        `E-mail: ${p.email}`,
+        ...(p.username ? [`Username: ${p.username}`] : []),
+        `Password: ${p.password}`,
+      ].join("\n");
+      try {
+        await navigator.clipboard.writeText(text);
+        historyStatus(`Identity used on ${entry.host} copied.`);
+      } catch {
+        historyStatus("Copy unavailable.", true);
+      }
+    }),
+    button("Reuse", async () => {
+      // Back as the current identity; the next fill on this site keeps it instead of generating a new one.
+      profile = { ...ThrowawayGenerator.complete(p), reusedFor: entry.host, createdAt: Date.now() };
+      revision++;
+      tmCode = null;
+      render();
+      void tmRender();
+      showPanel("profile");
+      status(`Identity used on ${entry.host} is back. Fill the form to use it again.`);
+      try {
+        await browser.storage.local.set({ profile, revision });
+      } catch {
+        status("Identity restored, but saving it locally failed.", true);
+      }
+    }),
+    button("Delete", async () => {
+      await AliasfillHistory.remove(browser.storage.local, entry.id);
+      historyStatus(`Entry for ${entry.host} deleted.`);
+      await renderHistory();
+    }),
+  );
+  item.append(head, who, row);
+  return item;
+}
+$("history-search").addEventListener("input", () => void renderHistory());
+// Two clicks: popups cannot show confirm() in Firefox.
+let clearArmed = null;
+$("history-clear").addEventListener("click", async () => {
+  if (!clearArmed) {
+    $("history-clear").textContent = "Click again to delete all";
+    historyStatus("The whole history will be deleted. This cannot be undone.");
+    clearArmed = setTimeout(() => {
+      clearArmed = null;
+      $("history-clear").textContent = "Clear history";
+      historyStatus("");
+    }, 4000);
+    return;
+  }
+  clearTimeout(clearArmed);
+  clearArmed = null;
+  $("history-clear").textContent = "Clear history";
+  await AliasfillHistory.clear(browser.storage.local);
+  historyStatus("History cleared.");
+  await renderHistory();
+});
+// ---------------------------------------------------------------------------
 // Throwaway Mail: a real disposable address per site + retrieval of the received code.
 // ---------------------------------------------------------------------------
 let tmCode = null;
@@ -499,7 +617,8 @@ async function ensureIdentity() {
   const { alwaysNew } = await browser.storage.local.get("alwaysNew");
   const url = await activeTabUrl();
   const host = /^https?:/.test(url) ? new URL(url).hostname : "";
-  const sameSite = profile?.throwaway?.host === host;
+  // Same site: its disposable address, or an identity reused from the history for it.
+  const sameSite = profile?.throwaway?.host === host || (!!host && profile?.reusedFor === host);
   if (profile && (alwaysNew === false || sameSite)) return true;
   if (profile && lockedFields.size === fieldKeys.length) return true;
   const keptAlias = lockedFields.has("email") ? profile?.throwaway : undefined;

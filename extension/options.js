@@ -198,9 +198,10 @@ const toggles = () => ({
   bitwardenMode: $("bitwarden-mode").checked,
   autoFillCode: $("auto-fill-code").checked,
   identityTtlHours: Number($("identity-ttl").value),
+  historyDays: Number($("history-days").value),
 });
 // Off by default / 24 h by default, unlike the other automations.
-for (const id of ["bitwarden-mode", "identity-ttl", "auto-fill-code"])
+for (const id of ["bitwarden-mode", "identity-ttl", "history-days", "auto-fill-code"])
   $(id).addEventListener("change", async () => {
     await browser.storage.local.set(toggles());
     await browser.runtime.sendMessage({ type: "purge" }).catch(() => {});
@@ -218,10 +219,11 @@ $("version").textContent = `Aliasfill ${browser.runtime.getManifest().version}`;
 (async () => {
   const flags = await browser.storage.local.get(Object.values(TOGGLES));
   for (const [id, key] of Object.entries(TOGGLES)) $(id).checked = flags[key] !== false;
-  const extra = await browser.storage.local.get(["bitwardenMode", "identityTtlHours", "autoFillCode"]);
+  const extra = await browser.storage.local.get(["bitwardenMode", "identityTtlHours", "historyDays", "autoFillCode"]);
   $("auto-fill-code").checked = extra.autoFillCode === true;
   $("bitwarden-mode").checked = extra.bitwardenMode === true;
   $("identity-ttl").value = String(extra.identityTtlHours ?? 24);
+  $("history-days").value = String(extra.historyDays ?? 90);
   $("provider").value = await AliasProviders.selectedId();
   renderFields(await AliasProviders.settings(providerId()));
   const active = await AliasProviders.active();

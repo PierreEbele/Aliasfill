@@ -406,6 +406,40 @@ a:focus-visible {
   font-size: 10px;
   text-align: center;
 }
+.search {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: 7px;
+  padding: 6px 8px;
+  font: 12px inherit;
+  margin-bottom: 8px;
+}
+.history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.history li {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.history .history-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.history strong {
+  overflow-wrap: anywhere;
+}
+.history .row {
+  margin-top: 4px;
+}
 .field {
   display: flex;
   justify-content: space-between;

@@ -20,6 +20,7 @@ async function purgeExpired() {
   if (profile && !profile.createdAt) await browser.storage.local.set({ profile: { ...profile, createdAt: now } });
   else if (profile && identityTtlHours > 0 && now - profile.createdAt > identityTtlHours * 3600_000)
     await browser.storage.local.remove(["profile"]);
+  await AliasfillHistory.purge(browser.storage.local, now);
   const live = Object.fromEntries(Object.entries(tmPending).filter(([, p]) => p.until > now));
   if (Object.keys(live).length !== Object.keys(tmPending).length) await browser.storage.local.set({ tmPending: live });
 }
@@ -91,7 +92,9 @@ async function fillNewIdentity(tabId, pageUrl) {
   const host = new URL(pageUrl).hostname;
   // Bitwarden mode: e-mail and password are left to Bitwarden (which saves them).
   const fields = s.bitwardenMode ? s.selectedFields.filter((k) => k !== "email" && k !== "password") : s.selectedFields;
-  const keepPrevious = s.profile && (!s.alwaysNew || s.profile.throwaway?.host === host || (s.bitwardenMode && s.profile.site === host));
+  const keepPrevious =
+    s.profile &&
+    (!s.alwaysNew || s.profile.throwaway?.host === host || s.profile.reusedFor === host || (s.bitwardenMode && s.profile.site === host));
   let profile = keepPrevious ? s.profile : ThrowawayGenerator.generate(s.countryMode, s.profile, s.lockedFields);
   if (!keepPrevious && s.lockedFields.includes("email") && s.profile?.throwaway) profile.throwaway = s.profile.throwaway;
   profile = { ...profile, site: host };
@@ -116,6 +119,7 @@ async function fillNewIdentity(tabId, pageUrl) {
     profile = { ...profile, password: res.result.password };
     await browser.storage.local.set({ profile });
   }
+  if (res?.result?.filled) await AliasfillHistory.record(browser.storage.local, host, profile);
   const via = provider ? { provider: provider.provider.name, codes: !!provider.provider.codes } : { provider: null, codes: false };
   if (s.bitwardenMode) return { report: res?.result || null, name: profile.fullName, bitwarden: true, ...via };
   if (profile.throwaway?.host === host && profile.throwaway.id && s.autoCode && provider?.provider.codes)

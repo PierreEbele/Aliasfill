@@ -13,6 +13,7 @@ importScripts(
   "data/nl.js",
   "data/us.js",
   "generator.js",
+  "history.js",
   "throwaway.js",
   "providers/index.js",
   "providers/local.js",

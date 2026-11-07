@@ -15,7 +15,8 @@
     </header>
     <nav class="tabs" aria-label="Data type">
       <button id="tab-profile" type="button" aria-pressed="true" aria-controls="profile-panel">Identity</button
-      ><button id="tab-card" type="button" aria-pressed="false" aria-controls="card-panel">Test card</button>
+      ><button id="tab-card" type="button" aria-pressed="false" aria-controls="card-panel">Test card</button
+      ><button id="tab-history" type="button" aria-pressed="false" aria-controls="history-panel">History</button>
     </nav>
     <main>
       <div id="perm-banner" class="perm" hidden>
@@ -141,6 +142,23 @@
         <p id="status" class="status" role="status" aria-live="polite">Generate an identity or fill directly.</p>
       </section>
 
+      <section id="history-panel" aria-label="Identities used per site" hidden>
+        <input
+          id="history-search"
+          class="search"
+          type="search"
+          placeholder="Search a site, name or address"
+          aria-label="Search the history"
+        />
+        <ul id="history-list" class="history"></ul>
+        <p id="history-empty" class="hint">No identity filled yet. Each fill is kept here, in this browser only.</p>
+        <div class="toolbar">
+          <span id="history-retention" class="hint"></span><span class="spacer"></span
+          ><button id="history-clear" class="link" type="button">Clear history</button>
+        </div>
+        <p id="history-status" class="status" role="status" aria-live="polite"></p>
+      </section>
+
       <section id="card-panel" aria-label="Test card" hidden>
         <p id="card-mode-heading" class="label">FRANCE · STRIPE SANDBOX</p>
         <div class="field">
@@ -207,6 +225,7 @@
     <script src="data/nl.js"></script>
     <script src="data/us.js"></script>
     <script src="generator.js"></script>
+    <script src="history.js"></script>
     <script src="throwaway.js"></script>
     <script src="providers/index.js"></script>
     <script src="providers/local.js"></script>
