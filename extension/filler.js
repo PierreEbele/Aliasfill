@@ -36,7 +36,7 @@
     if (!changes.length) return;
     dispose(lastFill);
     for (const entry of changes) {
-      entry.dirty = entry.el.value !== entry.after;
+      entry.dirty = entry.radio ? !entry.el.checked : entry.el.value !== entry.after;
       entry.onEdit = () => {
         entry.dirty = true;
       };
@@ -118,9 +118,29 @@
       .map(normalize)
       .filter(Boolean);
   }
+  // Civility or gender, asked as a select or as radio buttons (never as free text: "Mme" would not fit "Gender").
+  const genderWords = /\b(gender|genre|sexe|sex|geschlecht|genero|sesso|geslacht)\b/;
+  const titleWords = /\b(title|civilite|civility|salutation|anrede|tratamiento|titolo|aanhef|honorific)\b/;
+  const titleOptions =
+    /^(mme|mlle|madame|monsieur|m|mr|mrs|ms|miss|herr|frau|sr|sra|sig|sig ra|signora|signore|dhr|mevr|mevrouw|de heer|female|male|woman|homme|femme)$/;
+  function classifyChoice(el) {
+    const legend = el.closest("fieldset")?.querySelector("legend")?.textContent;
+    const group = el.closest('[role="radiogroup"]');
+    const context = [
+      el.name,
+      legend,
+      group?.getAttribute("aria-label"),
+      group?.getAttribute("aria-labelledby") && el.getRootNode().getElementById?.(group.getAttribute("aria-labelledby"))?.textContent,
+    ]
+      .map(normalize)
+      .filter(Boolean);
+    if (context.some((text) => titleWords.test(text) || genderWords.test(text))) return "title";
+    return signals(el).some((text) => titleOptions.test(text)) ? "title" : null;
+  }
   function classify(el) {
     const type = (el.type || "").toLowerCase();
     if (!["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName)) return null;
+    if (el.tagName === "INPUT" && type === "radio") return classifyChoice(el);
     if (el.tagName === "INPUT" && !["text", "email", "tel", "number", "password", "date", ""].includes(type)) return null;
     const birth = classifyBirth(el);
     if (birth) return birth;
@@ -132,6 +152,8 @@
       .split(/\s+/)
       .filter((token) => token !== "webauthn")
       .pop();
+    if (auto === "sex") return el.tagName === "SELECT" ? "title" : null;
+    if (el.tagName === "SELECT" && signals(el).some((text) => genderWords.test(text))) return "title";
     // Discord & co.: e-mail field marked autocomplete="username" (login identifier = e-mail).
     if (auto === "username" && el.tagName === "INPUT" && (type === "email" || signals(el).some((text) => /^e ?mail$|\bemail\b/.test(text))))
       return "email";
@@ -656,8 +678,10 @@
     if (!selectedFields.size) return { ...report, emptySelection: true };
     const changes = [];
     const groups = new Map();
+    // Custom radio buttons often hide the input itself behind a styled label.
+    const shown = (el) => visible(el) || (el.type === "radio" && Array.from(el.labels || []).some((label) => visible(label, false)));
     for (const el of scan(root.document)) {
-      if (!visible(el)) continue;
+      if (!shown(el)) continue;
       const key = classify(el);
       if (!key) continue;
       const group = el.form || el.closest('[role="form"]') || el.getRootNode();
@@ -786,6 +810,10 @@
         report.excluded++;
         continue;
       }
+      if (el.type === "radio") {
+        fillChoice(el, selected, data, options, report, changes);
+        continue;
+      }
       const existing = String(el.value || "").trim();
       const placeholderSelect =
         el.tagName === "SELECT" &&
@@ -826,6 +854,33 @@
     rememberChanges(changes);
     return report;
   }
+  // Radio buttons: the group is handled once, at its first button; the one matching the title or gender is clicked.
+  function fillChoice(el, selected, data, options, report, changes) {
+    const radios = selected
+      .filter((field) => field.el.type === "radio" && field.key === "title" && field.el.name === el.name)
+      .map((field) => field.el);
+    if (radios[0] !== el) {
+      report.detected--;
+      return;
+    }
+    const expected = (data.titleAliases || [data.title]).map(normalize);
+    const match = radios.find((radio) => [radio.value, ...signals(radio)].some((text) => expected.includes(normalize(text))));
+    const checked = radios.find((radio) => radio.checked) || null;
+    if (!match) report.rejected++;
+    else if (checked === match) report.unchanged++;
+    else if (checked && !options.overwrite) report.preserved++;
+    else {
+      try {
+        match.click();
+        if (match.checked) {
+          report.filled++;
+          changes.push({ el: match, key: "title", radio: true, before: checked, dirty: false });
+        } else report.rejected++;
+      } catch {
+        report.rejected++;
+      }
+    }
+  }
   function undo() {
     const report = { restored: 0, skipped: 0, failed: 0, available: false };
     const transaction = lastFill;
@@ -838,6 +893,20 @@
     const current = new Set(scan(root.document));
     for (const entry of [...transaction.entries].reverse()) {
       const { el, key, before, after, dirty } = entry;
+      if (entry.radio) {
+        if (dirty || !current.has(el) || !el.checked) {
+          report.skipped++;
+          continue;
+        }
+        if (before) before.click();
+        else {
+          el.checked = false;
+          el.dispatchEvent(new el.ownerDocument.defaultView.Event("change", { bubbles: true }));
+        }
+        if (el.checked) report.failed++;
+        else report.restored++;
+        continue;
+      }
       const cardEntry = key.startsWith("card");
       const currentKind = cardEntry ? classifyCard(el) : classify(el);
       if (

@@ -59,7 +59,7 @@ With any other provider these controls are hidden: the popup shows no code panel
 
 Each identity has a title, a first and last name, a username derived from the name, a company, an address (street, second line, postcode, town, region or state, country), a phone number, a birth date (18 to 75 years old) and a 20-character password.
 
-- **Title and first name agree.** Given names are listed by gender in each country sheet; the title (_Mme_, _Herr_, _Mr_…) is one of that gender's, and a locked first name or title keeps it. A title or gender `<select>` is matched in the local language or in English (_Mrs_, _Ms_, _Female_…).
+- **Title and first name agree.** Given names are listed by gender in each country sheet; the title (_Mme_, _Herr_, _Mr_…) is one of that gender's, and a locked first name or title keeps it. A title or gender `<select>` or radio group (_Mme ○ M. ○_, _Female ○ Male ○_, even with the input hidden behind a styled label) is matched in the local language or in English (_Mrs_, _Ms_, _Female_…); _Undo_ restores the previous choice.
 - **Real towns, never anyone's address.** Towns, postcodes and regions are real (so sites that check the postcode against the town accept them), the street is a common one for the country and the house number is random. The name is drawn on its own, so no address is tied to the people who live there.
 - **Phone numbers reserved for fiction where they exist.** Where the country's regulator keeps a range out of service for films and fiction, the phone comes from it (source noted in the sheet). Elsewhere it is a random mobile number in the country's format: it is not reserved and may belong to a real subscriber (the popup says so on the phone).
 

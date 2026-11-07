@@ -33,8 +33,28 @@
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
       .replace(/[^a-z0-9]/g, "");
-  // English titles and words for the sex, also recognised in a title or gender select.
-  const englishTitles = { female: ["Mrs", "Ms", "Miss", "Madam", "Female", "Woman", "F"], male: ["Mr", "Sir", "Male", "Man", "M"] };
+  // English titles and words for the sex in the supported languages, also recognised in a title or gender
+  // select or radio group.
+  const englishTitles = {
+    female: [
+      "Mrs",
+      "Ms",
+      "Miss",
+      "Madam",
+      "Female",
+      "Woman",
+      "F",
+      "Femme",
+      "Féminin",
+      "Weiblich",
+      "Mujer",
+      "Femenino",
+      "Donna",
+      "Femmina",
+      "Vrouw",
+    ],
+    male: ["Mr", "Sir", "Male", "Man", "M", "Homme", "Masculin", "Männlich", "Hombre", "Masculino", "Uomo", "Maschio"],
+  };
   const titlesOf = (sheet, place) => (sheet.titles.female ? sheet.titles : sheet.titles[place?.language] || Object.values(sheet.titles)[0]);
   function genderOf(firstName) {
     for (const code of countries.codes()) {
