@@ -861,5 +861,5 @@
     }
     return report;
   }
-  root.ThrowawayFill = { version: "2.0", fill, fillCard, undo, classify };
+  root.ThrowawayFill = { version: "2.0", fill, fillCard, undo, classify, selectValue };
 })(globalThis);

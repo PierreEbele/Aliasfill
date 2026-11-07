@@ -6,7 +6,7 @@ Aliasfill is a browser extension that fills sign-up forms with a fake identity a
 
 ## What stays in your browser
 
-The fake identity (name, address, phone, birth date, password, test card), your settings and the API key of the alias provider you choose are kept in the extension's local storage in your browser profile. They are not synced. The fake identity is deleted automatically after the delay you set (24 hours by default).
+The fake identity (name, address, phone, birth date, password, test card), your settings and the API key of the alias provider you choose are kept in the extension's local storage in your browser profile. They are not synced. The fake identity is deleted automatically after the delay you set (24 hours by default). The history of identities used per site (name, address, password, date) stays in the same local storage, is deleted after the delay you set (90 days by default) and can be turned off or cleared by hand.
 
 ## What is sent, and to whom
 

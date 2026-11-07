@@ -152,6 +152,20 @@ describe("extension background", () => {
     expect((await send({ type: "fill-new" })).email).toBe(r.email);
   });
 
+  it("keeps each filled site's identity in the history, unless the history is off", async () => {
+    const { store, send } = await setup();
+    const r = await send({ type: "fill-new" });
+    expect(store.identityHistory).toHaveLength(1);
+    expect(store.identityHistory[0]).toMatchObject({ host: "shop.example.org", profile: { email: r.email, fullName: r.name } });
+    await send({ type: "fill-new" }); // same site, same identity: refreshed, not duplicated
+    expect(store.identityHistory).toHaveLength(1);
+    store.historyDays = -1;
+    await send({ type: "purge" });
+    expect(store.identityHistory).toBeUndefined();
+    await send({ type: "fill-new" }, "https://other.example.org/join");
+    expect(store.identityHistory).toBeUndefined();
+  });
+
   it("an unconfigured provider keeps the generated @example.com address", async () => {
     const { store, send } = await setup();
     store.aliasProvider = "simplelogin";
