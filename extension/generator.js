@@ -281,6 +281,8 @@
     // Multilingual countries keep street names and titles by language, each place naming its own.
     const streets = Array.isArray(sheet.streets) ? sheet.streets : sheet.streets[place.language];
     const titles = titlesOf(sheet, place);
+    // A place may list real addresses (postcode, street and house numbers that go together).
+    const spot = place.addresses ? pick(place.addresses) : null;
     // A country without a range reserved for fiction gets a random number in its format (phoneReserved false).
     const phone = sheet.phone ? sheet.phone.generate(rand, place) : { national: "", phone: "" };
     const profile = {
@@ -296,14 +298,14 @@
       lastName,
       fullName: `${firstName} ${lastName}`,
       company: `${pick(sheet.names.last)} ${pick(sheet.companySuffixes)}`,
-      address: sheet.address(integer(150) + 1, pick(streets)),
+      address: spot ? sheet.address(pick(spot.numbers), spot.street) : sheet.address(integer(150) + 1, pick(streets)),
       address2: pick(sheet.address2)
         .replace("#", () => String(integer(40) + 1))
         .replace("@", () => pick("ABCDEF")),
       city: place.city,
       region: place.region,
       regionCode: place.regionCode || "",
-      postalCode: sheet.postalCode(place, rand),
+      postalCode: spot ? spot.postal : sheet.postalCode(place, rand),
       email: `${ascii(firstName)}.${ascii(lastName)}.${token}@example.com`,
       phone: phone.phone,
       phoneNational: phone.national,

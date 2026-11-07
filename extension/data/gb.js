@@ -1,5 +1,6 @@
-// United Kingdom. Real towns with their postcode district and county, common street names and a random
-// house number: the address is credible but never tied to the generated name.
+// United Kingdom. Real towns with real full postcodes (postcodes.io, ONS Postcode Directory, fetched 2026-11-07) and
+// their county, common street names and a random house number: the address is credible but never tied to the
+// generated name.
 AliasfillCountries.register({
   code: "GB",
   country: "United Kingdom",
@@ -63,19 +64,19 @@ AliasfillCountries.register({
     "Kingsway",
   ],
   places: [
-    { city: "York", region: "North Yorkshire", postal: "YO1" },
-    { city: "Norwich", region: "Norfolk", postal: "NR1" },
-    { city: "Exeter", region: "Devon", postal: "EX1" },
-    { city: "Carlisle", region: "Cumbria", postal: "CA1" },
-    { city: "Preston", region: "Lancashire", postal: "PR1" },
-    { city: "Maidstone", region: "Kent", postal: "ME14" },
-    { city: "Swindon", region: "Wiltshire", postal: "SN1" },
-    { city: "Hexham", region: "Northumberland", postal: "NE46" },
-    { city: "Perth", region: "Perth and Kinross", postal: "PH1" },
-    { city: "Bangor", region: "Gwynedd", postal: "LL57" },
+    { city: "York", region: "North Yorkshire", postal: ["YO1 6BZ", "YO1 6HB", "YO1 6JH", "YO1 7LP", "YO1 8AZ", "YO1 9WZ"] },
+    { city: "Norwich", region: "Norfolk", postal: ["NR1 2JX", "NR1 2UF", "NR1 3AD", "NR1 4AU", "NR1 4DD", "NR1 4JR"] },
+    { city: "Exeter", region: "Devon", postal: ["EX1 2TT", "EX1 3DN", "EX1 3FN", "EX1 3NA", "EX1 3NR", "EX1 9SJ"] },
+    { city: "Carlisle", region: "Cumbria", postal: ["CA1 2JN", "CA1 3AT", "CA1 3AZ", "CA1 3BU", "CA1 3EB", "CA1 3HD"] },
+    { city: "Preston", region: "Lancashire", postal: ["PR1 1QJ", "PR1 4PQ", "PR1 5LX", "PR1 5NZ", "PR1 5YS", "PR1 7PX"] },
+    { city: "Maidstone", region: "Kent", postal: ["ME14 1GY", "ME14 3HS", "ME14 3JN", "ME14 4DP", "ME14 4QD", "ME14 5RH"] },
+    { city: "Swindon", region: "Wiltshire", postal: ["SN1 2EU", "SN1 3DF", "SN1 3FJ", "SN1 3LH", "SN1 3RT", "SN1 7BX"] },
+    { city: "Hexham", region: "Northumberland", postal: ["NE46 1BS", "NE46 1DE", "NE46 1UG", "NE46 2HA", "NE46 3JB", "NE46 4HJ"] },
+    { city: "Perth", region: "Perth and Kinross", postal: ["PH1 1EX", "PH1 1QT", "PH1 1SG", "PH1 3UX", "PH1 3ZZ", "PH1 5NA"] },
+    { city: "Bangor", region: "Gwynedd", postal: ["LL57 1HE", "LL57 2AL", "LL57 2DW", "LL57 2LH", "LL57 2PH", "LL57 4SA"] },
   ],
   postalPattern: /^[A-Z]{1,2}\d{1,2} \d[ABD-HJLNP-UW-Z]{2}$/,
-  postalCode: (place, rand) => `${place.postal} ${rand.integer(9) + 1}${rand.letters(2, "ABDEFGHJLNPQRSTUWXYZ")}`,
+  postalCode: (place, rand) => rand.pick(place.postal),
   address: (number, street) => `${number} ${street}`,
   phone: {
     reserved: true,

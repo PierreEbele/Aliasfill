@@ -72,7 +72,16 @@ describe("country sheets", () => {
         expect(p.phoneNational).toMatch(want.phone);
         expect(p.phone.replace(/\D/g, "")).toBe(p.phoneCountryCode.slice(1) + p.phoneNational.replace(/^0/, ""));
         expect(p.phoneReserved).toBe(want.reserved);
-        expect(sheet.places.some((place: any) => place.city === p.city && place.region === p.region)).toBe(true);
+        const place = sheet.places.find((place: any) => place.city === p.city && place.region === p.region);
+        expect(place).toBeTruthy();
+        // Real addresses: postcode, street and house number come from the same entry; postcode lists: one of them.
+        if (place.addresses)
+          expect(
+            place.addresses.some(
+              (a: any) => a.postal === p.postalCode && a.numbers.some((n: number) => p.address === sheet.address(n, a.street)),
+            ),
+          ).toBe(true);
+        else if (Array.isArray(place.postal)) expect(place.postal.some((code: string) => p.postalCode.startsWith(code))).toBe(true); // full code, or Canada's FSA
         expect(p.address).toMatch(/\d/);
         expect(p.address2).not.toMatch(/[#@]/);
         expect(p.company).toBeTruthy();
