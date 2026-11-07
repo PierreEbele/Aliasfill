@@ -78,6 +78,7 @@ AliasfillCountries.register({
   postalCode: (place, rand) => rand.pick(place.postal),
   address: (number, street) => `${number} ${street}`,
   phone: {
+    reserved: true,
     // NANPA: 555-0100 to 555-0199 stay reserved for fictitious use, in every area code.
     source: "https://nanpa.com/numbering/555-line-numbers",
     generate(rand, place) {

@@ -78,7 +78,14 @@ AliasfillCountries.register({
   postalPattern: /^\d{4} [A-Z]{2}$/,
   postalCode: (place, rand) => `${place.postal} ${rand.letters(2, "ABCEGHJKLMNPRTVWXZ")}`,
   address: (number, street) => `${street} ${number}`,
-  // No range reserved for fiction found at the ACM (Nummerplan telefoon- en ISDN-diensten) (checked 2026-11-07): the phone stays empty rather than
-  // risk a real subscriber's number.
-  phone: null,
+  phone: {
+    // No range reserved for fiction found at the ACM (Nummerplan telefoon- en ISDN-diensten) (checked 2026-11-07): random number in the
+    // Dutch mobile format, 06 xxxx xxxx. It is not reserved, so it may belong to a real subscriber.
+    source: null,
+    reserved: false,
+    generate(rand) {
+      const national = "06" + rand.pick(["1", "2", "3", "4", "5"]) + rand.digits(7);
+      return { national, phone: `+31 6 ${national.slice(2, 6)} ${national.slice(6)}` };
+    },
+  },
 });

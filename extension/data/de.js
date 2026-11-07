@@ -68,6 +68,7 @@ AliasfillCountries.register({
   postalCode: (place, rand) => rand.pick(place.postal),
   address: (number, street) => `${street} ${number}`,
   phone: {
+    reserved: true,
     // Bundesnetzagentur "Drama Numbers" (Rufnummern für Medienproduktionen), mobile blocks made available by the
     // network operators: 0171 39200 00 to 99 and 0176 040690 00 to 99.
     source: "https://www.bundesnetzagentur.de/DE/Fachthemen/Telekommunikation/Nummerierung/DramaNumbers/artikel.html",

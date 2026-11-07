@@ -67,7 +67,14 @@ AliasfillCountries.register({
   postalPattern: /^\d{5}$/,
   postalCode: (place, rand) => place.postal.slice(0, 3) + rand.pick(["01", "02", "03", "04", "05"]),
   address: (number, street) => `${street}, ${number}`,
-  // No range reserved for fiction found at the CNMC (numbering plan) (checked 2026-11-07): the phone stays empty rather than
-  // risk a real subscriber's number.
-  phone: null,
+  phone: {
+    // No range reserved for fiction found at the CNMC (numbering plan) (checked 2026-11-07): random number in the
+    // Spanish mobile format, 6xx xxx xxx. It is not reserved, so it may belong to a real subscriber.
+    source: null,
+    reserved: false,
+    generate(rand) {
+      const national = "6" + rand.digits(8);
+      return { national, phone: `+34 ${national.slice(0, 3)} ${national.slice(3, 6)} ${national.slice(6)}` };
+    },
+  },
 });

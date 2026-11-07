@@ -68,6 +68,7 @@ AliasfillCountries.register({
   postalCode: (place) => place.postal,
   address: (number, street) => `${number} ${street}`,
   phone: {
+    reserved: true,
     // Audiovisual block reserved by ARCEP, decision 2025-2215, §2.5.12: 06 39 98 00 00 to 06 39 98 99 99.
     source: "ARCEP decision 2025-2215, §2.5.12",
     generate(rand) {

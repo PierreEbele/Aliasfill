@@ -81,7 +81,14 @@ AliasfillCountries.register({
   postalPattern: /^\d{4}$/,
   postalCode: (place) => place.postal,
   address: (number, street) => `${street} ${number}`,
-  // No range reserved for fiction found at OFCOM/BAKOM (Swiss numbering plan) (checked 2026-11-07): the phone stays empty rather than
-  // risk a real subscriber's number.
-  phone: null,
+  phone: {
+    // No range reserved for fiction found at OFCOM/BAKOM (Swiss numbering plan) (checked 2026-11-07): random number in the
+    // Swiss mobile format, 07x xxx xx xx. It is not reserved, so it may belong to a real subscriber.
+    source: null,
+    reserved: false,
+    generate(rand) {
+      const national = "07" + rand.pick(["5", "6", "7", "8", "9"]) + rand.digits(7);
+      return { national, phone: `+41 ${national.slice(1, 3)} ${national.slice(3, 6)} ${national.slice(6, 8)} ${national.slice(8)}` };
+    },
+  },
 });

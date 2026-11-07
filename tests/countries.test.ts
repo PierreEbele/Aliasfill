@@ -15,19 +15,24 @@ const G = sandbox.ThrowawayGenerator;
 const C = sandbox.AliasfillCountries;
 const F = sandbox.ThrowawayFill;
 
-// Expected formats, written independently of the sheets. phone: the national number inside the range reserved
-// for fiction, or null for a country where no such range was found.
-const expected: Record<string, { postal: RegExp; phone: RegExp | null; select: string[] }> = {
-  FR: { postal: /^\d{5}$/, phone: /^063998\d{4}$/, select: ["France", "FR", "FRA", "Frankreich"] },
-  GB: { postal: /^[A-Z]{1,2}\d{1,2} \d[A-Z]{2}$/, phone: /^07700900\d{3}$/, select: ["United Kingdom", "UK", "GB", "Royaume-Uni"] },
-  US: { postal: /^\d{5}$/, phone: /^\d{3}55501\d{2}$/, select: ["United States", "USA", "US", "États-Unis"] },
-  CA: { postal: /^[A-Z]\d[A-Z] \d[A-Z]\d$/, phone: /^\d{3}55501\d{2}$/, select: ["Canada", "CA", "CAN"] },
-  DE: { postal: /^\d{5}$/, phone: /^0(17139200|17604069)\d{2}$/, select: ["Germany", "Deutschland", "Allemagne", "DE"] },
-  ES: { postal: /^\d{5}$/, phone: null, select: ["Spain", "España", "Espagne", "ES"] },
-  IT: { postal: /^\d{5}$/, phone: null, select: ["Italy", "Italia", "Italie", "IT"] },
-  BE: { postal: /^\d{4}$/, phone: null, select: ["Belgium", "Belgique", "België", "BE"] },
-  CH: { postal: /^\d{4}$/, phone: null, select: ["Switzerland", "Schweiz", "Suisse", "CH"] },
-  NL: { postal: /^\d{4} [A-Z]{2}$/, phone: null, select: ["Netherlands", "Nederland", "Pays-Bas", "NL"] },
+// Expected formats, written independently of the sheets. phone: the national number, inside the range reserved
+// for fiction where the regulator has one (reserved), else in the country's mobile format.
+const expected: Record<string, { postal: RegExp; phone: RegExp; reserved: boolean; select: string[] }> = {
+  FR: { postal: /^\d{5}$/, phone: /^063998\d{4}$/, reserved: true, select: ["France", "FR", "FRA", "Frankreich"] },
+  GB: {
+    postal: /^[A-Z]{1,2}\d{1,2} \d[A-Z]{2}$/,
+    phone: /^07700900\d{3}$/,
+    reserved: true,
+    select: ["United Kingdom", "UK", "GB", "Royaume-Uni"],
+  },
+  US: { postal: /^\d{5}$/, phone: /^\d{3}55501\d{2}$/, reserved: true, select: ["United States", "USA", "US", "États-Unis"] },
+  CA: { postal: /^[A-Z]\d[A-Z] \d[A-Z]\d$/, phone: /^\d{3}55501\d{2}$/, reserved: true, select: ["Canada", "CA", "CAN"] },
+  DE: { postal: /^\d{5}$/, phone: /^0(17139200|17604069)\d{2}$/, reserved: true, select: ["Germany", "Deutschland", "Allemagne", "DE"] },
+  ES: { postal: /^\d{5}$/, phone: /^6\d{8}$/, reserved: false, select: ["Spain", "España", "Espagne", "ES"] },
+  IT: { postal: /^\d{5}$/, phone: /^3\d{9}$/, reserved: false, select: ["Italy", "Italia", "Italie", "IT"] },
+  BE: { postal: /^\d{4}$/, phone: /^04[789]\d{7}$/, reserved: false, select: ["Belgium", "Belgique", "België", "BE"] },
+  CH: { postal: /^\d{4}$/, phone: /^07[5-9]\d{7}$/, reserved: false, select: ["Switzerland", "Schweiz", "Suisse", "CH"] },
+  NL: { postal: /^\d{4} [A-Z]{2}$/, phone: /^06[1-5]\d{7}$/, reserved: false, select: ["Netherlands", "Nederland", "Pays-Bas", "NL"] },
 };
 const select = (...labels: [string, string][]) => ({
   options: [["", "Choose…"], ...labels].map(([value, textContent]) => ({ value, textContent, disabled: false, parentElement: {} })),
@@ -57,17 +62,16 @@ describe("country sheets", () => {
   });
 
   for (const [code, want] of Object.entries(expected))
-    it(`${code}: valid postcode, fictional phone, recognised country select, title matching the first name`, () => {
+    it(`${code}: valid postcode, phone in format or reserved range, recognised country select, title matching the first name`, () => {
       const sheet = C.get(code);
       for (let i = 0; i < 150; i++) {
         const p = G.generate(code);
         expect(p.countryCode).toBe(code);
         expect(p.postalCode).toMatch(want.postal);
         expect(p.postalCode).toMatch(sheet.postalPattern);
-        if (want.phone) {
-          expect(p.phoneNational).toMatch(want.phone);
-          expect(p.phone.replace(/\D/g, "")).toBe(p.phoneCountryCode.slice(1) + p.phoneNational.replace(/^0/, ""));
-        } else expect([p.phone, p.phoneNational]).toEqual(["", ""]);
+        expect(p.phoneNational).toMatch(want.phone);
+        expect(p.phone.replace(/\D/g, "")).toBe(p.phoneCountryCode.slice(1) + p.phoneNational.replace(/^0/, ""));
+        expect(p.phoneReserved).toBe(want.reserved);
         expect(sheet.places.some((place: any) => place.city === p.city && place.region === p.region)).toBe(true);
         expect(p.address).toMatch(/\d/);
         expect(p.address2).not.toMatch(/[#@]/);

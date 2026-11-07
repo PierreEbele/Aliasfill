@@ -261,7 +261,7 @@
     // Multilingual countries keep street names and titles by language, each place naming its own.
     const streets = Array.isArray(sheet.streets) ? sheet.streets : sheet.streets[place.language];
     const titles = titlesOf(sheet, place);
-    // No phone for a country without a range reserved for fiction.
+    // A country without a range reserved for fiction gets a random number in its format (phoneReserved false).
     const phone = sheet.phone ? sheet.phone.generate(rand, place) : { national: "", phone: "" };
     const profile = {
       country: sheet.country,
@@ -287,6 +287,7 @@
       email: `${ascii(firstName)}.${ascii(lastName)}.${token}@example.com`,
       phone: phone.phone,
       phoneNational: phone.national,
+      phoneReserved: !!sheet.phone?.reserved,
       birthDate: generateBirthDate(),
       password: generatePassword(),
     };
@@ -299,6 +300,7 @@
       if (locks.has("phone")) {
         profile.phoneNational = previous.phoneNational;
         profile.phoneCountryCode = previous.phoneCountryCode;
+        profile.phoneReserved = previous.phoneReserved !== false;
       }
     }
     profile.fullName = `${profile.firstName} ${profile.lastName}`;

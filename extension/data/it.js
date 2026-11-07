@@ -81,7 +81,15 @@ AliasfillCountries.register({
   postalPattern: /^\d{5}$/,
   postalCode: (place) => place.postal,
   address: (number, street) => `${street} ${number}`,
-  // No range reserved for fiction found at AGCOM (Piano nazionale di numerazione) (checked 2026-11-07): the phone stays empty rather than
-  // risk a real subscriber's number.
-  phone: null,
+  phone: {
+    // No range reserved for fiction found at AGCOM (Piano nazionale di numerazione) (checked 2026-11-07): random number in the
+    // Italian mobile format, 3xx xxx xxxx. It is not reserved, so it may belong to a real subscriber.
+    source: null,
+    reserved: false,
+    generate(rand) {
+      const national =
+        "3" + rand.pick(["20", "28", "29", "33", "35", "38", "40", "47", "48", "49", "66", "80", "88", "92"]) + rand.digits(7);
+      return { national, phone: `+39 ${national.slice(0, 3)} ${national.slice(3, 6)} ${national.slice(6)}` };
+    },
+  },
 });

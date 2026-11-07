@@ -224,7 +224,10 @@ function render() {
     $(id).textContent = profile[key] || "—";
   $("avatar").textContent = profile.firstName[0] + profile.lastName[0];
   $("edition").textContent = `Identity #${revision} · ${profile.country}`;
-  $("phone").title = profile.phone ? "" : "No phone range is reserved for fiction in this country: phone fields are left empty.";
+  $("phone").title =
+    profile.phoneReserved === false
+      ? "Random number in this country's format: no range is reserved for fiction here, so it may belong to someone."
+      : "";
   $("password").value = profile.password;
   $("birth-date").textContent = profile.birthDate.split("-").reverse().join("/");
   $("password").type = "password";

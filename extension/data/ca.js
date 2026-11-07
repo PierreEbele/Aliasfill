@@ -68,6 +68,7 @@ AliasfillCountries.register({
   postalCode: (place, rand) => `${rand.pick(place.postal)} ${rand.digits(1)}${rand.letters(1, "ABCEGHJKLMNPRSTVWXYZ")}${rand.digits(1)}`,
   address: (number, street) => `${number} ${street}`,
   phone: {
+    reserved: true,
     // NANPA (which covers Canada): 555-0100 to 555-0199 stay reserved for fictitious use, in every area code.
     source: "https://nanpa.com/numbering/555-line-numbers",
     generate(rand, place) {

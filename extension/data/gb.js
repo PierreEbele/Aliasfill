@@ -78,6 +78,7 @@ AliasfillCountries.register({
   postalCode: (place, rand) => `${place.postal} ${rand.integer(9) + 1}${rand.letters(2, "ABDEFGHJLNPQRSTUWXYZ")}`,
   address: (number, street) => `${number} ${street}`,
   phone: {
+    reserved: true,
     // Ofcom, numbers reserved for drama purposes: 07700 900000 to 07700 900999.
     source: "https://www.ofcom.org.uk/phones-and-broadband/phone-numbers/numbers-for-drama",
     generate(rand) {
