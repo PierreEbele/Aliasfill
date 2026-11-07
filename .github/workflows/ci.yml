@@ -18,6 +18,10 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm test
+      - name: Chromium for the end-to-end tests
+        run: pnpm exec playwright install --with-deps chromium
+      - name: End-to-end tests (Chrome build in Chromium)
+        run: pnpm test:e2e
       - name: Mozilla add-on linter
         run: pnpm lint:firefox
       - name: Build the Firefox and Chrome packages

@@ -2,3 +2,5 @@ node_modules
 dist
 # Local store listing drafts
 extension/store/
+test-results
+playwright-report

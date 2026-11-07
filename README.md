@@ -118,13 +118,14 @@ The provider's key is only sent to that provider's API. Extensions with host acc
 ```bash
 pnpm install
 pnpm test        # adapters against fake HTTP, background script, generator, one-time-code detection, Chrome manifest
+pnpm test:e2e    # the Chrome build in a real Chromium (pnpm exec playwright install chromium once)
 pnpm lint        # types + formatting
 pnpm lint:firefox  # Mozilla's add-on linter (what addons.mozilla.org runs), warnings fail
 pnpm format
 pnpm pack        # dist/aliasfill-<version>.xpi and dist/aliasfill-<version>-chrome.zip
 ```
 
-Tests run the extension's own files in a Node `vm` with a fake `browser` and a fake `fetch` (`tests/fake-throwaway.ts` stands in for a Throwaway Mail server): no network, no browser. Store listing drafts can be kept locally in `extension/store/` (git-ignored, left out of the packages).
+Tests run the extension's own files in a Node `vm` with a fake `browser` and a fake `fetch` (`tests/fake-throwaway.ts` stands in for a Throwaway Mail server): no network, no browser. `pnpm test:e2e` loads the Chrome build unpacked in Chromium (Playwright) and fills local test pages: title radios, region and country selects, Undo, the history in the popup, and the verification code pasted from the fake Throwaway Mail server. Store listing drafts can be kept locally in `extension/store/` (git-ignored, left out of the packages).
 
 ## Releasing
 

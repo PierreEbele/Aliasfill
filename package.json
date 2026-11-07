@@ -15,9 +15,12 @@
     "lint": "tsc --noEmit --noUnusedLocals --noUnusedParameters -p tsconfig.json && prettier --check .",
     "format": "prettier --write .",
     "pack": "sh scripts/pack-extension.sh",
-    "lint:firefox": "web-ext lint -s extension --ignore-files \"store/**\" --self-hosted=false --warnings-as-errors"
+    "lint:firefox": "web-ext lint -s extension --ignore-files \"store/**\" --self-hosted=false --warnings-as-errors",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/chrome": "^0.3.7",
     "@types/node": "^26.6.6",
     "prettier": "^3.9.10",
     "typescript": "^7.0.2",
