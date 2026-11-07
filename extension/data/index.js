@@ -6,6 +6,8 @@
   const sheets = {};
   root.AliasfillCountries = {
     files: [
+      "data/at.js",
+      "data/au.js",
       "data/be.js",
       "data/ca.js",
       "data/ch.js",
@@ -13,8 +15,10 @@
       "data/es.js",
       "data/fr.js",
       "data/gb.js",
+      "data/ie.js",
       "data/it.js",
       "data/nl.js",
+      "data/pt.js",
       "data/us.js",
     ],
     register(sheet) {

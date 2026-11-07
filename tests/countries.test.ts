@@ -32,6 +32,15 @@ const expected: Record<string, { postal: RegExp; phone: RegExp; reserved: boolea
   IT: { postal: /^\d{5}$/, phone: /^3\d{9}$/, reserved: false, select: ["Italy", "Italia", "Italie", "IT"] },
   BE: { postal: /^\d{4}$/, phone: /^04[789]\d{7}$/, reserved: false, select: ["Belgium", "Belgique", "België", "BE"] },
   CH: { postal: /^\d{4}$/, phone: /^07[5-9]\d{7}$/, reserved: false, select: ["Switzerland", "Schweiz", "Suisse", "CH"] },
+  PT: { postal: /^\d{4}-\d{3}$/, phone: /^9[1236]\d{7}$/, reserved: false, select: ["Portugal", "PT", "PRT"] },
+  AT: { postal: /^\d{4}$/, phone: /^06(50|60|64|76|99)\d{7}$/, reserved: false, select: ["Austria", "Österreich", "Autriche", "AT"] },
+  IE: {
+    postal: /^[A-Z]\d{2} [0-9ACDEFHKNPRTVWXY]{4}$/,
+    phone: /^0890110\d{3}$/,
+    reserved: true,
+    select: ["Ireland", "Éire", "Irlande", "IE"],
+  },
+  AU: { postal: /^\d{4}$/, phone: /^0[2378]5550\d{4}$/, reserved: true, select: ["Australia", "Australie", "AU", "AUS"] },
   NL: { postal: /^\d{4} [A-Z]{2}$/, phone: /^06[1-5]\d{7}$/, reserved: false, select: ["Netherlands", "Nederland", "Pays-Bas", "NL"] },
 };
 const select = (...labels: [string, string][]) => ({
