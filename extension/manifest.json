@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Aliasfill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Fake identities for sign-up forms, with disposable addresses from your own domain or alias service.",
   "permissions": ["alarms", "activeTab", "menus", "scripting", "storage"],
   "action": {
