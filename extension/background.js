@@ -143,10 +143,15 @@ async function fillNewIdentity(tabId, pageUrl) {
   return { report: res?.result || null, email: profile.email, name: profile.fullName, ...via };
 }
 
+const LOOPBACK = /^(localhost|.+\.localhost|127\.\d+\.\d+\.\d+|\[::1\])$/i;
+
 browser.runtime.onMessage.addListener((msg, sender) => {
   const tabId = sender.tab?.id;
   const url = sender.tab?.url || "";
   const host = /^https?:/.test(url) ? new URL(url).hostname : "";
+  // Codes go only to https pages (or pages served from this computer): a plain-http page of the same host is another
+  // origin, which anything on the network path can serve.
+  const codeHost = /^https:/.test(url) || LOOPBACK.test(host) ? host : "";
   switch (msg?.type) {
     case "state":
       return (async () => {
@@ -157,7 +162,7 @@ browser.runtime.onMessage.addListener((msg, sender) => {
           autoPrompt: s.autoPrompt && !dismissedHosts.includes(host),
           autoCode,
           autoFillCode: autoCode && s.autoFillCode,
-          pending: host && autoCode ? await getPending(host) : null,
+          pending: codeHost && autoCode ? await getPending(codeHost) : null,
         };
       })();
     case "fill-new":
@@ -167,16 +172,16 @@ browser.runtime.onMessage.addListener((msg, sender) => {
     case "poll-code":
       // Short long polling (20 s): each message keeps the background script awake.
       return (async () => {
-        const p = host && (await getPending(host));
+        const p = codeHost && (await getPending(codeHost));
         if (!p || !(await codeProvider())) return { done: true };
         try {
           const found = await Throwaway.waitForCode(p.id, p.since, 20);
           if (found?.code) {
-            await clearPending(host);
+            await clearPending(codeHost);
             return { code: found.code, from: found.from };
           }
           if (found?.links?.length) {
-            await clearPending(host);
+            await clearPending(codeHost);
             return { link: found.links[0].url };
           }
           return { waiting: true };
@@ -206,9 +211,9 @@ browser.runtime.onMessage.addListener((msg, sender) => {
     case "site-code":
       // Code field detected with no wait in progress: latest code (< 15 min) of this site's address.
       return (async () => {
-        if (!host || !(await codeProvider()) || !(await settings()).autoCode) return { done: true };
+        if (!codeHost || !(await codeProvider()) || !(await settings()).autoCode) return { done: true };
         try {
-          const a = await addressForHost(host, url, false);
+          const a = await addressForHost(codeHost, url, false);
           if (!a) return { done: true };
           const q = new URLSearchParams({
             wait: String(Math.min(Math.max(Number(msg.wait) || 0, 0), 20)),
