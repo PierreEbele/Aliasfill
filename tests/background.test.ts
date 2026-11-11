@@ -129,6 +129,25 @@ describe("extension background", () => {
     expect(t.addresses).toHaveLength(1);
   });
 
+  it("hands codes only to https pages or pages on this computer, not to a plain-http page of the same host", async () => {
+    const { t, store, send } = await setup();
+    await send({ type: "fill-new" }, "https://shop.example.org/register");
+    const id = store.tmPending["shop.example.org"].id;
+    t.deliver(t.addresses[0].email, { text: "Your code is 640217" });
+    expect((await send({ type: "state" }, "https://shop.example.org/verify")).pending).toMatchObject({ id });
+
+    const plain = "http://shop.example.org/verify";
+    expect((await send({ type: "state" }, plain)).pending).toBeNull();
+    expect(await send({ type: "poll-code" }, plain)).toEqual({ done: true });
+    expect(await send({ type: "site-code", wait: 0 }, plain)).toEqual({ done: true });
+    expect(store.tmPending["shop.example.org"].id).toBe(id); // still waiting for the https page
+
+    // Local development servers keep working over http.
+    const local = t.createAddress({ site_name: "localhost" });
+    await send({ type: "pending-set", host: "localhost", alias: { id: local.id, email: local.email, createdAt: 0 } });
+    expect((await send({ type: "state" }, "http://localhost:5173/verify")).pending).toMatchObject({ id: local.id });
+  });
+
   it("expires the identity after the configured time", async () => {
     const { store, send } = await setup();
     store.profile = { firstName: "A", createdAt: Date.now() - 2 * 3600_000 };
