@@ -68,7 +68,9 @@ export function fakeThrowaway({ domain = "mail.example.test", key = "tm_test_key
     if (p === "/v1/addresses") {
       const site = u.searchParams.get("site")?.toLowerCase();
       const q = u.searchParams.get("q")?.toLowerCase();
-      const found = addresses.filter((a) => (!site || a.site_name.toLowerCase().includes(site)) && (!q || a.email.includes(q)));
+      const found = addresses.filter(
+        (a) => (!site || a.site_name.toLowerCase().includes(site)) && (!q || a.email.toLowerCase().includes(q)),
+      );
       return json(200, { addresses: found.map(view) });
     }
     const code = /^\/v1\/addresses\/([^/]+)\/code$/.exec(p);

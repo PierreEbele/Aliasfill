@@ -86,6 +86,22 @@ async function clearPending(host) {
   await browser.storage.local.set({ tmPending });
 }
 
+// Bitwarden mode: an address found in the page is adopted only if it was made for this site: its site name is the
+// page's host or a parent domain of it. Addresses Bitwarden creates are named after the site it sent, or "Bitwarden"
+// when it sent none: those are taken only if just created.
+const ADOPT_FRESH_MS = 5 * 60_000;
+const ADOPT_SKEW_MS = 30_000;
+const timestamp = (v) => (typeof v === "number" ? v : Date.parse(v));
+function adoptable(address, host) {
+  const site = String(address.site_name || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\.$/, "");
+  const h = host.toLowerCase();
+  if (site && (site === h || (site.includes(".") && h.endsWith(`.${site}`)))) return true;
+  return site === "bitwarden" && Date.now() - timestamp(address.created_at) < ADOPT_FRESH_MS;
+}
+
 // Fresh identity (except locked fields) + disposable address for this site, then fill the tab.
 async function fillNewIdentity(tabId, pageUrl) {
   const s = await settings();
@@ -177,9 +193,11 @@ browser.runtime.onMessage.addListener((msg, sender) => {
         if (!host || !/^[^@\s]+@[^@\s]+$/.test(email) || !(await codeProvider())) return { ok: false };
         try {
           const data = await Throwaway.request(`/v1/addresses?q=${encodeURIComponent(email)}`);
-          const a = (data.addresses || []).find((x) => x.email.toLowerCase() === email);
-          if (!a) return { ok: false };
-          if ((await settings()).autoCode) await setPending(host, { id: a.id, email: a.email, createdAt: a.created_at });
+          const a = (data?.addresses || []).find((x) => String(x.email || "").toLowerCase() === email);
+          if (!a || !adoptable(a, host)) return { ok: false };
+          // Only codes that arrive from now on (minus a little clock skew), never the address's older mail.
+          const since = Math.max(Date.now() - ADOPT_SKEW_MS, timestamp(a.created_at) || 0);
+          if ((await settings()).autoCode) await setPending(host, { id: a.id, email: a.email, createdAt: since });
           return { ok: true, email: a.email };
         } catch {
           return { ok: false };

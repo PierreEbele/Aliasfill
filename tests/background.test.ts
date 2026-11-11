@@ -86,6 +86,41 @@ describe("extension background", () => {
     expect(store.tmPending["shop.example.org"].id).toBe(alias.id);
   });
 
+  it("Bitwarden mode adopts only an address made for this site, and only waits for new mail", async () => {
+    const { t, store, send } = await setup();
+    store.bitwardenMode = true;
+    const page = "https://shop.example.org/register";
+
+    // Another site's address, typed into this page: refused, nothing waits for its mail.
+    const other = t.createAddress({ site_name: "bank.example.com" });
+    t.deliver(other.email, { text: "Your code is 551203" });
+    expect(await send({ type: "adopt-email", email: other.email }, page)).toEqual({ ok: false });
+    expect(store.tmPending).toBeUndefined();
+
+    // Bitwarden named the address "Bitwarden" (no site sent): taken only while fresh.
+    const stale = t.createAddress({ site_name: "Bitwarden" });
+    stale.created_at = Date.now() - 3600_000;
+    expect(await send({ type: "adopt-email", email: stale.email }, page)).toEqual({ ok: false });
+    expect(store.tmPending).toBeUndefined();
+    const fresh = t.createAddress({ site_name: "Bitwarden" });
+    expect(await send({ type: "adopt-email", email: fresh.email }, page)).toEqual({ ok: true, email: fresh.email });
+
+    // Named after the registrable domain: taken on a subdomain, but codes it received before are not replayed.
+    const parent = t.createAddress({ site_name: "example.org" });
+    parent.created_at = Date.now() - 86_400_000;
+    t.deliver(parent.email, { text: "Your code is 118822" });
+    parent.messages[0].receivedAt = Date.now() - 3600_000;
+    expect(await send({ type: "adopt-email", email: parent.email }, page)).toEqual({ ok: true, email: parent.email });
+    expect(store.tmPending["shop.example.org"].id).toBe(parent.id);
+    expect(store.tmPending["shop.example.org"].since).toBeGreaterThan(parent.messages[0].receivedAt);
+
+    // A bare top-level domain or a look-alike suffix is not a parent domain.
+    for (const site_name of ["org", "le.org", "xample.org"]) {
+      const a = t.createAddress({ site_name });
+      expect(await send({ type: "adopt-email", email: a.email }, page)).toEqual({ ok: false });
+    }
+  });
+
   it("normal mode still creates the alias itself", async () => {
     const { t, send, filled } = await setup();
     const r = await send({ type: "fill-new" });
