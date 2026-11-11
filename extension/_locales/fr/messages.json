@@ -967,5 +967,8 @@
   },
   "m1p9b6et": {
     "message": "« Remplir » choisit les champs de la page. « Verrouillé » garde la valeur quand vous générez."
+  },
+  "m1202lun": {
+    "message": "Ce code est pour $1 : il n’est pas collé dans cette page. Utilisez Copier ou Coller."
   }
 }

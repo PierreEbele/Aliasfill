@@ -185,3 +185,44 @@ test("the popup lists the history and offers every country sheet", async () => {
   await expect(popup.locator("#profile-actions")).toBeHidden();
   await popup.close();
 });
+
+test("the popup pastes a code by itself only into the address's own site, and opens web links only", async () => {
+  await sw.evaluate(
+    (server) => chrome.storage.local.set({ aliasProvider: "throwaway", tmServer: server, tmApiKey: "tm_e2e_key", profile: null }),
+    base,
+  );
+  const site = await ctx.newPage();
+  await site.goto(`${base}/verify`);
+  const { email } = await fill(site);
+
+  // The popup is opened over another page (here, its own tab): the code is shown, not pasted.
+  const popup = await ctx.newPage();
+  await popup.goto(`chrome-extension://${new URL(sw.url()).host}/popup.html`);
+  await expect(popup.locator("#tm-address")).toHaveText(`${email} · localhost`);
+  await expect(popup.locator("#tm-wait")).toBeEnabled();
+  await popup.click("#tm-wait");
+  tm.deliver(email, { from: "hello@shop.example", text: "Your code is 905117" });
+  await expect(popup.locator("#tm-code")).toHaveText("905117", { timeout: 15_000 });
+  await expect(popup.locator("#tm-status")).toContainText("localhost");
+  await expect(popup.locator("#tm-paste")).toBeEnabled();
+  await expect(site.locator("#otp")).toHaveValue("");
+
+  // A mail whose only link is not a web address: no link offered.
+  await expect(popup.locator("#tm-wait")).toBeEnabled();
+  await popup.click("#tm-wait");
+  const address = tm.addresses.find((a) => a.email === email)!;
+  address.messages.push({
+    id: "m-js",
+    from: "x@shop.example",
+    subject: "Confirm",
+    code: null,
+    links: [{ url: "javascript:alert(1)" }],
+    receivedAt: Date.now() + 1000,
+  });
+  await expect(popup.locator("#tm-code")).toHaveText("—", { timeout: 15_000 });
+  await expect(popup.locator("#tm-wait")).toBeEnabled();
+  await expect(popup.locator("#tm-link a")).toHaveCount(0);
+  await expect(popup.locator("#tm-link")).toBeHidden();
+  await popup.close();
+  await site.close();
+});
