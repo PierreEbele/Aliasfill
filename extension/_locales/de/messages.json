@@ -967,5 +967,8 @@
   },
   "m1p9b6et": {
     "message": "„Ausfüllen“ wählt die Felder auf der Seite. „Gesperrt“ behält den Wert beim Erzeugen."
+  },
+  "m1202lun": {
+    "message": "Dieser Code ist für $1: Er wird nicht in diese Seite eingefügt. Verwenden Sie Kopieren oder Einfügen."
   }
 }

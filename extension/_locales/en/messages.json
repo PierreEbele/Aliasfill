@@ -860,6 +860,9 @@
   "m9os6h2": {
     "message": "The whole history will be deleted. This cannot be undone."
   },
+  "m1202lun": {
+    "message": "This code is for $1: not pasted into this page. Use Copy or Paste."
+  },
   "m19wnz4d": {
     "message": "This looks like a sign-in or account verification form. Aliasfill skips those forms and their passwords."
   },

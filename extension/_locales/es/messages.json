@@ -967,5 +967,8 @@
   },
   "m1p9b6et": {
     "message": "«Rellenar» elige los campos de la página. «Bloqueado» conserva el valor al generar."
+  },
+  "m1202lun": {
+    "message": "Este código es para $1: no se pega en esta página. Usa Copiar o Pegar."
   }
 }

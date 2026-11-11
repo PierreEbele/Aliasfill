@@ -595,16 +595,19 @@ async function tmRender() {
   $("tm-email-note").hidden = !on;
   $("tm-email-note").textContent = alias ? t("DISPOSABLE") : t("DISPOSABLE ON FILL");
   $("tm-panel").hidden = !(canFetchCodes() && alias?.id);
-  if (alias) $("tm-address").textContent = alias.email;
+  // The site the address was made for: its code is pasted automatically only there.
+  if (alias) $("tm-address").textContent = alias.host ? `${alias.email} · ${alias.host}` : alias.email;
   $("tm-code").textContent = tmCode?.code || "—";
   $("tm-copy").disabled = $("tm-paste").disabled = !tmCode?.code;
   $("tm-wait").disabled = tmWaiting || !alias;
   $("tm-wait").textContent = tmWaiting ? t("Waiting…") : tmCode ? t("Next code") : t("Wait for code");
-  $("tm-link").hidden = !(tmCode && !tmCode.code && tmCode.links?.length);
+  const link = tmCode && !tmCode.code ? String(tmCode.links?.[0]?.url || tmCode.links?.[0] || "") : "";
+  const webLink = /^https?:\/\//i.test(link);
+  $("tm-link").hidden = !webLink;
   $("tm-link").replaceChildren();
-  if (tmCode && !tmCode.code && tmCode.links?.length) {
+  if (webLink) {
     const a = document.createElement("a");
-    a.href = tmCode.links[0].url || tmCode.links[0];
+    a.href = link;
     a.target = "_blank";
     a.rel = "noopener noreferrer";
     a.textContent = t("Open the confirmation link");
@@ -614,6 +617,11 @@ async function tmRender() {
 async function activeTabUrl() {
   const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
   return tab?.url || "";
+}
+// Is the open tab the site the address was made for?
+async function onAliasSite(alias) {
+  const url = await activeTabUrl().catch(() => "");
+  return /^https?:/.test(url) && !!alias?.host && new URL(url).hostname === alias.host;
 }
 // Before filling: create (or reuse) the disposable address for the open site.
 // Returns false if the fill must be aborted.
@@ -685,10 +693,15 @@ async function tmPoll(wait) {
     for (let i = 0; i < (wait ? 2 : 1) && !found; i++) found = await active.provider.waitForCode(active.cfg, alias, since, wait);
     if (found) {
       tmCode = found;
-      if (found.code && wait) setTimeout(() => $("tm-paste").click(), 0);
+      // Pasted by itself only into the address's own site; elsewhere, Copy or Paste is left to the user.
+      const elsewhere = found.code && wait && !(await onAliasSite(alias));
+      if (found.code && wait && !elsewhere) setTimeout(() => $("tm-paste").click(), 0);
       tmStatus(
         found.code
-          ? t("From $1", found.from || "?") + (found.subject ? ` · “${found.subject}”` : "") + "."
+          ? t("From $1", found.from || "?") +
+              (found.subject ? ` · “${found.subject}”` : "") +
+              "." +
+              (elsewhere ? " " + t("This code is for $1: not pasted into this page. Use Copy or Paste.", alias.host) : "")
           : t("E-mail received without a code: confirmation link available."),
       );
     } else if (wait) tmStatus(t("Nothing yet. Try again after asking the site to send the code."));
