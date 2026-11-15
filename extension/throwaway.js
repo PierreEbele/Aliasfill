@@ -44,6 +44,7 @@ const Throwaway = (() => {
     if (!res.ok) {
       const err = new Error(data?.error?.message || `HTTP ${res.status}`);
       err.status = res.status;
+      err.code = data?.error?.code; // e.g. domain_not_allowed, insufficient_scope (restricted keys)
       throw err;
     }
     return data;

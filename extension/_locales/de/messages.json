@@ -860,6 +860,15 @@
   "m9os6h2": {
     "message": "Der gesamte Verlauf wird gelöscht. Das kann nicht rückgängig gemacht werden."
   },
+  "m1q0qi86": {
+    "message": "Dieser API-Schlüssel kann keine Adressen erstellen (nur Lesezugriff oder auf einige Adressen beschränkt)."
+  },
+  "m1l3b6i3": {
+    "message": "Dieser API-Schlüssel darf auf dieser Domain keine Adressen erstellen: Wählen Sie in den Einstellungen eine seiner Domains."
+  },
+  "m1202lun": {
+    "message": "Dieser Code ist für $1: Er wird nicht in diese Seite eingefügt. Verwenden Sie Kopieren oder Einfügen."
+  },
   "m19wnz4d": {
     "message": "Das sieht nach einem Anmelde- oder Kontobestätigungsformular aus. Aliasfill überspringt diese Formulare und ihre Passwörter."
   },
@@ -967,8 +976,5 @@
   },
   "m1p9b6et": {
     "message": "„Ausfüllen“ wählt die Felder auf der Seite. „Gesperrt“ behält den Wert beim Erzeugen."
-  },
-  "m1202lun": {
-    "message": "Dieser Code ist für $1: Er wird nicht in diese Seite eingefügt. Verwenden Sie Kopieren oder Einfügen."
   }
 }

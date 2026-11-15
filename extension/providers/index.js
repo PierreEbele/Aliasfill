@@ -118,6 +118,11 @@ globalThis.AliasProviders = (() => {
 
   // Human message for a failed call.
   function errorMessage(provider, e) {
+    // A valid but restricted Throwaway Mail key: say why instead of calling the key invalid.
+    if (e?.status === 403 && e.code === "domain_not_allowed")
+      return t("This API key may not create addresses on this domain: pick one of its domains in the settings.");
+    if (e?.status === 403 && e.code === "insufficient_scope")
+      return t("This API key cannot create addresses (read-only or restricted to some addresses).");
     if (e?.status === 401 || e?.status === 403) return t("Invalid $1 API key.", provider?.name || t("provider"));
     if (e?.message === "NOT_CONFIGURED") return t("No alias provider is set up (see the extension settings).");
     return e?.message || String(e);

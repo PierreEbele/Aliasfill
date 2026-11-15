@@ -237,6 +237,20 @@ describe("alias providers", () => {
     await expect(P2.createAlias("https://shop.example.org/")).rejects.toThrow("The domain is invalid");
   });
 
+  it("tells a restricted Throwaway Mail key apart from an invalid one", async () => {
+    const tm = { aliasProvider: "throwaway", tmServer: "https://mail.example.test", tmApiKey: "tm_key" };
+    for (const [code, expected] of [
+      ["domain_not_allowed", /may not create addresses on this domain/],
+      ["insufficient_scope", /cannot create addresses \(read-only/],
+      [undefined, /^Invalid Throwaway Mail API key\.$/],
+    ] as const) {
+      const { P } = load(tm, () => ({ status: 403, json: { error: { code, message: "refused" } } }));
+      const err = await P.createAlias("https://shop.example.org/").catch((e: any) => e);
+      expect(err.status).toBe(403);
+      expect(P.errorMessage(P.get("throwaway"), err)).toMatch(expected);
+    }
+  });
+
   it("refuses plain-http provider URLs except on localhost", () => {
     const { P } = load();
     expect(() => P.normalizeBaseUrl("http://sl.example.org")).toThrow(/HTTPS/);

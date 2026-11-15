@@ -860,6 +860,15 @@
   "m9os6h2": {
     "message": "Tout l’historique va être supprimé. C’est irréversible."
   },
+  "m1q0qi86": {
+    "message": "Cette clé d’API ne peut pas créer d’adresses (lecture seule ou limitée à certaines adresses)."
+  },
+  "m1l3b6i3": {
+    "message": "Cette clé d’API ne peut pas créer d’adresses sur ce domaine : choisissez l’un de ses domaines dans les réglages."
+  },
+  "m1202lun": {
+    "message": "Ce code est pour $1 : il n’est pas collé dans cette page. Utilisez Copier ou Coller."
+  },
   "m19wnz4d": {
     "message": "Cela ressemble à un formulaire de connexion ou de vérification de compte. Aliasfill ignore ces formulaires et leurs mots de passe."
   },
@@ -967,8 +976,5 @@
   },
   "m1p9b6et": {
     "message": "« Remplir » choisit les champs de la page. « Verrouillé » garde la valeur quand vous générez."
-  },
-  "m1202lun": {
-    "message": "Ce code est pour $1 : il n’est pas collé dans cette page. Utilisez Copier ou Coller."
   }
 }

@@ -860,6 +860,12 @@
   "m9os6h2": {
     "message": "The whole history will be deleted. This cannot be undone."
   },
+  "m1q0qi86": {
+    "message": "This API key cannot create addresses (read-only or restricted to some addresses)."
+  },
+  "m1l3b6i3": {
+    "message": "This API key may not create addresses on this domain: pick one of its domains in the settings."
+  },
   "m1202lun": {
     "message": "This code is for $1: not pasted into this page. Use Copy or Paste."
   },
