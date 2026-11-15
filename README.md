@@ -3,8 +3,10 @@
 [![CI](https://github.com/PierreEbele/Aliasfill/actions/workflows/ci.yml/badge.svg)](https://github.com/PierreEbele/Aliasfill/actions/workflows/ci.yml)
 [![Firefox add-on](https://img.shields.io/amo/v/aliasfill?label=Firefox%20add-on)](https://addons.mozilla.org/firefox/addon/aliasfill/)
 [![Firefox users](https://img.shields.io/amo/users/aliasfill)](https://addons.mozilla.org/firefox/addon/aliasfill/)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/bboolmpoilfgnfldkkiljmdkkkdhgall?label=Chrome%20Web%20Store)](https://chromewebstore.google.com/detail/aliasfill/bboolmpoilfgnfldkkiljmdkkkdhgall)
+[![Chrome users](https://img.shields.io/chrome-web-store/users/bboolmpoilfgnfldkkiljmdkkkdhgall)](https://chromewebstore.google.com/detail/aliasfill/bboolmpoilfgnfldkkiljmdkkkdhgall)
 
-**[Get it for Firefox](https://addons.mozilla.org/firefox/addon/aliasfill/)** · Chrome/Chromium: download the `-chrome.zip` from the [latest release](https://github.com/PierreEbele/Aliasfill/releases/latest) and load it unpacked (see [Setup](#setup)).
+**[Get it for Firefox](https://addons.mozilla.org/firefox/addon/aliasfill/)** · **[Get it for Chrome](https://chromewebstore.google.com/detail/aliasfill/bboolmpoilfgnfldkkiljmdkkkdhgall)** (also Brave, Vivaldi, and Edge with _Allow extensions from other stores_)
 
 Browser extension for Firefox and Chrome/Chromium that fills sign-up forms with a fake identity and a disposable e-mail address for the site.
 
@@ -111,7 +113,7 @@ The provider's key is only sent to that provider's API. Extensions with host acc
    - `dist/aliasfill-<version>-chrome.zip` (Chrome/Chromium).
 2. Install:
    - **Firefox:** install it from [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/aliasfill/) (signed, updated automatically). To try a local build: `about:debugging#/runtime/this-firefox` → _Load Temporary Add-on_ → pick `extension/manifest.json` (removed at restart).
-   - **Chrome/Chromium:** unzip the `-chrome.zip` into a folder you keep, open `chrome://extensions`, enable _Developer mode_, _Load unpacked_ → that folder. Chrome 121 or later.
+   - **Chrome/Chromium:** install it from the [Chrome Web Store](https://chromewebstore.google.com/detail/aliasfill/bboolmpoilfgnfldkkiljmdkkkdhgall) (updated automatically). To try a local build: unzip the `-chrome.zip` into a folder, open `chrome://extensions`, enable _Developer mode_, _Load unpacked_ → that folder. Chrome 121 or later.
 3. Settings (⚙ in the popup): pick the provider, fill its fields, _Test connection_, _Save_. For Throwaway Mail: _API keys → Create_ in the app (name it after the browser), server `https://mail.example.com`, paste the key, pick the preferred domain. The domain is a preference: when a site is known to reject it (see _Sites that reject a domain_ in the Throwaway Mail user guide), the server picks another one.
 
 ## Development
@@ -133,9 +135,11 @@ Tests run the extension's own files in a Node `vm` with a fake `browser` and a f
 1. Bump `version` in `extension/manifest.json` and `package.json`, commit.
 2. Tag and push: `git tag -a v1.2.0 -m "Aliasfill 1.2.0" && git push origin v1.2.0`.
 
-The **Release** workflow then runs the tests and Mozilla's linter, checks the tag matches the manifest, builds both packages, creates the GitHub release with them, and submits the version to addons.mozilla.org (listed channel). Mozilla reviews it, then publishes it and Firefox updates installed copies on its own.
+The **Release** workflow then runs the tests and Mozilla's linter, checks the tag matches the manifest, builds both packages, creates the GitHub release with them, and submits the version to addons.mozilla.org (listed channel), the Chrome Web Store and Edge Add-ons when their secrets are set. Mozilla reviews it, then publishes it and Firefox updates installed copies on its own.
 
 The AMO step needs two repository secrets, `AMO_JWT_ISSUER` and `AMO_JWT_SECRET`, from [addons.mozilla.org → Manage API Keys](https://addons.mozilla.org/developers/addon/api/key/). Without them it is skipped and the GitHub release is still made.
+
+It then submits the Chrome package to the **Chrome Web Store** (`scripts/publish-chrome.mjs`, API v2): the package is uploaded to the existing item and published; Google reviews it. This needs a service account linked to the publisher and two repository secrets: `CWS_SERVICE_ACCOUNT_KEY` (the service account's JSON key) and `CWS_PUBLISHER_ID` (Developer Dashboard → Settings). To set them up: in a Google Cloud project, enable the _Chrome Web Store API_, create a service account (no role needed) and a JSON key for it; in the [Developer Dashboard](https://chrome.google.com/webstore/devconsole) → _Account_, add the service account's e-mail. The item ID is in the workflow. Without the secrets the step is skipped.
 
 It then submits the Chrome package to **Microsoft Edge Add-ons** (`scripts/publish-edge.mjs`, Update REST API v1.1): the package is uploaded as the draft and the draft is published; Microsoft reviews it. This needs the product to exist (submit the first version by hand in [Partner Center](https://partner.microsoft.com/dashboard/microsoftedge), free) and three repository secrets from Partner Center → Microsoft Edge → Publish API: `EDGE_CLIENT_ID`, `EDGE_API_KEY` (it expires: renew it there) and `EDGE_PRODUCT_ID` (on the extension's overview page). Without them the step is skipped.
 
