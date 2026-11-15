@@ -3,11 +3,13 @@
 // https://developer.chrome.com/docs/webstore/using-api
 // Auth: a service account linked to the publisher (Developer Dashboard → Account), signed in with its JSON key.
 // Usage: CWS_SERVICE_ACCOUNT_KEY='{…json key…}' CWS_PUBLISHER_ID=… CWS_ITEM_ID=… node scripts/publish-chrome.mjs dist/aliasfill-X.Y.Z-chrome.zip
+//        … node scripts/publish-chrome.mjs --check   only signs in and prints the item's status (nothing is uploaded)
 import crypto from "node:crypto";
 import fs from "node:fs";
 
 const { CWS_SERVICE_ACCOUNT_KEY, CWS_PUBLISHER_ID, CWS_ITEM_ID } = process.env;
 const file = process.argv[2];
+const check = file === "--check";
 if (!CWS_SERVICE_ACCOUNT_KEY || !CWS_PUBLISHER_ID || !CWS_ITEM_ID || !file) {
   console.error("usage: CWS_SERVICE_ACCOUNT_KEY=… CWS_PUBLISHER_ID=… CWS_ITEM_ID=… node scripts/publish-chrome.mjs <package.zip>");
   process.exit(2);
@@ -45,6 +47,11 @@ async function call(url, init = {}) {
   const body = text ? JSON.parse(text) : {};
   if (!res.ok) throw new Error(`${url}: HTTP ${res.status} ${text}`);
   return body;
+}
+
+if (check) {
+  console.log(`Signed in. Item status: ${JSON.stringify(await call(`https://chromewebstore.googleapis.com/v2/${item}:fetchStatus`))}`);
+  process.exit(0);
 }
 
 let upload = await call(`https://chromewebstore.googleapis.com/upload/v2/${item}:upload`, {

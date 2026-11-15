@@ -1,0 +1,21 @@
+name: Store credentials check
+
+# Run by hand (Actions → Store credentials check → Run workflow) after setting or renewing the store secrets:
+# signs in to each store and reads the item's status, without uploading or publishing anything.
+on: workflow_dispatch
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      CWS_SERVICE_ACCOUNT_KEY: ${{ secrets.CWS_SERVICE_ACCOUNT_KEY }}
+      CWS_PUBLISHER_ID: ${{ secrets.CWS_PUBLISHER_ID }}
+      CWS_ITEM_ID: bboolmpoilfgnfldkkiljmdkkkdhgall
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Chrome Web Store
+        if: env.CWS_SERVICE_ACCOUNT_KEY != '' && env.CWS_PUBLISHER_ID != ''
+        run: node scripts/publish-chrome.mjs --check
